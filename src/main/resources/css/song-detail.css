@@ -1,0 +1,11 @@
+.tab-label:hover {
+    -fx-text-fill: rgb(30, 207, 157);
+}
+
+#song-detail-vbox {
+    -fx-background-color: #f5f5f6;
+}
+
+#song-detail-pane {
+    -fx-background-color: #f5f5f6;
+}
