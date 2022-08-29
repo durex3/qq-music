@@ -124,7 +124,7 @@
                                  <children>
                                     <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
                                        <children>
-                                          <RXAvatar id="cur-play-image" fx:id="curMusicPlayImage" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" shapeType="SQUARE">
+                                          <RXAvatar id="cur-play-image" fx:id="curMusicPlayImage" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#handleShowPlayDetailPaneClick" prefHeight="40.0" prefWidth="40.0" shapeType="SQUARE">
                                              <image>
                                                 <Image url="@../image/qilixiang.jpeg" />
                                              </image>
@@ -250,7 +250,8 @@
                     </AnchorPane>
                 </children>
             </AnchorPane>
-            <AnchorPane fx:id="playListPane" prefHeight="690.0" prefWidth="300.0" stylesheets="@../css/main.css" translateX="300.0" visible="false" StackPane.alignment="TOP_RIGHT">
+            <AnchorPane id="play-detail-pane" prefHeight="200.0" prefWidth="200.0" translateY="690.0" visible="false" />
+            <AnchorPane id="play-list-pane" fx:id="playListPane" prefHeight="690.0" prefWidth="300.0" stylesheets="@../css/main.css" translateX="300.0" visible="false" StackPane.alignment="TOP_RIGHT">
                <children>
                   <AnchorPane onMouseClicked="#handleHidePlayListPaneClick" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <AnchorPane id="list-pane" prefWidth="300.0" stylesheets="@../css/main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

@@ -38,14 +38,9 @@ public class MainController implements Initializable {
     private double dragOffsetX;
     private double dragOffsetY;
     private Pane curSelectedPane;
-    private Timeline showPlayListAnim;
-    private Timeline hidePlayListAnim;
-
 
     @FXML
     private AnchorPane mainPane;
-    @FXML
-    private ScrollPane contentPane;
     @FXML
     private RXAvatar curMusicPlayImage;
     @FXML
@@ -63,8 +58,6 @@ public class MainController implements Initializable {
     @FXML
     private Region nextBtn;
     @FXML
-    private AnchorPane playListPane;
-    @FXML
     private Label bottomPlayListNum;
     @FXML
     private Label playListNum;
@@ -75,35 +68,8 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        showPlayListAnim = new Timeline(
-                new KeyFrame(
-                        Duration.millis(300),
-                        new KeyValue(playListPane.translateXProperty(), 0)
-                )
-        );
-        hidePlayListAnim = new Timeline(
-                new KeyFrame(
-                        Duration.millis(300),
-                        new KeyValue(playListPane.translateXProperty(), 300)
-                )
-        );
-        hidePlayListAnim.setOnFinished(actionEvent -> playListPane.setVisible(false));
-
-        playListView.setItems(MusicPlayer.getPlayList());
-        playListView.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                final int selectedIndex = playListView.getSelectionModel().getSelectedIndex();
-                MusicPlayer.play(selectedIndex, MusicPlayer.getTablePlayList().get(selectedIndex));
-            }
-        });
-    }
-
-    public synchronized void init() {
         // 默认选中的菜单
         curSelectedPane = (Pane) mainPane.lookup("#recommend-pane");
-        this.stage = (Stage) mainPane.getScene().getWindow();
-        // 主场景的内容面板 唯一
-        MainScene.setContentPane(contentPane);
 
         // 当前播放歌曲的图片
         curMusicPlayImage.imageProperty().bind(MusicPlayer.getCurMusicPlayImage());
@@ -129,6 +95,17 @@ public class MainController implements Initializable {
         nextBtn.setOnMouseClicked(event -> MusicPlayer.playNextMusic());
         bottomPlayListNum.textProperty().bind(MusicPlayer.getCurrentPlayListNum());
         playListNum.textProperty().bind(MusicPlayer.getCurrentPlayListNum());
+        playListView.setItems(MusicPlayer.getPlayList());
+        playListView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                final int selectedIndex = playListView.getSelectionModel().getSelectedIndex();
+                MusicPlayer.play(selectedIndex, MusicPlayer.getTablePlayList().get(selectedIndex));
+            }
+        });
+    }
+
+    public synchronized void init() {
+        this.stage = (Stage) mainPane.getScene().getWindow();
     }
 
     @FXML
@@ -158,7 +135,7 @@ public class MainController implements Initializable {
         setMenuStyle((Pane) e.getSource());
         final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainScene.class.getResource("/fxml/recommend.fxml")));
         try {
-            contentPane.setContent(fxmlLoader.load());
+            MainScene.getContentPane().setContent(fxmlLoader.load());
         } catch (IOException ex) {
             log.error("加载推荐页面失败: ", ex);
         }
@@ -167,37 +144,46 @@ public class MainController implements Initializable {
     @FXML
     public void handleMusicClicked(MouseEvent e) {
         setMenuStyle((Pane) e.getSource());
-        contentPane.setContent(new Label("音乐馆"));
+        MainScene.getContentPane().setContent(new Label("音乐馆"));
     }
 
 
     @FXML
     public void handleVideoClicked(MouseEvent e) {
         setMenuStyle((Pane) e.getSource());
-        contentPane.setContent(new Label("视频"));
+        MainScene.getContentPane().setContent(new Label("视频"));
     }
 
     @FXML
     public void handleRadioClicked(MouseEvent e) {
         setMenuStyle((Pane) e.getSource());
-        contentPane.setContent(new Label("电台"));
+        MainScene.getContentPane().setContent(new Label("电台"));
     }
 
     @FXML
     public void handleShowPlayListPaneClick(MouseEvent e) {
-        playListPane.setVisible(true);
-        if (hidePlayListAnim.getStatus() == Animation.Status.RUNNING) {
-            hidePlayListAnim.stop();
+        MainScene.getPlayListPane().setVisible(true);
+        if (MainScene.getHidePlayListAnim().getStatus() == Animation.Status.RUNNING) {
+            MainScene.getHidePlayListAnim().stop();
         }
-        showPlayListAnim.play();
+        MainScene.getShowPlayListAnim().play();
     }
 
     @FXML
     public void handleHidePlayListPaneClick(MouseEvent e) {
-        if (showPlayListAnim.getStatus() == Animation.Status.RUNNING) {
-            showPlayListAnim.stop();
+        if (MainScene.getShowPlayListAnim().getStatus() == Animation.Status.RUNNING) {
+            MainScene.getShowPlayListAnim().stop();
         }
-        hidePlayListAnim.play();
+        MainScene.getHidePlayListAnim().play();
+    }
+
+    @FXML
+    public void handleShowPlayDetailPaneClick(MouseEvent e) {
+        MainScene.getPlayDetailPane().setVisible(true);
+        if (MainScene.getHidePlayDetailAnim().getStatus() == Animation.Status.RUNNING) {
+            MainScene.getHidePlayDetailAnim().stop();
+        }
+        MainScene.getShowPlayDetailAnim().play();
     }
 
     private void setMenuStyle(Pane source) {
