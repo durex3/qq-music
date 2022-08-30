@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -42,7 +43,6 @@ import java.util.ResourceBundle;
 @Slf4j
 public class MainController implements Initializable {
 
-    private Stage stage;
     private double dragOffsetX;
     private double dragOffsetY;
     private Pane curSelectedPane;
@@ -122,30 +122,26 @@ public class MainController implements Initializable {
         }
     }
 
-    public synchronized void init() {
-        this.stage = (Stage) mainPane.getScene().getWindow();
-    }
-
     @FXML
     public void handleMinimizeClicked(MouseEvent event) {
-        stage.setIconified(true);
+        getStage().setIconified(true);
     }
 
     @FXML
     public void handleCloseClicked(MouseEvent event) {
-        stage.close();
+        getStage().close();
     }
 
     @FXML
     public void handleMousePressed(MouseEvent e) {
-        this.dragOffsetX = e.getScreenX() - stage.getX();
-        this.dragOffsetY = e.getScreenY() - stage.getY();
+        this.dragOffsetX = e.getScreenX() - getStage().getX();
+        this.dragOffsetY = e.getScreenY() - getStage().getY();
     }
 
     @FXML
     public void handleMouseDragged(MouseEvent e) {
-        stage.setX(e.getScreenX() - this.dragOffsetX);
-        stage.setY(e.getScreenY() - this.dragOffsetY);
+        getStage().setX(e.getScreenX() - this.dragOffsetX);
+        getStage().setY(e.getScreenY() - this.dragOffsetY);
     }
 
     @FXML
@@ -218,5 +214,9 @@ public class MainController implements Initializable {
         source.setBackground(new Background(new BackgroundFill(MusicConstant.MENU_SELECTED_COLOR, MusicConstant.MENU_CORNER_RADII, null)));
 
         this.curSelectedPane = source;
+    }
+
+    private Stage getStage() {
+        return (Stage) mainPane.getScene().getWindow();
     }
 }

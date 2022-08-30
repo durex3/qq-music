@@ -24,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -162,5 +163,19 @@ public class PlayDetailController implements Initializable {
     public void handleSoundPopupClick(MouseEvent event) {
         Bounds bounds = soundBtn.localToScreen(soundBtn.getBoundsInLocal());
         soundPopup.show(playDetailPane.getScene().getWindow(), bounds.getMinX() - 20, bounds.getMinY() - 165);
+    }
+
+    @FXML
+    public void handleMinimizeClicked(MouseEvent event) {
+        getStage().setIconified(true);
+    }
+
+    @FXML
+    public void handleCloseClicked(MouseEvent event) {
+        getStage().close();
+    }
+
+    private Stage getStage() {
+        return (Stage) playDetailPane.getScene().getWindow();
     }
 }

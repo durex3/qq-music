@@ -5,7 +5,6 @@ import com.durex.music.model.bind.CurrPlaySecondsBinding;
 import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.service.MusicService;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;

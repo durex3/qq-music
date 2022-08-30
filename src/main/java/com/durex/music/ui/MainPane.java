@@ -1,7 +1,6 @@
 package com.durex.music.ui;
 
 import com.durex.music.constant.MusicConstant;
-import com.durex.music.controller.MainController;
 import com.durex.music.exception.MusicException;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -46,12 +45,10 @@ public class MainPane {
 
     public static synchronized void load(Stage stage) {
         AnchorPane root;
-        MainController mainController;
         try {
             // 主面板
             FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/main.fxml")));
             root = fxmlLoader.load();
-            mainController = fxmlLoader.getController();
 
             // 播放器内容滚动面板 和播放队列面板
             MainPane.scrollPane = (ScrollPane) root.lookup("#scroll-pane");
@@ -61,7 +58,9 @@ public class MainPane {
             AnchorPane playDetailPane = (AnchorPane) root.lookup("#play-detail-pane");
             MainPane.playDetailPane = playDetailPane;
             fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/play-detail.fxml")));
-            playDetailPane.getChildren().add(fxmlLoader.load());
+            final AnchorPane playDetail = fxmlLoader.load();
+            playDetailPane.getChildren().add(playDetail);
+            loadWindowTool(playDetail, Color.WHITE);
 
             // 加载推荐内容面板
             fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/recommend.fxml")));
@@ -75,7 +74,6 @@ public class MainPane {
         loadBottomPlayInfo(root);
         initAnim();
         stage.setScene(new Scene(root));
-        mainController.init();
     }
 
     public static ScrollPane getScrollPane() {
@@ -125,17 +123,25 @@ public class MainPane {
         searchLabel.setText("\ue600;");
         searchLabel.setFont(TOOL);
 
+        loadWindowTool(root, Color.BLACK);
+    }
+
+    private static void loadWindowTool(AnchorPane root, Color color) {
         Label minimizeLabel = (Label) root.lookup("#minimize-label");
         minimizeLabel.setText("\ue65a;");
         minimizeLabel.setFont(TOOL);
+        minimizeLabel.setTextFill(color);
 
         Label maximizeLabel = (Label) root.lookup("#maximize-label");
         maximizeLabel.setText("\ue65d;");
         maximizeLabel.setFont(TOOL);
+        maximizeLabel.setTextFill(color);
 
         Label closeLabel = (Label) root.lookup("#close-label");
         closeLabel.setText("\ue661;");
         closeLabel.setFont(TOOL);
+        closeLabel.setTextFill(color);
+
     }
 
     /**
