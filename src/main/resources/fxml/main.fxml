@@ -124,11 +124,16 @@
                                  <children>
                                     <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <RXAvatar id="cur-play-image" fx:id="curMusicPlayImage" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#handleShowPlayDetailPaneClick" prefHeight="40.0" prefWidth="40.0" shapeType="SQUARE">
-                                             <image>
-                                                <Image url="@../image/qilixiang.jpeg" />
-                                             </image>
-                                          </RXAvatar>
+                                          <StackPane fx:id="curMusicPlayImagePane">
+                                             <children>
+                                                <RXAvatar id="cur-play-image" fx:id="curMusicPlayImage" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#handleShowPlayDetailPaneClick" prefHeight="40.0" prefWidth="40.0" shapeType="SQUARE">
+                                                   <image>
+                                                      <Image url="@../image/qilixiang.jpeg" />
+                                                   </image>
+                                                </RXAvatar>
+                                                <Label fx:id="showPlayDetailIcon" minHeight="17.0" minWidth="17.0" onMouseClicked="#handleShowPlayDetailPaneClick" styleClass="show-play-detail-icon" stylesheets="@../css/main.css" visible="false" />
+                                             </children>
+                                          </StackPane>
                                           <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                                              <children>
                                                 <Label id="cur_play_name" fx:id="curMusicPlayName" text="七里香-周杰伦">

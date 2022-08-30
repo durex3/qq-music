@@ -51,7 +51,11 @@ public class MainController implements Initializable {
     @FXML
     private AnchorPane mainPane;
     @FXML
+    private StackPane curMusicPlayImagePane;
+    @FXML
     private RXAvatar curMusicPlayImage;
+    @FXML
+    private Label showPlayDetailIcon;
     @FXML
     private Label curMusicPlayName;
     @FXML
@@ -84,6 +88,14 @@ public class MainController implements Initializable {
 
         // 当前播放歌曲的图片
         curMusicPlayImage.imageProperty().bind(MusicPlayer.getCurMusicPlayImage());
+        curMusicPlayImagePane.setOnMouseEntered(event -> {
+            curMusicPlayImagePane.setOpacity(0.5);
+            showPlayDetailIcon.setVisible(true);
+        });
+        curMusicPlayImagePane.setOnMouseExited(event -> {
+            curMusicPlayImagePane.setOpacity(1);
+            showPlayDetailIcon.setVisible(false);
+        });
         // 当前播放歌曲的名字
         curMusicPlayName.textProperty().bind(MusicPlayer.getCurMusicPlayName());
         // 播放按钮 双向绑定
