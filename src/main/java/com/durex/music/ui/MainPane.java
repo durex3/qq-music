@@ -47,8 +47,7 @@ public class MainPane {
         AnchorPane root;
         try {
             // 主面板
-            FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/main.fxml")));
-            root = fxmlLoader.load();
+            root = FXMLLoader.load(Objects.requireNonNull(MainPane.class.getResource("/fxml/main.fxml")));
 
             // 播放器内容滚动面板 和播放队列面板
             MainPane.scrollPane = (ScrollPane) root.lookup("#scroll-pane");
@@ -57,14 +56,12 @@ public class MainPane {
             // 加载播放详情面板
             AnchorPane playDetailPane = (AnchorPane) root.lookup("#play-detail-pane");
             MainPane.playDetailPane = playDetailPane;
-            fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/play-detail.fxml")));
-            final AnchorPane playDetail = fxmlLoader.load();
+            final AnchorPane playDetail = FXMLLoader.load(Objects.requireNonNull(MainPane.class.getResource("/fxml/play-detail.fxml")));
             playDetailPane.getChildren().add(playDetail);
             loadWindowTool(playDetail, Color.WHITE);
 
             // 加载推荐内容面板
-            fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/recommend.fxml")));
-            scrollPane.setContent(fxmlLoader.load());
+            scrollPane.setContent(FXMLLoader.load(Objects.requireNonNull(MainPane.class.getResource("/fxml/recommend.fxml"))));
         } catch (IOException e) {
             log.error("初始化主面板失败: ", e);
             throw new MusicException(e);
