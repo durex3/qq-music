@@ -136,15 +136,15 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <HBox maxWidth="150.0" prefHeight="100.0" prefWidth="100.0" spacing="5.0">
+                  <HBox prefHeight="100.0" spacing="5.0">
                      <children>
                         <Label text="歌手:" textFill="WHITE" />
                         <Label fx:id="curMusicPlaySinger" maxWidth="100.0" text="周杰伦" textFill="WHITE" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                  <HBox prefHeight="100.0" spacing="5.0">
                      <children>
                         <Label text="专辑:" textFill="WHITE" />
                         <Label fx:id="curMusicPlayAlbum" maxWidth="150.0" text="七里香" textFill="WHITE" />

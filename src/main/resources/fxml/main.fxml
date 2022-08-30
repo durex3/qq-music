@@ -207,9 +207,9 @@
                                        <children>
                                           <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                                              <children>
-                                                <Label fx:id="curMusicSeconds" minWidth="36.0" prefHeight="17.0" text="00:00" textFill="#7b7b7a" />
+                                                <Label fx:id="curMusicSeconds" minWidth="36.0" text="00:00" textFill="#7b7b7a" />
                                                 <Label text="/ " textFill="#7b7b7a" />
-                                                <Label id="cur_play_interval" fx:id="curMusicTotalSeconds" minWidth="36.0" text="00:00" textFill="#7b7a7a" />
+                                                <Label id="cur_play_interval" fx:id="curMusicTotalSeconds" minWidth="36.0" text="00:00" textFill="#7b7b7a" />
                                              </children>
                                           </HBox>
                                           <StackPane fx:id="soundBtn" onMouseClicked="#handleSoundPopupClick" prefHeight="150.0" prefWidth="200.0" stylesheets="@../css/main.css">

@@ -24,7 +24,7 @@ public class MusicConstant {
     public static final String IMAGE_PREFIX = "https://y.gtimg.cn/music/photo_new/T002R500x500M000%s.jpg?max_age=2592000";
 
     // 59：经典，71：情歌，3056：网络歌曲，64：KTV热歌
-    public static final List<String> SONG_CATEGORY_RANDOM = Arrays.asList("59", "64", "71", "3056");
+    public static final List<String> SONG_CATEGORY_RANDOM = Arrays.asList("3230", "71", "74", "3317", "3056");
 
     private MusicConstant() {
     }
