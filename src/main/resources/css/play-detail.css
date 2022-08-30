@@ -72,3 +72,36 @@
 .show-list-btn:hover > .show-list-icon {
     -fx-background-color: -base-hover-color;
 }
+
+.hide-detail-btn {
+    -fx-max-width: 16;
+    -fx-max-height: 9;
+}
+
+.hide-detail-btn:hover Region {
+    -fx-background-color: -base-hover-color;
+}
+
+.hide-detail-btn Region {
+    -fx-background-color: white;
+    -fx-shape: "M533.333333 631.466667L866.133333 298.666667l29.866667 29.866666-362.666667 362.666667L170.666667 328.533333l29.866666-29.866666 332.8 332.8z"
+}
+
+/* LrcView 歌词显示组件 */
+.rx-lrc-view {
+    -fx-border-color: transparent;
+}
+
+.rx-lrc-view .lrc-line {
+    -fx-alignment: center;
+    -fx-text-fill: white;
+    -fx-start-margin: 10;
+}
+
+.rx-lrc-view .lrc-line:playing {
+    -fx-text-fill: -base-hover-color;
+}
+
+.rx-audio-spectrum {
+    -fx-border-color: transparent;
+}

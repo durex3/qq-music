@@ -56,11 +56,11 @@
                                 </HBox>
                             </children>
                         </VBox>
-                        <HBox alignment="CENTER">
+                        <HBox alignment="CENTER" minWidth="90.0">
                             <children>
-                                <Label fx:id="curMusicSeconds" text="00:00" textFill="#7b7b7a" />
-                                <Label text="/" textFill="#7b7b7a" />
-                                <Label id="cur_play_interval" fx:id="curMusicTotalSeconds" prefHeight="17.0" text="00:00" textFill="#7b7a7a" />
+                                <Label fx:id="curMusicSeconds" minWidth="36.0" text="00:00" textFill="#7b7b7a" />
+                                <Label text="/ " textFill="#7b7b7a" />
+                                <Label id="cur_play_interval" fx:id="curMusicTotalSeconds" minWidth="36.0" prefHeight="17.0" text="00:00" textFill="#7b7a7a" />
                             </children>
                         </HBox>
                     </children>
@@ -126,9 +126,37 @@
                 </HBox>
             </children>
         </HBox>
-        <RXAvatar minHeight="350.0" minWidth="350.0" prefHeight="350.0" prefWidth="350.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="140.0" />
-        <RXAudioSpectrum prefWidth="960.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="560.0" />
-        <RXLrcView prefHeight="300.0" prefWidth="300.0" AnchorPane.bottomAnchor="180.0" AnchorPane.rightAnchor="150.0" />
-        <VBox prefHeight="130.0" prefWidth="300.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="60.0" />
+        <RXAvatar fx:id="curMusicPlayImage" minHeight="350.0" minWidth="350.0" prefHeight="350.0" prefWidth="350.0" shapeType="SQUARE" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="140.0" />
+        <RXAudioSpectrum fx:id="curMusicAudioSpectrum" prefWidth="960.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="560.0" />
+        <RXLrcView fx:id="curMusicLrcView" lineHeight="30.0" prefHeight="300.0" prefWidth="350.0" AnchorPane.bottomAnchor="200.0" AnchorPane.rightAnchor="210.0" />
+        <VBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="300.0" spacing="10.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <Label fx:id="curMusicPlayName" text="七里香" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <HBox maxWidth="150.0" prefHeight="100.0" prefWidth="100.0" spacing="5.0">
+                     <children>
+                        <Label text="歌手:" textFill="WHITE" />
+                        <Label fx:id="curMusicPlaySinger" maxWidth="100.0" text="周杰伦" textFill="WHITE" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label text="专辑:" textFill="WHITE" />
+                        <Label fx:id="curMusicPlayAlbum" maxWidth="150.0" text="七里香" textFill="WHITE" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </children></VBox>
+      <StackPane onMouseClicked="#handleHidePlayDetailPaneClick" prefHeight="150.0" prefWidth="200.0" styleClass="hide-detail-btn" stylesheets="@../css/play-detail.css" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <Region prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </StackPane>
     </children>
 </AnchorPane>

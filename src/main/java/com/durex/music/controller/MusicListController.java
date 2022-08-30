@@ -57,12 +57,12 @@ public class MusicListController implements Initializable {
         songId = songDetail.getDissid();
 
 
-
         musicList.forEach(music -> {
             MusicProperty musicProperty = new MusicProperty();
             musicProperty.setId(music.getAlbumid());
 
             musicProperty.setName(MusicNameHBox.build(music));
+            musicProperty.setMusicName(music.getSongname());
             String singerName = music.getSinger().stream().map(Singer::getName).collect(Collectors.joining("/"));
 
             final Label singerNameLabel = new Label(singerName);
@@ -92,9 +92,7 @@ public class MusicListController implements Initializable {
 
         // 高度适应行数
         musicListTable.setFixedCellSize(40);
-        musicListTable.prefHeightProperty().bind(
-                musicListTable.fixedCellSizeProperty().multiply(Bindings.size(musicListTable.getItems()).add(0.75))
-        );
+        musicListTable.prefHeightProperty().bind(musicListTable.fixedCellSizeProperty().multiply(Bindings.size(musicListTable.getItems()).add(0.75)));
         musicListTable.minHeightProperty().bind(musicListTable.prefHeightProperty());
         musicListTable.maxHeightProperty().bind(musicListTable.prefHeightProperty());
 
@@ -114,8 +112,7 @@ public class MusicListController implements Initializable {
         // 不是当前播放列表的歌单
         if (MusicPlayer.getCurrentPlaySongId().get() != songId) {
             MusicPlayer.getPlayList().clear();
-            MusicPlayer.getTablePlayList()
-                    .forEach(musicProperty -> MusicPlayer.getPlayList().add(MusicPlayPane.build(musicProperty)));
+            MusicPlayer.getTablePlayList().forEach(musicProperty -> MusicPlayer.getPlayList().add(MusicPlayPane.build(musicProperty)));
             MusicPlayer.getCurrentPlaySongId().set(songId);
             MusicPlayer.getCurrentPlayListNum().set(String.valueOf(MusicPlayer.getPlayList().size()));
 

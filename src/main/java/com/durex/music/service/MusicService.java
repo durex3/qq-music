@@ -1,6 +1,7 @@
 package com.durex.music.service;
 
 import com.durex.music.constant.MusicConstant;
+import com.durex.music.response.qq.LyricResp;
 import com.durex.music.utils.JsonMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
@@ -45,5 +46,28 @@ public class MusicService {
         }
 
         return result.getOrDefault("data", "").toString();
+    }
+
+    /**
+     * <h2>获取歌词</h2>
+     *
+     * @param songmid 歌曲 id
+     * @return 歌词
+     */
+    public static String getLyric(String songmid) {
+        String url = MusicConstant.QQ_MUSIC_HOST + "/lyric?songmid=" + songmid;
+        HttpClient client = HttpClient.newBuilder().build();
+
+        final HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
+
+        try {
+            final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            LyricResp lyricResp = JsonMapper.string2Object(response.body(), new TypeReference<LyricResp>() {
+            });
+            return lyricResp.getData().getLyric();
+        } catch (IOException | InterruptedException e) {
+            log.error("获取歌词失败: ", e);
+        }
+        return null;
     }
 }

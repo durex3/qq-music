@@ -31,8 +31,12 @@ public class MusicPlayer {
 
     private static final ObservableList<MusicProperty> TABLE_PLAY_LIST = FXCollections.observableArrayList();
     private static final ObservableList<AnchorPane> PLAY_LIST = FXCollections.observableArrayList();
+
+    private static final SimpleStringProperty CUR_MUSIC_PLAY_MID = new SimpleStringProperty();
     private static final ObjectProperty<Image> CUR_MUSIC_PLAY_IMAGE = new SimpleObjectProperty<>();
     private static final SimpleStringProperty CUR_MUSIC_PLAY_NAME = new SimpleStringProperty();
+
+    private static final SimpleStringProperty CUR_MUSIC_PLAY_ALBUM = new SimpleStringProperty();
 
     private static final SimpleBooleanProperty PLAY_BUTTON_SELECTED = new SimpleBooleanProperty();
 
@@ -66,8 +70,9 @@ public class MusicPlayer {
             final Image image = new Image(imageUrl, 40, 40, false, false, true);
             CUR_MUSIC_PLAY_IMAGE.set(image);
 
-            Label nameLabel = (Label) music.getName().lookup("#name-label");
-            CUR_MUSIC_PLAY_NAME.set(nameLabel.getText() + " - " + music.getSinger().getText());
+            CUR_MUSIC_PLAY_MID.set(music.getMid());
+            CUR_MUSIC_PLAY_NAME.set(music.getMusicName() + " - " + music.getSinger().getText());
+            CUR_MUSIC_PLAY_ALBUM.set(music.getAlbumName().getText());
             CUR_MUSIC_TOTAL_SECONDS.set(music.getDuration().getText());
 
             // 设置播放音乐的时长
@@ -229,7 +234,7 @@ public class MusicPlayer {
         player.currentTimeProperty().removeListener(getDurationChangeListener());
         curMusicSeconds.textProperty().unbind();
         PLAY_BUTTON_SELECTED.set(false);
-        player.setOnEndOfMedia(null);
+        //player.setOnEndOfMedia(null);
         player.dispose();
         player = null;
     }
@@ -309,5 +314,13 @@ public class MusicPlayer {
 
     public static SimpleStringProperty getCurrentPlayListNum() {
         return CURRENT_PLAY_LIST_NUM;
+    }
+
+    public static SimpleStringProperty getCurMusicPlayAlbum() {
+        return CUR_MUSIC_PLAY_ALBUM;
+    }
+
+    public static SimpleStringProperty getCurMusicPlayMid() {
+        return CUR_MUSIC_PLAY_MID;
     }
 }

@@ -122,7 +122,7 @@
                               <RXMediaProgressBar fx:id="currMusicProgress" prefHeight="10.0" prefWidth="810.0" />
                               <HBox alignment="CENTER" prefHeight="60.0" prefWidth="810.0" spacing="80.0" AnchorPane.topAnchor="10.0">
                                  <children>
-                                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
+                                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
                                           <RXAvatar id="cur-play-image" fx:id="curMusicPlayImage" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#handleShowPlayDetailPaneClick" prefHeight="40.0" prefWidth="40.0" shapeType="SQUARE">
                                              <image>
@@ -171,7 +171,7 @@
                                           </VBox>
                                        </children>
                                     </HBox>
-                                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" spacing="20.0">
+                                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" spacing="20.0" HBox.hgrow="ALWAYS">
                                        <children>
                                           <StackPane maxHeight="16.0" maxWidth="16.0" stylesheets="@../css/main.css">
                                              <children>
@@ -198,13 +198,13 @@
                                           </StackPane>
                                        </children>
                                     </HBox>
-                                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" spacing="15.0">
+                                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="220.0" spacing="15.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <HBox alignment="CENTER">
+                                          <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                                              <children>
-                                                <Label fx:id="curMusicSeconds" text="00:00" textFill="#7b7b7a" />
-                                                <Label text="/" textFill="#7b7b7a" />
-                                                <Label id="cur_play_interval" fx:id="curMusicTotalSeconds" prefHeight="17.0" text="00:00" textFill="#7b7a7a" />
+                                                <Label fx:id="curMusicSeconds" minWidth="36.0" prefHeight="17.0" text="00:00" textFill="#7b7b7a" />
+                                                <Label text="/ " textFill="#7b7b7a" />
+                                                <Label id="cur_play_interval" fx:id="curMusicTotalSeconds" minWidth="36.0" text="00:00" textFill="#7b7a7a" />
                                              </children>
                                           </HBox>
                                           <StackPane prefHeight="150.0" prefWidth="200.0" stylesheets="@../css/main.css">

@@ -10,6 +10,8 @@ public class MusicProperty {
 
     private String mid;
 
+    private String musicName;
+
     private final SimpleObjectProperty<HBox> name = new SimpleObjectProperty<>();
 
     private final SimpleObjectProperty<Label> singer = new SimpleObjectProperty<>();
@@ -119,5 +121,13 @@ public class MusicProperty {
 
     public void setMsgid(Long msgid) {
         this.msgid = msgid;
+    }
+
+    public String getMusicName() {
+        return musicName;
+    }
+
+    public void setMusicName(String musicName) {
+        this.musicName = musicName;
     }
 }
