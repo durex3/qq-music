@@ -9,7 +9,7 @@ import javafx.stage.StageStyle;
 import java.util.Objects;
 
 /**
- * <h1>jpackage --runtime-image target/image --type dmg --name qq-music --icon /Users/liugelong/development/project/java/qq-music/src/main/resources/image/AppIcon.icns  --module qq.music/com.durex.music.QQMusicApplication</h1>
+ *
  */
 public class QQMusicApplication extends Application {
 
