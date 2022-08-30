@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="690.0" prefWidth="1020.0" styleClass="music-detail-pane" stylesheets="@../css/play-detail.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.PlayDetailController">
+<AnchorPane fx:id="playDetailPane" prefHeight="690.0" prefWidth="1020.0" styleClass="music-detail-pane" stylesheets="@../css/play-detail.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.PlayDetailController">
     <children>
         <RXMediaProgressBar fx:id="currMusicProgress" prefHeight="10.0" prefWidth="960.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="620.0" />
         <HBox id="bottom-box" alignment="CENTER" prefHeight="60.0" prefWidth="960.0" styleClass="bottom-box" stylesheets="@../css/play-detail.css" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="630.0">
@@ -90,7 +90,7 @@
                                 <String fx:value="svg-btn" />
                             </styleClass>
                         </StackPane>
-                        <StackPane prefHeight="150.0" prefWidth="200.0" stylesheets="@../css/main.css">
+                        <StackPane fx:id="soundBtn" onMouseClicked="#handleSoundPopupClick" prefHeight="150.0" prefWidth="200.0" stylesheets="@../css/main.css">
                             <children>
                                 <Region prefHeight="200.0" prefWidth="200.0" />
                             </children>

@@ -1,4 +1,4 @@
-package com.durex.music.scene;
+package com.durex.music.ui;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.controller.MainController;
@@ -28,46 +28,44 @@ import java.util.Objects;
  * <h1>只会被加载一次</h1>
  */
 @Slf4j
-public class MainScene {
+public class MainPane {
 
-    private static ScrollPane contentPane;
+    private static ScrollPane scrollPane;
     private static AnchorPane playListPane;
     private static AnchorPane playDetailPane;
-
     private static Timeline showPlayListAnim;
     private static Timeline hidePlayListAnim;
     private static Timeline showPlayDetailAnim;
     private static Timeline hidePlayDetailAnim;
 
-    private static final Font MENU = Font.loadFont(MainScene.class.getResourceAsStream("/font/qq-music-menu.ttf"), 25);
-    private static final Font TOOL = Font.loadFont(MainScene.class.getResourceAsStream("/font/qq-music-tool.ttf"), 13);
+    private static final Font MENU = Font.loadFont(MainPane.class.getResourceAsStream("/font/qq-music-menu.ttf"), 25);
+    private static final Font TOOL = Font.loadFont(MainPane.class.getResourceAsStream("/font/qq-music-tool.ttf"), 13);
 
-    private MainScene() {
+    private MainPane() {
     }
 
     public static synchronized void load(Stage stage) {
         AnchorPane root;
         MainController mainController;
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainScene.class.getResource("/fxml/main.fxml")));
+            // 主面板
+            FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/main.fxml")));
             root = fxmlLoader.load();
             mainController = fxmlLoader.getController();
 
-            // 加载播放器内容面板唯一
-            AnchorPane mainPane = (AnchorPane) root.lookup("#content-pane");
-            final ScrollPane contentPane = (ScrollPane) mainPane.lookup("#scroll-pane");
-            MainScene.contentPane = contentPane;
-            MainScene.playListPane = (AnchorPane) root.lookup("#play-list-pane");
+            // 播放器内容滚动面板 和播放队列面板
+            MainPane.scrollPane = (ScrollPane) root.lookup("#scroll-pane");
+            MainPane.playListPane = (AnchorPane) root.lookup("#play-list-pane");
 
             // 加载播放详情面板
             AnchorPane playDetailPane = (AnchorPane) root.lookup("#play-detail-pane");
-            MainScene.playDetailPane = playDetailPane;
-            fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainScene.class.getResource("/fxml/play-detail.fxml")));
+            MainPane.playDetailPane = playDetailPane;
+            fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/play-detail.fxml")));
             playDetailPane.getChildren().add(fxmlLoader.load());
 
             // 加载推荐内容面板
-            fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainScene.class.getResource("/fxml/recommend.fxml")));
-            contentPane.setContent(fxmlLoader.load());
+            fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/recommend.fxml")));
+            scrollPane.setContent(fxmlLoader.load());
         } catch (IOException e) {
             log.error("初始化主面板失败: ", e);
             throw new MusicException(e);
@@ -80,8 +78,8 @@ public class MainScene {
         mainController.init();
     }
 
-    public static ScrollPane getContentPane() {
-        return contentPane;
+    public static ScrollPane getScrollPane() {
+        return scrollPane;
     }
 
     public static AnchorPane getPlayListPane() {
@@ -176,13 +174,13 @@ public class MainScene {
     }
 
     private static void initAnim() {
-        showPlayListAnim = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(MainScene.getPlayListPane().translateXProperty(), 0)));
-        hidePlayListAnim = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(MainScene.getPlayListPane().translateXProperty(), 300)));
-        hidePlayListAnim.setOnFinished(actionEvent -> MainScene.getPlayListPane().setVisible(false));
+        showPlayListAnim = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(MainPane.getPlayListPane().translateXProperty(), 0)));
+        hidePlayListAnim = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(MainPane.getPlayListPane().translateXProperty(), 300)));
+        hidePlayListAnim.setOnFinished(actionEvent -> MainPane.getPlayListPane().setVisible(false));
 
-        showPlayDetailAnim = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(MainScene.getPlayDetailPane().translateYProperty(), 0)));
-        hidePlayDetailAnim = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(MainScene.getPlayDetailPane().translateYProperty(), 690)));
-        hidePlayDetailAnim.setOnFinished(actionEvent -> MainScene.getPlayDetailPane().setVisible(false));
+        showPlayDetailAnim = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(MainPane.getPlayDetailPane().translateYProperty(), 0)));
+        hidePlayDetailAnim = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(MainPane.getPlayDetailPane().translateYProperty(), 690)));
+        hidePlayDetailAnim.setOnFinished(actionEvent -> MainPane.getPlayDetailPane().setVisible(false));
     }
 
 }

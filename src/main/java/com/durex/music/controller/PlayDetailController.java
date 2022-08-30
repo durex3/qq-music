@@ -1,8 +1,9 @@
 package com.durex.music.controller;
 
 import com.durex.music.model.MusicPlayer;
-import com.durex.music.scene.MainScene;
 import com.durex.music.service.MusicService;
+import com.durex.music.ui.MainPane;
+import com.durex.music.ui.SoundPane;
 import com.leewyatt.rxcontrols.controls.RXAudioSpectrum;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXLrcView;
@@ -12,12 +13,16 @@ import javafx.animation.Animation;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
-import javafx.scene.media.AudioSpectrumListener;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
@@ -29,7 +34,10 @@ public class PlayDetailController implements Initializable {
 
 
     private final float[] emptyAry = new float[128];
+    private ContextMenu soundPopup;
 
+    @FXML
+    private AnchorPane playDetailPane;
     @FXML
     private ToggleButton playButton;
     @FXML
@@ -56,6 +64,8 @@ public class PlayDetailController implements Initializable {
     private RXLrcView curMusicLrcView;
     @FXML
     private RXAudioSpectrum curMusicAudioSpectrum;
+    @FXML
+    private StackPane soundBtn;
 
 
     @Override
@@ -122,23 +132,35 @@ public class PlayDetailController implements Initializable {
                     curMusicAudioSpectrum.setMagnitudes(magnitudes));
         });
 
+        // 声音弹出
+        soundPopup = new ContextMenu(new SeparatorMenuItem());
+        final AnchorPane soundPane = SoundPane.load();
+        if (soundPane != null) {
+            soundPopup.getScene().setRoot(soundPane);
+        }
     }
 
 
     @FXML
     public void handleShowPlayListPaneClick(MouseEvent e) {
-        MainScene.getPlayListPane().setVisible(true);
-        if (MainScene.getHidePlayListAnim().getStatus() == Animation.Status.RUNNING) {
-            MainScene.getHidePlayListAnim().stop();
+        MainPane.getPlayListPane().setVisible(true);
+        if (MainPane.getHidePlayListAnim().getStatus() == Animation.Status.RUNNING) {
+            MainPane.getHidePlayListAnim().stop();
         }
-        MainScene.getShowPlayListAnim().play();
+        MainPane.getShowPlayListAnim().play();
     }
 
     @FXML
     public void handleHidePlayDetailPaneClick(MouseEvent e) {
-        if (MainScene.getShowPlayDetailAnim().getStatus() == Animation.Status.RUNNING) {
-            MainScene.getShowPlayDetailAnim().stop();
+        if (MainPane.getShowPlayDetailAnim().getStatus() == Animation.Status.RUNNING) {
+            MainPane.getShowPlayDetailAnim().stop();
         }
-        MainScene.getHidePlayDetailAnim().play();
+        MainPane.getHidePlayDetailAnim().play();
+    }
+
+    @FXML
+    public void handleSoundPopupClick(MouseEvent event) {
+        Bounds bounds = soundBtn.localToScreen(soundBtn.getBoundsInLocal());
+        soundPopup.show(playDetailPane.getScene().getWindow(), bounds.getMinX() - 20, bounds.getMinY() - 165);
     }
 }

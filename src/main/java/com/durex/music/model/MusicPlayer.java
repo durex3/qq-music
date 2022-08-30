@@ -5,9 +5,11 @@ import com.durex.music.model.bind.CurrPlaySecondsBinding;
 import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.service.MusicService;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -45,6 +47,8 @@ public class MusicPlayer {
     private static final SimpleLongProperty CURRENT_PLAY_SONG_ID = new SimpleLongProperty(-1);
 
     private static final SimpleStringProperty CURRENT_PLAY_LIST_NUM = new SimpleStringProperty("0");
+
+    private static final SimpleDoubleProperty CURRENT_SOUND_VALUE = new SimpleDoubleProperty(50.0);
 
     private static Label curMusicSeconds;
     private static MediaPlayer player;
@@ -322,5 +326,9 @@ public class MusicPlayer {
 
     public static SimpleStringProperty getCurMusicPlayMid() {
         return CUR_MUSIC_PLAY_MID;
+    }
+
+    public static SimpleDoubleProperty getCurrentSoundValue() {
+        return CURRENT_SOUND_VALUE;
     }
 }

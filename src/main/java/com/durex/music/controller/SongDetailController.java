@@ -3,7 +3,7 @@ package com.durex.music.controller;
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.qq.SongDetail;
 import com.durex.music.model.qq.Tag;
-import com.durex.music.scene.MainScene;
+import com.durex.music.ui.MainPane;
 import com.durex.music.service.SongDetailService;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import javafx.fxml.FXML;
@@ -65,7 +65,7 @@ public class SongDetailController implements Initializable {
     private Node curSelectedTab;
 
     public void init(String dissId) {
-        MainScene.getContentPane().setVvalue(0);
+        MainPane.getScrollPane().setVvalue(0);
         final SongDetail songDetail = SongDetailService.getSongDetail(dissId);
         if (songDetail == null) {
             return;
@@ -133,7 +133,7 @@ public class SongDetailController implements Initializable {
         }
 
         // 歌曲列表
-        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainScene.class.getResource("/fxml/music-list.fxml")));
+        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/music-list.fxml")));
         try {
             Parent musicList = fxmlLoader.load();
             songDetailPane.setCenter(musicList);

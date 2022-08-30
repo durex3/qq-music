@@ -2,22 +2,30 @@ package com.durex.music.controller;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.MusicPlayer;
-import com.durex.music.scene.MainScene;
+import com.durex.music.ui.MainPane;
+import com.durex.music.ui.SoundPane;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.geometry.Bounds;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -38,6 +46,7 @@ public class MainController implements Initializable {
     private double dragOffsetX;
     private double dragOffsetY;
     private Pane curSelectedPane;
+    private ContextMenu soundPopup;
 
     @FXML
     private AnchorPane mainPane;
@@ -65,6 +74,8 @@ public class MainController implements Initializable {
     private HBox clearListBtn;
     @FXML
     private ListView<AnchorPane> playListView;
+    @FXML
+    private StackPane soundBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -102,6 +113,13 @@ public class MainController implements Initializable {
                 MusicPlayer.play(selectedIndex, MusicPlayer.getTablePlayList().get(selectedIndex));
             }
         });
+
+        // 声音弹出
+        soundPopup = new ContextMenu(new SeparatorMenuItem());
+        final AnchorPane soundPane = SoundPane.load();
+        if (soundPane != null) {
+            soundPopup.getScene().setRoot(soundPane);
+        }
     }
 
     public synchronized void init() {
@@ -133,9 +151,9 @@ public class MainController implements Initializable {
     @FXML
     public void handleRecommendClicked(MouseEvent e) {
         setMenuStyle((Pane) e.getSource());
-        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainScene.class.getResource("/fxml/recommend.fxml")));
+        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/recommend.fxml")));
         try {
-            MainScene.getContentPane().setContent(fxmlLoader.load());
+            MainPane.getScrollPane().setContent(fxmlLoader.load());
         } catch (IOException ex) {
             log.error("加载推荐页面失败: ", ex);
         }
@@ -144,46 +162,52 @@ public class MainController implements Initializable {
     @FXML
     public void handleMusicClicked(MouseEvent e) {
         setMenuStyle((Pane) e.getSource());
-        MainScene.getContentPane().setContent(new Label("音乐馆"));
+        MainPane.getScrollPane().setContent(new Label("音乐馆"));
     }
 
 
     @FXML
     public void handleVideoClicked(MouseEvent e) {
         setMenuStyle((Pane) e.getSource());
-        MainScene.getContentPane().setContent(new Label("视频"));
+        MainPane.getScrollPane().setContent(new Label("视频"));
     }
 
     @FXML
     public void handleRadioClicked(MouseEvent e) {
         setMenuStyle((Pane) e.getSource());
-        MainScene.getContentPane().setContent(new Label("电台"));
+        MainPane.getScrollPane().setContent(new Label("电台"));
     }
 
     @FXML
     public void handleShowPlayListPaneClick(MouseEvent e) {
-        MainScene.getPlayListPane().setVisible(true);
-        if (MainScene.getHidePlayListAnim().getStatus() == Animation.Status.RUNNING) {
-            MainScene.getHidePlayListAnim().stop();
+        MainPane.getPlayListPane().setVisible(true);
+        if (MainPane.getHidePlayListAnim().getStatus() == Animation.Status.RUNNING) {
+            MainPane.getHidePlayListAnim().stop();
         }
-        MainScene.getShowPlayListAnim().play();
+        MainPane.getShowPlayListAnim().play();
     }
 
     @FXML
     public void handleHidePlayListPaneClick(MouseEvent e) {
-        if (MainScene.getShowPlayListAnim().getStatus() == Animation.Status.RUNNING) {
-            MainScene.getShowPlayListAnim().stop();
+        if (MainPane.getShowPlayListAnim().getStatus() == Animation.Status.RUNNING) {
+            MainPane.getShowPlayListAnim().stop();
         }
-        MainScene.getHidePlayListAnim().play();
+        MainPane.getHidePlayListAnim().play();
     }
 
     @FXML
     public void handleShowPlayDetailPaneClick(MouseEvent e) {
-        MainScene.getPlayDetailPane().setVisible(true);
-        if (MainScene.getHidePlayDetailAnim().getStatus() == Animation.Status.RUNNING) {
-            MainScene.getHidePlayDetailAnim().stop();
+        MainPane.getPlayDetailPane().setVisible(true);
+        if (MainPane.getHidePlayDetailAnim().getStatus() == Animation.Status.RUNNING) {
+            MainPane.getHidePlayDetailAnim().stop();
         }
-        MainScene.getShowPlayDetailAnim().play();
+        MainPane.getShowPlayDetailAnim().play();
+    }
+
+    @FXML
+    public void handleSoundPopupClick(MouseEvent event) {
+        Bounds bounds = soundBtn.localToScreen(soundBtn.getBoundsInLocal());
+        soundPopup.show(mainPane.getScene().getWindow(), bounds.getMinX() - 20, bounds.getMinY() - 165);
     }
 
     private void setMenuStyle(Pane source) {

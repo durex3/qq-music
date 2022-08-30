@@ -207,7 +207,7 @@
                                                 <Label id="cur_play_interval" fx:id="curMusicTotalSeconds" minWidth="36.0" text="00:00" textFill="#7b7a7a" />
                                              </children>
                                           </HBox>
-                                          <StackPane prefHeight="150.0" prefWidth="200.0" stylesheets="@../css/main.css">
+                                          <StackPane fx:id="soundBtn" onMouseClicked="#handleSoundPopupClick" prefHeight="150.0" prefWidth="200.0" stylesheets="@../css/main.css">
                                              <children>
                                                 <Region prefHeight="200.0" prefWidth="200.0" />
                                              </children>

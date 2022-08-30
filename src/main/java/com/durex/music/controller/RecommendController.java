@@ -2,7 +2,7 @@ package com.durex.music.controller;
 
 import com.durex.music.model.qq.Banner;
 import com.durex.music.model.qq.Song;
-import com.durex.music.scene.MainScene;
+import com.durex.music.ui.MainPane;
 import com.durex.music.service.RecommendService;
 import com.durex.music.ui.SongVBox;
 import com.leewyatt.rxcontrols.animation.carousel.AnimAround;
@@ -53,7 +53,7 @@ public class RecommendController implements Initializable {
                 songVboxList.forEach(song -> {
                     Node songImage = song.lookup("#song-image");
                     songImage.setOnMouseClicked(event -> {
-                        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainScene.class.getResource("/fxml/song-detail.fxml")));
+                        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/song-detail.fxml")));
                         try {
                             Parent songDetail = fxmlLoader.load();
                             // 传递数据
@@ -61,7 +61,7 @@ public class RecommendController implements Initializable {
                             String dissId = image.getUserData().toString();
                             SongDetailController controller = fxmlLoader.getController();
                             controller.init(dissId);
-                            MainScene.getContentPane().setContent(songDetail);
+                            MainPane.getScrollPane().setContent(songDetail);
                         } catch (IOException ex) {
                             log.error("加载歌单详情页面失败: ", ex);
                         }
