@@ -11,8 +11,6 @@ module qq.music {
     requires org.slf4j;
 
     opens com.durex.music.controller to javafx.fxml;
-    opens com.durex.music.model.bind to java.base;
-    opens com.durex.music.model.qq to com.fasterxml.jackson.databind;
 
     exports com.durex.music;
     exports com.durex.music.response.qq;
