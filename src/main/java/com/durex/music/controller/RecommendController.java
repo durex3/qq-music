@@ -2,8 +2,8 @@ package com.durex.music.controller;
 
 import com.durex.music.model.qq.Banner;
 import com.durex.music.model.qq.Song;
-import com.durex.music.ui.MainPane;
 import com.durex.music.service.RecommendService;
+import com.durex.music.ui.MainPane;
 import com.durex.music.ui.SongVBox;
 import com.leewyatt.rxcontrols.animation.carousel.AnimAround;
 import com.leewyatt.rxcontrols.animation.carousel.CarouselAnimation;
@@ -11,7 +11,6 @@ import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXCarousel;
 import com.leewyatt.rxcontrols.enums.DisplayMode;
 import com.leewyatt.rxcontrols.pane.RXCarouselPane;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -42,36 +42,44 @@ public class RecommendController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Platform.runLater(() -> {
-            final List<Song> songList = RecommendService.getRecommendSongList();
+        final List<Song> songList = RecommendService.getRecommendSongList();
+        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml/song-detail.fxml")));
+        Parent songDetail = null;
+        SongDetailController controller = null;
+        try {
+            songDetail = fxmlLoader.load();
+            controller = fxmlLoader.getController();
+        } catch (IOException e) {
+            log.error("加载歌单详情页面失败: ", e);
+        }
+        initCarousel(RecommendService.getBannerList());
+        songListPane.getChildren().addAll(buildSongList(songList, songDetail, controller));
+    }
 
-            if (songList != null && !songList.isEmpty()) {
-                final List<VBox> songVboxList = songList.stream()
-                        .map(song -> SongVBox.build(song.getTid().toString(), song.getCoverUrlSmall(), song.getTitle(), song.getAccessNum()))
-                        .toList();
+    private List<VBox> buildSongList(List<Song> songList, Parent songDetail, SongDetailController controller) {
+        if (songList == null || songList.isEmpty()) {
+            return Collections.emptyList();
+        }
+        final List<VBox> songVboxList = songList.stream()
+                .map(song -> SongVBox.build(song.getTid().toString(), song.getCoverUrlSmall(), song.getTitle(), song.getAccessNum()))
+                .toList();
 
-                songVboxList.forEach(song -> {
-                    Node songImage = song.lookup("#song-image");
-                    songImage.setOnMouseClicked(event -> {
-                        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/song-detail.fxml")));
-                        try {
-                            Parent songDetail = fxmlLoader.load();
-                            // 传递数据
-                            RXAvatar image = (RXAvatar) event.getSource();
-                            String dissId = image.getUserData().toString();
-                            SongDetailController controller = fxmlLoader.getController();
-                            controller.init(dissId);
-                            MainPane.getScrollPane().setContent(songDetail);
-                        } catch (IOException ex) {
-                            log.error("加载歌单详情页面失败: ", ex);
-                        }
-                    });
-                });
-
-                initCarousel(RecommendService.getBannerList());
-                songListPane.getChildren().addAll(songVboxList);
-            }
+        songVboxList.forEach(song -> {
+            Node songImage = song.lookup("#song-image");
+            songImage.setOnMouseClicked(event -> {
+                // 传递数据
+                RXAvatar image = (RXAvatar) event.getSource();
+                String dissId = image.getUserData().toString();
+                if (controller != null) {
+                    controller.init(dissId);
+                }
+                if (songDetail != null) {
+                    MainPane.getScrollPane().setContent(songDetail);
+                }
+            });
         });
+
+        return songVboxList;
     }
 
     private void initCarousel(List<Banner> bannerList) {
