@@ -7,8 +7,6 @@ import com.durex.music.response.qq.RecommendBannerResp;
 import com.durex.music.response.qq.RecommendPlayListResp;
 import com.durex.music.utils.JsonMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -16,10 +14,10 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author liugelong
@@ -29,12 +27,8 @@ import java.util.concurrent.TimeUnit;
 public class RecommendService {
 
     private static final Random RANDOM = new Random();
+    private static final List<Song> SONG_LIST = new ArrayList<>();
 
-    private static final Cache<String, String> CACHE = Caffeine.newBuilder()
-            .expireAfterWrite(1, TimeUnit.DAYS)
-            .expireAfterAccess(1, TimeUnit.DAYS)
-            .maximumSize(10)
-            .build();
 
     private RecommendService() {
     }
@@ -46,11 +40,8 @@ public class RecommendService {
      * @return {@link  List<Song>}
      */
     public static List<Song> getRecommendSongList() {
-
-        final String value = CACHE.getIfPresent(MusicConstant.RECOMMEND_SONG_LIST_KEY);
-        if (value != null && !value.isBlank()) {
-            return JsonMapper.string2Object(value, new TypeReference<>() {
-            });
+        if (!SONG_LIST.isEmpty()) {
+            return SONG_LIST;
         }
 
         int index = RANDOM.nextInt(MusicConstant.SONG_CATEGORY_RANDOM.size());
@@ -64,13 +55,12 @@ public class RecommendService {
             RecommendPlayListResp recommendPlayListResp = JsonMapper.string2Object(response.body(), new TypeReference<>() {
             });
             final List<Song> songList = recommendPlayListResp.getData().getList();
-            CACHE.put(MusicConstant.RECOMMEND_SONG_LIST_KEY, JsonMapper.object2String(songList));
-            return songList;
+            SONG_LIST.addAll(songList);
         } catch (IOException | InterruptedException e) {
             log.error("获取推荐歌单失败: ", e);
         }
 
-        return Collections.emptyList();
+        return SONG_LIST;
     }
 
     /**

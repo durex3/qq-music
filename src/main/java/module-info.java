@@ -4,7 +4,6 @@ module qq.music {
     requires javafx.media;
     requires java.net.http;
     requires lombok;
-    requires com.github.benmanes.caffeine;
     requires rxcontrols;
     requires com.fasterxml.jackson.databind;
     requires org.slf4j;
