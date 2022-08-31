@@ -11,12 +11,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
-import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -27,6 +27,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -98,6 +99,11 @@ public class MainController implements Initializable {
         });
         // 当前播放歌曲的名字
         curMusicPlayName.textProperty().bind(MusicPlayer.getCurMusicPlayName());
+        Tooltip tooltip = new Tooltip();
+        tooltip.setShowDelay(Duration.millis(100));
+        tooltip.setStyle("-fx-background-color: white; -fx-text-fill: black;");
+        tooltip.textProperty().bind(curMusicPlayName.textProperty());
+        curMusicPlayName.setTooltip(tooltip);
         // 播放按钮 双向绑定
         playButton.selectedProperty().bindBidirectional(MusicPlayer.getPlayButtonSelected());
         // 监听是否播放

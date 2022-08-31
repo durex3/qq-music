@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -23,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -102,6 +104,13 @@ public class SongDetailController implements Initializable {
 
         // 歌单描述
         songDesc.setText(songDetail.getDesc());
+        Tooltip tooltip = new Tooltip();
+        tooltip.setPrefWidth(200);
+        tooltip.setWrapText(true);
+        tooltip.setShowDelay(Duration.millis(100));
+        tooltip.setStyle("-fx-background-color: white; -fx-text-fill: black;");
+        tooltip.textProperty().bind(songDesc.textProperty());
+        songDesc.setTooltip(tooltip);
 
         // 播放全部 收藏 更新 按钮
         playAll.setAlignment(Pos.CENTER);
