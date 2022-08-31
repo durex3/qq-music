@@ -1,6 +1,5 @@
 module qq.music {
     requires javafx.controls;
-    requires java.base;
     requires javafx.fxml;
     requires javafx.media;
     requires java.net.http;
