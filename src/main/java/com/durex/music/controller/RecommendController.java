@@ -35,6 +35,9 @@ import java.util.ResourceBundle;
 @Slf4j
 public class RecommendController implements Initializable {
 
+    private SongDetailController controller = null;
+    private Parent songDetail = null;
+
     @FXML
     private TilePane songListPane;
     @FXML
@@ -44,8 +47,7 @@ public class RecommendController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         final List<Song> songList = RecommendService.getRecommendSongList();
         final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml/song-detail.fxml")));
-        Parent songDetail = null;
-        SongDetailController controller = null;
+
         try {
             songDetail = fxmlLoader.load();
             controller = fxmlLoader.getController();
@@ -53,10 +55,10 @@ public class RecommendController implements Initializable {
             log.error("加载歌单详情页面失败: ", e);
         }
         initCarousel(RecommendService.getBannerList());
-        songListPane.getChildren().addAll(buildSongList(songList, songDetail, controller));
+        songListPane.getChildren().addAll(buildSongList(songList));
     }
 
-    private List<VBox> buildSongList(List<Song> songList, Parent songDetail, SongDetailController controller) {
+    private List<VBox> buildSongList(List<Song> songList) {
         if (songList == null || songList.isEmpty()) {
             return Collections.emptyList();
         }
