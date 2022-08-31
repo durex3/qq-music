@@ -90,12 +90,16 @@ public class MainController implements Initializable {
         // 当前播放歌曲的图片
         curMusicPlayImage.imageProperty().bind(MusicPlayer.getCurMusicPlayImage());
         curMusicPlayImagePane.setOnMouseEntered(event -> {
-            curMusicPlayImagePane.setOpacity(0.5);
-            showPlayDetailIcon.setVisible(true);
+            if (curMusicPlayImage.getImage() != null) {
+                curMusicPlayImagePane.setOpacity(0.5);
+                showPlayDetailIcon.setVisible(true);
+            }
         });
         curMusicPlayImagePane.setOnMouseExited(event -> {
-            curMusicPlayImagePane.setOpacity(1);
-            showPlayDetailIcon.setVisible(false);
+            if (curMusicPlayImage.getImage() != null) {
+                curMusicPlayImagePane.setOpacity(1);
+                showPlayDetailIcon.setVisible(false);
+            }
         });
         // 当前播放歌曲的名字
         curMusicPlayName.textProperty().bind(MusicPlayer.getCurMusicPlayName());
@@ -211,6 +215,9 @@ public class MainController implements Initializable {
 
     @FXML
     public void handleShowPlayDetailPaneClick(MouseEvent e) {
+        if (MusicPlayer.getPlayer() == null) {
+            return;
+        }
         MainPane.getPlayDetailPane().setVisible(true);
         if (MainPane.getHidePlayDetailAnim().getStatus() == Animation.Status.RUNNING) {
             MainPane.getHidePlayDetailAnim().stop();
@@ -219,7 +226,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void handleSoundPopupClick(MouseEvent event) {
+    public void handleSoundPopupClick(MouseEvent e) {
         Bounds bounds = soundBtn.localToScreen(soundBtn.getBoundsInLocal());
         soundPopup.show(mainPane.getScene().getWindow(), bounds.getMinX() - 20, bounds.getMinY() - 165);
     }

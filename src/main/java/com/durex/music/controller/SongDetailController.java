@@ -95,7 +95,7 @@ public class SongDetailController implements Initializable {
             final List<Label> tagLabelList = tagList.stream().map(Tag::getName)
                     .map(name -> {
                         Label label = new Label("#" + name);
-                        label.setFont(Font.font(null, 14));
+                        label.setFont(Font.font(14));
                         label.setTextFill(Color.web("#7b7b7b"));
                         return label;
                     }).toList();
