@@ -3,12 +3,11 @@ package com.durex.music.controller;
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.qq.SongDetail;
 import com.durex.music.model.qq.Tag;
-import com.durex.music.ui.MainPane;
 import com.durex.music.service.SongDetailService;
+import com.durex.music.ui.MainPane;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -28,13 +27,11 @@ import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 @Slf4j
-public class SongDetailController implements Initializable {
+public class SongDetailController {
 
     @FXML
     private RXAvatar songImage;
@@ -155,11 +152,6 @@ public class SongDetailController implements Initializable {
         } catch (IOException e) {
             log.error("加载歌曲列表失败: ", e);
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     private void selectedTab(Node node) {
