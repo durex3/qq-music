@@ -47,20 +47,20 @@ public class RecommendController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        final List<RecommendPlay> songList = RecommendService.getRecommendSongList();
-        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml/song-detail.fxml")));
-
-        try {
-            songDetail = fxmlLoader.load();
-            controller = fxmlLoader.getController();
-        } catch (IOException e) {
-            log.error("加载歌单详情页面失败: ", e);
-        }
         initCarousel(RecommendService.getBannerList());
 
         if (vBoxList.isEmpty()) {
+            final List<RecommendPlay> songList = RecommendService.getRecommendSongList();
             vBoxList.addAll(buildSongList(songList));
+            final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml/song-detail.fxml")));
+            try {
+                songDetail = fxmlLoader.load();
+                controller = fxmlLoader.getController();
+            } catch (IOException e) {
+                log.error("加载歌单详情页面失败: ", e);
+            }
         }
+
         songListPane.getChildren().addAll(vBoxList);
     }
 
