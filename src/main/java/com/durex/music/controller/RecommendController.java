@@ -36,7 +36,7 @@ public class RecommendController implements Initializable {
     private SongDetailController controller = null;
     private Parent songDetail = null;
 
-    private List<VBox> vBoxList = new ArrayList<>();
+    private final List<VBox> vBoxList = new ArrayList<>();
 
     @FXML
     private TilePane songListPane;
