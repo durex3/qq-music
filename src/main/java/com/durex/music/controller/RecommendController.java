@@ -25,10 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * <h2>推荐面板 controller</h2>
@@ -38,6 +35,8 @@ public class RecommendController implements Initializable {
 
     private SongDetailController controller = null;
     private Parent songDetail = null;
+
+    private List<VBox> vBoxList = new ArrayList<>();
 
     @FXML
     private TilePane songListPane;
@@ -58,7 +57,11 @@ public class RecommendController implements Initializable {
             log.error("加载歌单详情页面失败: ", e);
         }
         initCarousel(RecommendService.getBannerList());
-        songListPane.getChildren().addAll(buildSongList(songList));
+
+        if (vBoxList.isEmpty()) {
+            vBoxList.addAll(buildSongList(songList));
+        }
+        songListPane.getChildren().addAll(vBoxList);
     }
 
     private List<VBox> buildSongList(List<RecommendPlay> songList) {
