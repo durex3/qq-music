@@ -2,7 +2,9 @@ package com.durex.music.controller;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.MusicPlayer;
+import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.ui.MainPane;
+import com.durex.music.ui.MusicPlayCell;
 import com.durex.music.ui.SoundPane;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
@@ -78,7 +80,7 @@ public class MainController implements Initializable {
     @FXML
     private HBox clearListBtn;
     @FXML
-    private ListView<AnchorPane> playListView;
+    private ListView<MusicProperty> playListView;
     @FXML
     private StackPane soundBtn;
 
@@ -128,7 +130,8 @@ public class MainController implements Initializable {
         nextBtn.setOnMouseClicked(event -> MusicPlayer.playNextMusic());
         bottomPlayListNum.textProperty().bind(MusicPlayer.getMusicPlayList().sizeProperty());
         playListNum.textProperty().bind(MusicPlayer.getMusicPlayList().sizeProperty());
-        playListView.setItems(MusicPlayer.getMusicPlayList().getMusicPaneList());
+        playListView.setCellFactory(listView -> new MusicPlayCell());
+        playListView.setItems(MusicPlayer.getMusicPlayList().getMusicPropertyList());
         playListView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 final int selectedIndex = playListView.getSelectionModel().getSelectedIndex();

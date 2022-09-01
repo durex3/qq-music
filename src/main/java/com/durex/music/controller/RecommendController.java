@@ -18,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,8 @@ public class RecommendController implements Initializable {
     private TilePane songListPane;
     @FXML
     private RXCarousel carousel;
+    @FXML
+    private GridPane musicListPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

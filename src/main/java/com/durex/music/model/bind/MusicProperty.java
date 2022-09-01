@@ -1,8 +1,8 @@
 package com.durex.music.model.bind;
 
+import com.durex.music.model.qq.Pay;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 
 public class MusicProperty {
 
@@ -10,9 +10,7 @@ public class MusicProperty {
 
     private String mid;
 
-    private String musicName;
-
-    private final SimpleObjectProperty<HBox> name = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<Label> name = new SimpleObjectProperty<>();
 
     private final SimpleObjectProperty<Label> singer = new SimpleObjectProperty<>();
 
@@ -26,9 +24,11 @@ public class MusicProperty {
 
     private Long msgid;
 
+    private Pay pay;
+
 
     public boolean isVip() {
-        return this.name.get().lookup("#music-vip") != null;
+        return pay.getPayplay() == 1;
     }
 
     public boolean isNotCanPlay() {
@@ -51,15 +51,15 @@ public class MusicProperty {
         this.mid = mid;
     }
 
-    public HBox getName() {
+    public Label getName() {
         return name.get();
     }
 
-    public SimpleObjectProperty<HBox> nameProperty() {
+    public SimpleObjectProperty<Label> nameProperty() {
         return name;
     }
 
-    public void setName(HBox name) {
+    public void setName(Label name) {
         this.name.set(name);
     }
 
@@ -123,11 +123,11 @@ public class MusicProperty {
         this.msgid = msgid;
     }
 
-    public String getMusicName() {
-        return musicName;
+    public Pay getPay() {
+        return pay;
     }
 
-    public void setMusicName(String musicName) {
-        this.musicName = musicName;
+    public void setPay(Pay pay) {
+        this.pay = pay;
     }
 }

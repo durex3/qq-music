@@ -2,7 +2,9 @@ package com.durex.music.service;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.qq.Banner;
+import com.durex.music.model.qq.MusicDetail;
 import com.durex.music.model.qq.RecommendPlay;
+import com.durex.music.response.qq.NewMusicResp;
 import com.durex.music.response.qq.RecommendBannerResp;
 import com.durex.music.response.qq.RecommendPlayListUResp;
 import com.durex.music.utils.JsonMapper;
@@ -79,7 +81,31 @@ public class RecommendService {
             log.error("获取轮播图失败: ", e);
         }
 
+        return Collections.emptyList();
+    }
+
+
+    /**
+     * <h2>获取新歌列表</h2>
+     *
+     * @return {@link List<MusicDetail>}
+     */
+    public static List<MusicDetail> getNewMusicList() {
+        String url = MusicConstant.QQ_MUSIC_HOST + "/new/songs?type=0";
+        HttpClient client = HttpClient.newBuilder().build();
+
+        final HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
+
+        try {
+            final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            NewMusicResp newMusicResp = JsonMapper.string2Object(response.body(), new TypeReference<>() {
+            });
+            return newMusicResp.getData().getList();
+        } catch (IOException | InterruptedException e) {
+            log.error("获取新歌列表: ", e);
+        }
 
         return Collections.emptyList();
     }
+
 }

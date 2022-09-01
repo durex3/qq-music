@@ -1,7 +1,5 @@
 package com.durex.music.model.qq;
 
-import lombok.Data;
-
 public class Singer {
 
     private Long id;

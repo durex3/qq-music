@@ -6,22 +6,24 @@ import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.qq.Music;
 import com.durex.music.model.qq.Singer;
 import com.durex.music.model.qq.SongDetail;
-import com.durex.music.ui.MusicNameHBox;
-import com.durex.music.ui.MusicPlayPane;
 import com.durex.music.utils.TimeUtils;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.util.List;
@@ -35,13 +37,13 @@ public class MusicListController implements Initializable {
     @FXML
     private TableColumn<MusicProperty, Integer> id;
     @FXML
-    private TableColumn<MusicProperty, SimpleObjectProperty<HBox>> name;
+    private TableColumn<MusicProperty, Label> name;
     @FXML
-    private TableColumn<MusicProperty, SimpleObjectProperty<Label>> singer;
+    private TableColumn<MusicProperty, Label> singer;
     @FXML
-    private TableColumn<MusicProperty, String> album;
+    private TableColumn<MusicProperty, Label> album;
     @FXML
-    private TableColumn<MusicProperty, String> duration;
+    private TableColumn<MusicProperty, Label> duration;
     private long songId;
     private final ObservableList<MusicProperty> musicPropertyList = FXCollections.observableArrayList();
 
@@ -49,6 +51,36 @@ public class MusicListController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        name.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Label nameLabel, boolean empty) {
+                super.updateItem(nameLabel, empty);
+                if (nameLabel != null && !empty) {
+                    final MusicProperty music = musicListTable.getItems().get(this.getIndex());
+                    HBox hBox = new HBox();
+                    hBox.setSpacing(5);
+                    hBox.setAlignment(Pos.CENTER_LEFT);
+                    nameLabel.setTextFill(Color.BLACK);
+                    hBox.getChildren().add(nameLabel);
+                    if (music.isVip()) {
+                        StackPane stackPane = new StackPane();
+                        Rectangle rectangle = new Rectangle(20, 12);
+                        rectangle.setFill(Color.WHITE);
+                        rectangle.setStroke(MusicConstant.MENU_SELECTED_COLOR);
+                        Label vipLabel = new Label("vip");
+                        vipLabel.setFont(Font.font(10));
+                        vipLabel.setTextFill(MusicConstant.MENU_SELECTED_COLOR);
+                        stackPane.getChildren().addAll(rectangle, vipLabel);
+                        hBox.getChildren().add(stackPane);
+                    }
+
+                    if (music.isNotCanPlay()) {
+                        nameLabel.setTextFill(Color.web("#a6a6a6"));
+                    }
+                    this.setGraphic(hBox);
+                }
+            }
+        });
         singer.setCellValueFactory(new PropertyValueFactory<>("singer"));
         album.setCellValueFactory(new PropertyValueFactory<>("albumName"));
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
@@ -64,8 +96,7 @@ public class MusicListController implements Initializable {
             MusicProperty musicProperty = new MusicProperty();
             musicProperty.setId(music.getAlbumid());
 
-            musicProperty.setName(MusicNameHBox.build(music));
-            musicProperty.setMusicName(music.getSongname());
+            musicProperty.setName(new Label(music.getSongname()));
             String singerName = music.getSinger().stream().map(Singer::getName).collect(Collectors.joining("/"));
 
             final Label singerNameLabel = new Label(singerName);
@@ -82,6 +113,7 @@ public class MusicListController implements Initializable {
             musicProperty.setInterval(music.getInterval());
             musicProperty.setMsgid(music.getMsgid());
             musicProperty.setAlbummid(music.getAlbummid());
+            musicProperty.setPay(music.getPay());
             musicPropertyList.add(musicProperty);
         });
 
@@ -112,15 +144,13 @@ public class MusicListController implements Initializable {
         // 不是当前播放列表的歌单
         if (MusicPlayer.getMusicPlayList().getCurrentSongId() != songId) {
             MusicPlayer.getMusicPlayList().getMusicPropertyList().clear();
-            MusicPlayer.getMusicPlayList().getMusicPaneList().clear();
             MusicPlayer.getMusicPlayList().setCurrentSongId(songId);
 
             for (MusicProperty musicProperty : musicPropertyList) {
                 MusicPlayer.getMusicPlayList().getMusicPropertyList().add(musicProperty);
-                MusicPlayer.getMusicPlayList().getMusicPaneList().add(MusicPlayPane.build(musicProperty));
             }
 
-            MusicPlayer.getMusicPlayList().setSize(String.valueOf(MusicPlayer.getMusicPlayList().getMusicPaneList().size()));
+            MusicPlayer.getMusicPlayList().setSize(String.valueOf(MusicPlayer.getMusicPlayList().getMusicPropertyList().size()));
 
             MusicPlayer.getMusicPlayList().setLastMusicIndex(-1);
         }

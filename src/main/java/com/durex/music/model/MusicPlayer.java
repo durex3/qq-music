@@ -65,7 +65,7 @@ public class MusicPlayer {
             CUR_MUSIC_PLAY_IMAGE.set(image);
 
             CUR_MUSIC_PLAY_MID.set(music.getMid());
-            CUR_MUSIC_PLAY_NAME.set(music.getMusicName() + " - " + music.getSinger().getText());
+            CUR_MUSIC_PLAY_NAME.set(music.getName().getText() + " - " + music.getSinger().getText());
             CUR_MUSIC_PLAY_ALBUM.set(music.getAlbumName().getText());
             CUR_MUSIC_TOTAL_SECONDS.set(music.getDuration().getText());
 
@@ -121,13 +121,8 @@ public class MusicPlayer {
         } else {
             if (lastMusic != null) {
                 setCurrPlayMusicColor(lastMusic, Color.BLACK);
-                final AnchorPane lastPlayPane = MUSIC_PLAY_LIST.getMusicPaneList().get(MUSIC_PLAY_LIST.getLastMusicIndex());
-                setCurrPlayListMusicColor(lastPlayPane, Color.BLACK);
             }
             setCurrPlayMusicColor(music, MusicConstant.MENU_SELECTED_COLOR);
-            final AnchorPane playPane = MUSIC_PLAY_LIST.getMusicPaneList().get(index);
-            setCurrPlayListMusicColor(playPane, MusicConstant.MENU_SELECTED_COLOR);
-
             MUSIC_PLAY_LIST.setLastMusicIndex(index);
             play(music);
         }
@@ -146,7 +141,7 @@ public class MusicPlayer {
     }
 
     public static synchronized void playNextMusic() {
-        int size = MUSIC_PLAY_LIST.getMusicPaneList().size();
+        int size = MUSIC_PLAY_LIST.getMusicPropertyList().size();
         if (size < 2) {
             return;
         }
@@ -156,8 +151,6 @@ public class MusicPlayer {
         final MusicProperty lastMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
         if (lastMusic != null) {
             setCurrPlayMusicColor(lastMusic, Color.BLACK);
-            final AnchorPane lastPlayPane = MUSIC_PLAY_LIST.getMusicPaneList().get(MUSIC_PLAY_LIST.getLastMusicIndex());
-            setCurrPlayListMusicColor(lastPlayPane, Color.BLACK);
         }
 
         // 如果是最后一首歌, 那么下一首歌曲就是播放第一首歌曲
@@ -170,14 +163,12 @@ public class MusicPlayer {
         }
 
         setCurrPlayMusicColor(nextMusic, MusicConstant.MENU_SELECTED_COLOR);
-        final AnchorPane playPane = MUSIC_PLAY_LIST.getMusicPaneList().get(index);
-        setCurrPlayListMusicColor(playPane, MusicConstant.MENU_SELECTED_COLOR);
         MUSIC_PLAY_LIST.setLastMusicIndex(index);
         play(nextMusic);
     }
 
     public static synchronized void playPreMusic() {
-        int size = MUSIC_PLAY_LIST.getMusicPaneList().size();
+        int size = MUSIC_PLAY_LIST.getMusicPropertyList().size();
         if (size < 2) {
             return;
         }
@@ -187,8 +178,6 @@ public class MusicPlayer {
         final MusicProperty lastMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
         if (lastMusic != null) {
             MusicPlayer.setCurrPlayMusicColor(lastMusic, Color.BLACK);
-            final AnchorPane lastPlayPane = MUSIC_PLAY_LIST.getMusicPaneList().get(MUSIC_PLAY_LIST.getLastMusicIndex());
-            setCurrPlayListMusicColor(lastPlayPane, Color.BLACK);
         }
 
         // 如果是第一首歌, 那么上一首歌曲就是播放第后一首歌曲
@@ -201,15 +190,13 @@ public class MusicPlayer {
         }
 
         setCurrPlayMusicColor(preMusic, MusicConstant.MENU_SELECTED_COLOR);
-        final AnchorPane playPane = MUSIC_PLAY_LIST.getMusicPaneList().get(index);
-        setCurrPlayListMusicColor(playPane, MusicConstant.MENU_SELECTED_COLOR);
         MUSIC_PLAY_LIST.setLastMusicIndex(index);
         play(preMusic);
     }
 
     public static void setCurrPlayMusicColor(MusicProperty music, Color menuSelectedColor) {
         music.getSinger().setTextFill(menuSelectedColor);
-        ((Label) music.getName().lookup("#name-label")).setTextFill(menuSelectedColor);
+        music.getName().setTextFill(menuSelectedColor);
         music.getAlbumName().setTextFill(menuSelectedColor);
         music.getDuration().setTextFill(menuSelectedColor);
     }
