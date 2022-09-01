@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * @author liugelong
@@ -12,6 +13,8 @@ import javafx.collections.ObservableList;
 public class PlayListMusic {
 
     private final ObservableList<MusicProperty> musicPropertyList = FXCollections.observableArrayList();
+    private final ObservableList<AnchorPane> musicPaneList = FXCollections.observableArrayList();
+
 
     // 当前播放队列的播放歌单 id
     private final SimpleLongProperty currentSongId = new SimpleLongProperty(-1);
@@ -26,6 +29,10 @@ public class PlayListMusic {
 
     public ObservableList<MusicProperty> getMusicPropertyList() {
         return musicPropertyList;
+    }
+
+    public ObservableList<AnchorPane> getMusicPaneList() {
+        return musicPaneList;
     }
 
     public long getCurrentSongId() {

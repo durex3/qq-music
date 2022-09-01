@@ -6,6 +6,7 @@ import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.qq.Music;
 import com.durex.music.model.qq.Singer;
 import com.durex.music.model.qq.SongDetail;
+import com.durex.music.ui.MusicPlayPane;
 import com.durex.music.utils.TimeUtils;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -19,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -144,10 +146,14 @@ public class MusicListController implements Initializable {
         // 不是当前播放列表的歌单
         if (MusicPlayer.getMusicPlayList().getCurrentSongId() != songId) {
             MusicPlayer.getMusicPlayList().getMusicPropertyList().clear();
+            MusicPlayer.getMusicPlayList().getMusicPaneList().clear();
             MusicPlayer.getMusicPlayList().setCurrentSongId(songId);
 
             for (MusicProperty musicProperty : musicPropertyList) {
                 MusicPlayer.getMusicPlayList().getMusicPropertyList().add(musicProperty);
+                AnchorPane anchorPane = MusicPlayPane.build(musicProperty);
+                MusicPlayPane.bind(anchorPane, musicProperty);
+                MusicPlayer.getMusicPlayList().getMusicPaneList().add(anchorPane);
             }
 
             MusicPlayer.getMusicPlayList().setSize(String.valueOf(MusicPlayer.getMusicPlayList().getMusicPropertyList().size()));

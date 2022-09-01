@@ -6,16 +6,10 @@ import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.bind.PlayListMusic;
 import com.durex.music.service.MusicService;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -81,8 +75,7 @@ public class MusicPlayer {
             currMusicProgress.bufferProgressTimeProperty().bind(player.bufferProgressTimeProperty());
 
             // 监听播放时间进度
-            player.currentTimeProperty()
-                    .addListener(getDurationChangeListener());
+            player.currentTimeProperty().addListener(getDurationChangeListener());
 
             // 进度条拖动和点击事件
             currMusicProgress.setOnMouseDragged(event -> {
@@ -199,12 +192,6 @@ public class MusicPlayer {
         music.getName().setTextFill(menuSelectedColor);
         music.getAlbumName().setTextFill(menuSelectedColor);
         music.getDuration().setTextFill(menuSelectedColor);
-    }
-
-    public static void setCurrPlayListMusicColor(AnchorPane anchorPane, Color menuSelectedColor) {
-        ((Label) anchorPane.lookup("#play-list-music-name")).setTextFill(menuSelectedColor);
-        ((Label) anchorPane.lookup("#play-list-singer")).setTextFill(menuSelectedColor);
-        ((Label) anchorPane.lookup("#play-list-music-duration")).setTextFill(menuSelectedColor);
     }
 
     private static void disposeMediaPlayer() {

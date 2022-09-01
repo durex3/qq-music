@@ -2,9 +2,7 @@ package com.durex.music.controller;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.MusicPlayer;
-import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.ui.MainPane;
-import com.durex.music.ui.MusicPlayCell;
 import com.durex.music.ui.SoundPane;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
@@ -13,20 +11,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -80,7 +67,7 @@ public class MainController implements Initializable {
     @FXML
     private HBox clearListBtn;
     @FXML
-    private ListView<MusicProperty> playListView;
+    private ListView<AnchorPane> playListView;
     @FXML
     private StackPane soundBtn;
 
@@ -130,8 +117,7 @@ public class MainController implements Initializable {
         nextBtn.setOnMouseClicked(event -> MusicPlayer.playNextMusic());
         bottomPlayListNum.textProperty().bind(MusicPlayer.getMusicPlayList().sizeProperty());
         playListNum.textProperty().bind(MusicPlayer.getMusicPlayList().sizeProperty());
-        playListView.setCellFactory(listView -> new MusicPlayCell());
-        playListView.setItems(MusicPlayer.getMusicPlayList().getMusicPropertyList());
+        playListView.setItems(MusicPlayer.getMusicPlayList().getMusicPaneList());
         playListView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 final int selectedIndex = playListView.getSelectionModel().getSelectedIndex();
