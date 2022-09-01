@@ -242,11 +242,7 @@
                               </HBox>
                            </children>
                         </AnchorPane>
-                        <ScrollPane id="scroll-pane" fx:id="contentPane" hbarPolicy="NEVER" prefWidth="810.0" stylesheets="@../css/main.css" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="70.0" AnchorPane.topAnchor="70.0">
-                           <padding>
-                              <Insets left="30.0" right="30.0" />
-                           </padding>
-                        </ScrollPane>
+                        <ScrollPane id="scroll-pane" fx:id="contentPane" hbarPolicy="NEVER" prefWidth="810.0" stylesheets="@../css/main.css" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="70.0" AnchorPane.topAnchor="70.0" />
                         </children>
                     </AnchorPane>
                 </children>
