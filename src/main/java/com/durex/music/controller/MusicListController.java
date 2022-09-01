@@ -14,11 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -46,8 +42,8 @@ public class MusicListController implements Initializable {
     private TableColumn<MusicProperty, Label> album;
     @FXML
     private TableColumn<MusicProperty, Label> duration;
-    private long songId;
     private final ObservableList<MusicProperty> musicPropertyList = FXCollections.observableArrayList();
+    private long songId;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -62,7 +58,7 @@ public class MusicListController implements Initializable {
                     HBox hBox = new HBox();
                     hBox.setSpacing(5);
                     hBox.setAlignment(Pos.CENTER_LEFT);
-                    nameLabel.setTextFill(Color.BLACK);
+                    nameLabel.setTextFill(music.getName().getTextFill());
                     hBox.getChildren().add(nameLabel);
                     if (music.isVip()) {
                         StackPane stackPane = new StackPane();
@@ -91,38 +87,37 @@ public class MusicListController implements Initializable {
     }
 
     public void init(SongDetail songDetail) {
+        this.songId = songDetail.getDissid();
         final List<Music> musicList = songDetail.getSonglist();
-        songId = songDetail.getDissid();
+        if (songDetail.getDissid() == MusicPlayer.getMusicPlayList().getCurrentSongId()) {
+            musicPropertyList.addAll(MusicPlayer.getMusicPlayList().getMusicPropertyList());
+        } else {
+            musicList.forEach(music -> {
+                MusicProperty musicProperty = new MusicProperty();
+                musicProperty.setId(music.getAlbumid());
 
-        musicList.forEach(music -> {
-            MusicProperty musicProperty = new MusicProperty();
-            musicProperty.setId(music.getAlbumid());
+                musicProperty.setName(new Label(music.getSongname()));
+                String singerName = music.getSinger().stream().map(Singer::getName).collect(Collectors.joining("/"));
 
-            musicProperty.setName(new Label(music.getSongname()));
-            String singerName = music.getSinger().stream().map(Singer::getName).collect(Collectors.joining("/"));
+                final Label singerNameLabel = new Label(singerName);
+                singerNameLabel.setTextFill(Color.BLACK);
+                musicProperty.setSinger(singerNameLabel);
+                final Label albumNameLabel = new Label(music.getAlbumname());
+                albumNameLabel.setTextFill(Color.BLACK);
+                musicProperty.setAlbumName(albumNameLabel);
 
-            final Label singerNameLabel = new Label(singerName);
-            singerNameLabel.setTextFill(Color.BLACK);
-            musicProperty.setSinger(singerNameLabel);
-            final Label albumNameLabel = new Label(music.getAlbumname());
-            albumNameLabel.setTextFill(Color.BLACK);
-            musicProperty.setAlbumName(albumNameLabel);
-
-            musicProperty.setMid(music.getSongmid());
-            final Label intervalLabel = new Label(TimeUtils.format((double) music.getInterval()));
-            intervalLabel.setTextFill(Color.BLACK);
-            musicProperty.setDuration(intervalLabel);
-            musicProperty.setInterval(music.getInterval());
-            musicProperty.setMsgid(music.getMsgid());
-            musicProperty.setAlbummid(music.getAlbummid());
-            musicProperty.setPay(music.getPay());
-            musicPropertyList.add(musicProperty);
-        });
-
-        if (songId == MusicPlayer.getMusicPlayList().getCurrentSongId()) {
-            // 如果是则设置为绿色的播放状态
-            MusicPlayer.setCurrPlayMusicColor(musicPropertyList.get(MusicPlayer.getMusicPlayList().getLastMusicIndex()), MusicConstant.MENU_SELECTED_COLOR);
+                musicProperty.setMid(music.getSongmid());
+                final Label intervalLabel = new Label(TimeUtils.format((double) music.getInterval()));
+                intervalLabel.setTextFill(Color.BLACK);
+                musicProperty.setDuration(intervalLabel);
+                musicProperty.setInterval(music.getInterval());
+                musicProperty.setMsgid(music.getMsgid());
+                musicProperty.setAlbummid(music.getAlbummid());
+                musicProperty.setPay(music.getPay());
+                musicPropertyList.add(musicProperty);
+            });
         }
+
 
         // 高度适应行数
         musicListTable.setFixedCellSize(40);
