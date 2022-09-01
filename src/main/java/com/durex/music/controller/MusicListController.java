@@ -1,8 +1,8 @@
 package com.durex.music.controller;
 
 import com.durex.music.constant.MusicConstant;
-import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.MusicPlayer;
+import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.qq.Music;
 import com.durex.music.model.qq.Singer;
 import com.durex.music.model.qq.SongDetail;
@@ -11,6 +11,8 @@ import com.durex.music.ui.MusicPlayPane;
 import com.durex.music.utils.TimeUtils;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -41,6 +43,7 @@ public class MusicListController implements Initializable {
     @FXML
     private TableColumn<MusicProperty, String> duration;
     private long songId;
+    private final ObservableList<MusicProperty> musicPropertyList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,13 +52,13 @@ public class MusicListController implements Initializable {
         singer.setCellValueFactory(new PropertyValueFactory<>("singer"));
         album.setCellValueFactory(new PropertyValueFactory<>("albumName"));
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
-        MusicPlayer.getTablePlayList().clear();
+        musicPropertyList.clear();
+        musicListTable.setItems(musicPropertyList);
     }
 
     public void init(SongDetail songDetail) {
         final List<Music> musicList = songDetail.getSonglist();
         songId = songDetail.getDissid();
-
 
         musicList.forEach(music -> {
             MusicProperty musicProperty = new MusicProperty();
@@ -79,15 +82,12 @@ public class MusicListController implements Initializable {
             musicProperty.setInterval(music.getInterval());
             musicProperty.setMsgid(music.getMsgid());
             musicProperty.setAlbummid(music.getAlbummid());
-
-            MusicPlayer.getTablePlayList().add(musicProperty);
+            musicPropertyList.add(musicProperty);
         });
 
-        musicListTable.setItems(MusicPlayer.getTablePlayList());
-
-        if (songId == MusicPlayer.getCurrentPlaySongId().get()) {
+        if (songId == MusicPlayer.getMusicPlayList().getCurrentSongId()) {
             // 如果是则设置为绿色的播放状态
-            MusicPlayer.setCurrPlayMusicColor(MusicPlayer.getTablePlayList().get(MusicPlayer.getLastMusicIndex()), MusicConstant.MENU_SELECTED_COLOR);
+            MusicPlayer.setCurrPlayMusicColor(musicPropertyList.get(MusicPlayer.getMusicPlayList().getLastMusicIndex()), MusicConstant.MENU_SELECTED_COLOR);
         }
 
         // 高度适应行数
@@ -110,13 +110,19 @@ public class MusicListController implements Initializable {
 
     private void initPlayList() {
         // 不是当前播放列表的歌单
-        if (MusicPlayer.getCurrentPlaySongId().get() != songId) {
-            MusicPlayer.getPlayList().clear();
-            MusicPlayer.getTablePlayList().forEach(musicProperty -> MusicPlayer.getPlayList().add(MusicPlayPane.build(musicProperty)));
-            MusicPlayer.getCurrentPlaySongId().set(songId);
-            MusicPlayer.getCurrentPlayListNum().set(String.valueOf(MusicPlayer.getPlayList().size()));
+        if (MusicPlayer.getMusicPlayList().getCurrentSongId() != songId) {
+            MusicPlayer.getMusicPlayList().getMusicPropertyList().clear();
+            MusicPlayer.getMusicPlayList().getMusicPaneList().clear();
+            MusicPlayer.getMusicPlayList().setCurrentSongId(songId);
 
-            MusicPlayer.setLastMusicIndex(-1);
+            for (MusicProperty musicProperty : musicPropertyList) {
+                MusicPlayer.getMusicPlayList().getMusicPropertyList().add(musicProperty);
+                MusicPlayer.getMusicPlayList().getMusicPaneList().add(MusicPlayPane.build(musicProperty));
+            }
+
+            MusicPlayer.getMusicPlayList().setSize(String.valueOf(MusicPlayer.getMusicPlayList().getMusicPaneList().size()));
+
+            MusicPlayer.getMusicPlayList().setLastMusicIndex(-1);
         }
     }
 }

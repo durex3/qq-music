@@ -3,18 +3,16 @@ package com.durex.music.model;
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.bind.CurrPlaySecondsBinding;
 import com.durex.music.model.bind.MusicProperty;
+import com.durex.music.model.bind.PlayListMusic;
 import com.durex.music.service.MusicService;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -30,8 +28,7 @@ public class MusicPlayer {
     private MusicPlayer() {
     }
 
-    private static final ObservableList<MusicProperty> TABLE_PLAY_LIST = FXCollections.observableArrayList();
-    private static final ObservableList<AnchorPane> PLAY_LIST = FXCollections.observableArrayList();
+    private static final PlayListMusic MUSIC_PLAY_LIST = new PlayListMusic();
 
     private static final SimpleStringProperty CUR_MUSIC_PLAY_MID = new SimpleStringProperty();
     private static final ObjectProperty<Image> CUR_MUSIC_PLAY_IMAGE = new SimpleObjectProperty<>();
@@ -42,18 +39,12 @@ public class MusicPlayer {
     private static final SimpleBooleanProperty PLAY_BUTTON_SELECTED = new SimpleBooleanProperty();
 
     private static final SimpleStringProperty CUR_MUSIC_TOTAL_SECONDS = new SimpleStringProperty("00:00");
-    // 当前播放队列的播放歌单 id
-    private static final SimpleLongProperty CURRENT_PLAY_SONG_ID = new SimpleLongProperty(-1);
-
-    private static final SimpleStringProperty CURRENT_PLAY_LIST_NUM = new SimpleStringProperty("0");
 
     private static final SimpleDoubleProperty CURRENT_SOUND_VALUE = new SimpleDoubleProperty(50.0);
 
     private static Label curMusicSeconds;
     private static MediaPlayer player;
     private static RXMediaProgressBar currMusicProgress;
-
-    private static int lastMusicIndex = -1;
 
     public static synchronized void play(MusicProperty music) {
         final String playUrl = MusicService.getMusicPlay(music.getMid());
@@ -122,22 +113,22 @@ public class MusicPlayer {
             return;
         }
         MusicProperty lastMusic = null;
-        if (getLastMusicIndex() >= 0) {
-            lastMusic = getTablePlayList().get(getLastMusicIndex());
+        if (MUSIC_PLAY_LIST.getLastMusicIndex() >= 0) {
+            lastMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(MUSIC_PLAY_LIST.getLastMusicIndex());
         }
         if (lastMusic != null && Objects.equals(lastMusic.getId(), music.getId())) {
             replayOrPause();
         } else {
             if (lastMusic != null) {
                 setCurrPlayMusicColor(lastMusic, Color.BLACK);
-                final AnchorPane lastPlayPane = MusicPlayer.getPlayList().get(MusicPlayer.getLastMusicIndex());
+                final AnchorPane lastPlayPane = MUSIC_PLAY_LIST.getMusicPaneList().get(MUSIC_PLAY_LIST.getLastMusicIndex());
                 setCurrPlayListMusicColor(lastPlayPane, Color.BLACK);
             }
             setCurrPlayMusicColor(music, MusicConstant.MENU_SELECTED_COLOR);
-            final AnchorPane playPane = MusicPlayer.getPlayList().get(index);
+            final AnchorPane playPane = MUSIC_PLAY_LIST.getMusicPaneList().get(index);
             setCurrPlayListMusicColor(playPane, MusicConstant.MENU_SELECTED_COLOR);
 
-            setLastMusicIndex(index);
+            MUSIC_PLAY_LIST.setLastMusicIndex(index);
             play(music);
         }
     }
@@ -155,64 +146,64 @@ public class MusicPlayer {
     }
 
     public static synchronized void playNextMusic() {
-        int size = TABLE_PLAY_LIST.size();
+        int size = MUSIC_PLAY_LIST.getMusicPaneList().size();
         if (size < 2) {
             return;
         }
 
-        int index = lastMusicIndex;
+        int index = MUSIC_PLAY_LIST.getLastMusicIndex();
 
-        final MusicProperty lastMusic = TABLE_PLAY_LIST.get(index);
+        final MusicProperty lastMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
         if (lastMusic != null) {
             setCurrPlayMusicColor(lastMusic, Color.BLACK);
-            final AnchorPane lastPlayPane = PLAY_LIST.get(MusicPlayer.getLastMusicIndex());
+            final AnchorPane lastPlayPane = MUSIC_PLAY_LIST.getMusicPaneList().get(MUSIC_PLAY_LIST.getLastMusicIndex());
             setCurrPlayListMusicColor(lastPlayPane, Color.BLACK);
         }
 
         // 如果是最后一首歌, 那么下一首歌曲就是播放第一首歌曲
         index = (index == size - 1) ? 0 : index + 1;
-        MusicProperty nextMusic = TABLE_PLAY_LIST.get(index);
+        MusicProperty nextMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
 
         while (nextMusic.isVip() || nextMusic.isNotCanPlay()) {
             index = (index == size - 1) ? 0 : index + 1;
-            nextMusic = TABLE_PLAY_LIST.get(index);
+            nextMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
         }
 
         setCurrPlayMusicColor(nextMusic, MusicConstant.MENU_SELECTED_COLOR);
-        final AnchorPane playPane = PLAY_LIST.get(index);
+        final AnchorPane playPane = MUSIC_PLAY_LIST.getMusicPaneList().get(index);
         setCurrPlayListMusicColor(playPane, MusicConstant.MENU_SELECTED_COLOR);
-        lastMusicIndex = index;
+        MUSIC_PLAY_LIST.setLastMusicIndex(index);
         play(nextMusic);
     }
 
     public static synchronized void playPreMusic() {
-        int size = TABLE_PLAY_LIST.size();
+        int size = MUSIC_PLAY_LIST.getMusicPaneList().size();
         if (size < 2) {
             return;
         }
 
-        int index = lastMusicIndex;
+        int index = MUSIC_PLAY_LIST.getLastMusicIndex();
 
-        final MusicProperty lastMusic = TABLE_PLAY_LIST.get(index);
+        final MusicProperty lastMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
         if (lastMusic != null) {
             MusicPlayer.setCurrPlayMusicColor(lastMusic, Color.BLACK);
-            final AnchorPane lastPlayPane = PLAY_LIST.get(MusicPlayer.getLastMusicIndex());
+            final AnchorPane lastPlayPane = MUSIC_PLAY_LIST.getMusicPaneList().get(MUSIC_PLAY_LIST.getLastMusicIndex());
             setCurrPlayListMusicColor(lastPlayPane, Color.BLACK);
         }
 
         // 如果是第一首歌, 那么上一首歌曲就是播放第后一首歌曲
         index = (index == 0) ? size - 1 : index - 1;
-        MusicProperty preMusic = TABLE_PLAY_LIST.get(index);
+        MusicProperty preMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
 
         while (preMusic.isVip() || preMusic.isNotCanPlay()) {
             index = (index == 0) ? size - 1 : index - 1;
-            preMusic = TABLE_PLAY_LIST.get(index);
+            preMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
         }
 
         setCurrPlayMusicColor(preMusic, MusicConstant.MENU_SELECTED_COLOR);
-        final AnchorPane playPane = PLAY_LIST.get(index);
+        final AnchorPane playPane = MUSIC_PLAY_LIST.getMusicPaneList().get(index);
         setCurrPlayListMusicColor(playPane, MusicConstant.MENU_SELECTED_COLOR);
-        lastMusicIndex = index;
+        MUSIC_PLAY_LIST.setLastMusicIndex(index);
         play(preMusic);
     }
 
@@ -295,28 +286,8 @@ public class MusicPlayer {
         return CUR_MUSIC_TOTAL_SECONDS;
     }
 
-    public static ObservableList<MusicProperty> getTablePlayList() {
-        return TABLE_PLAY_LIST;
-    }
-
-    public static ObservableList<AnchorPane> getPlayList() {
-        return PLAY_LIST;
-    }
-
-    public static int getLastMusicIndex() {
-        return lastMusicIndex;
-    }
-
-    public static void setLastMusicIndex(int lastMusicIndex) {
-        MusicPlayer.lastMusicIndex = lastMusicIndex;
-    }
-
-    public static SimpleLongProperty getCurrentPlaySongId() {
-        return CURRENT_PLAY_SONG_ID;
-    }
-
-    public static SimpleStringProperty getCurrentPlayListNum() {
-        return CURRENT_PLAY_LIST_NUM;
+    public static PlayListMusic getMusicPlayList() {
+        return MUSIC_PLAY_LIST;
     }
 
     public static SimpleStringProperty getCurMusicPlayAlbum() {

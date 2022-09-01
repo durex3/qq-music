@@ -1,7 +1,7 @@
 package com.durex.music.controller;
 
 import com.durex.music.model.qq.Banner;
-import com.durex.music.model.qq.Song;
+import com.durex.music.model.qq.RecommendPlay;
 import com.durex.music.service.RecommendService;
 import com.durex.music.ui.MainPane;
 import com.durex.music.ui.SongVBox;
@@ -45,7 +45,7 @@ public class RecommendController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        final List<Song> songList = RecommendService.getRecommendSongList();
+        final List<RecommendPlay> songList = RecommendService.getRecommendSongList();
         final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml/song-detail.fxml")));
 
         try {
@@ -58,12 +58,12 @@ public class RecommendController implements Initializable {
         songListPane.getChildren().addAll(buildSongList(songList));
     }
 
-    private List<VBox> buildSongList(List<Song> songList) {
+    private List<VBox> buildSongList(List<RecommendPlay> songList) {
         if (songList == null || songList.isEmpty()) {
             return Collections.emptyList();
         }
         final List<VBox> songVboxList = songList.stream()
-                .map(song -> SongVBox.build(song.getTid().toString(), song.getCoverUrlSmall(), song.getTitle(), song.getAccessNum()))
+                .map(song -> SongVBox.build(String.valueOf(song.getContentId()), song.getCover(), song.getTitle(), song.getListenNum()))
                 .toList();
 
         songVboxList.forEach(song -> {

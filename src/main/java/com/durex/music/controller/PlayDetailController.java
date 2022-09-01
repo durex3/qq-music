@@ -105,7 +105,7 @@ public class PlayDetailController implements Initializable {
 
         preBtn.setOnMouseClicked(event -> MusicPlayer.playPreMusic());
         nextBtn.setOnMouseClicked(event -> MusicPlayer.playNextMusic());
-        bottomPlayListNum.textProperty().bind(MusicPlayer.getCurrentPlayListNum());
+        bottomPlayListNum.textProperty().bind(MusicPlayer.getMusicPlayList().sizeProperty());
         // 当前播放歌曲的图片
         MusicPlayer.getCurMusicPlayImage().addListener((observableValue, o, n) ->
                 curMusicPlayImage.setImage(new Image(n.getUrl(), 350, 350, false, false, true)));

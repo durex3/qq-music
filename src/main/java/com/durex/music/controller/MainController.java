@@ -126,13 +126,13 @@ public class MainController implements Initializable {
         MusicPlayer.setCurrMusicProgress(currMusicProgress);
         preBtn.setOnMouseClicked(event -> MusicPlayer.playPreMusic());
         nextBtn.setOnMouseClicked(event -> MusicPlayer.playNextMusic());
-        bottomPlayListNum.textProperty().bind(MusicPlayer.getCurrentPlayListNum());
-        playListNum.textProperty().bind(MusicPlayer.getCurrentPlayListNum());
-        playListView.setItems(MusicPlayer.getPlayList());
+        bottomPlayListNum.textProperty().bind(MusicPlayer.getMusicPlayList().sizeProperty());
+        playListNum.textProperty().bind(MusicPlayer.getMusicPlayList().sizeProperty());
+        playListView.setItems(MusicPlayer.getMusicPlayList().getMusicPaneList());
         playListView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 final int selectedIndex = playListView.getSelectionModel().getSelectedIndex();
-                MusicPlayer.play(selectedIndex, MusicPlayer.getTablePlayList().get(selectedIndex));
+                MusicPlayer.play(selectedIndex, MusicPlayer.getMusicPlayList().getMusicPropertyList().get(selectedIndex));
             }
         });
 
