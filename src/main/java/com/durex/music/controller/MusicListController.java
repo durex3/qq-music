@@ -1,27 +1,25 @@
 package com.durex.music.controller;
 
-import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.MusicPlayer;
 import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.qq.Music;
 import com.durex.music.model.qq.Singer;
 import com.durex.music.model.qq.SongDetail;
 import com.durex.music.ui.MusicPlayPane;
+import com.durex.music.ui.MusicNameTableCell;
 import com.durex.music.utils.TimeUtils;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.util.List;
@@ -49,36 +47,7 @@ public class MusicListController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        name.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(Label nameLabel, boolean empty) {
-                super.updateItem(nameLabel, empty);
-                if (nameLabel != null && !empty) {
-                    final MusicProperty music = musicListTable.getItems().get(this.getIndex());
-                    HBox hBox = new HBox();
-                    hBox.setSpacing(5);
-                    hBox.setAlignment(Pos.CENTER_LEFT);
-                    nameLabel.setTextFill(music.getName().getTextFill());
-                    hBox.getChildren().add(nameLabel);
-                    if (music.isVip()) {
-                        StackPane stackPane = new StackPane();
-                        Rectangle rectangle = new Rectangle(20, 12);
-                        rectangle.setFill(Color.WHITE);
-                        rectangle.setStroke(MusicConstant.MENU_SELECTED_COLOR);
-                        Label vipLabel = new Label("vip");
-                        vipLabel.setFont(Font.font(10));
-                        vipLabel.setTextFill(MusicConstant.MENU_SELECTED_COLOR);
-                        stackPane.getChildren().addAll(rectangle, vipLabel);
-                        hBox.getChildren().add(stackPane);
-                    }
-
-                    if (music.isNotCanPlay()) {
-                        nameLabel.setTextFill(Color.web("#a6a6a6"));
-                    }
-                    this.setGraphic(hBox);
-                }
-            }
-        });
+        name.setCellFactory(column -> new MusicNameTableCell());
         singer.setCellValueFactory(new PropertyValueFactory<>("singer"));
         album.setCellValueFactory(new PropertyValueFactory<>("albumName"));
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
