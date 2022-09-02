@@ -46,7 +46,7 @@ public class MusicPlayer {
     private static RXMediaProgressBar currMusicProgress;
 
     public static synchronized void play(MusicProperty music) {
-        final String playUrl = MusicService.getMusicPlay(music.getMid());
+        final String playUrl = MusicService.getMusicPlay(music.getId());
         if (playUrl == null || playUrl.isBlank()) {
             return;
         }
@@ -63,7 +63,7 @@ public class MusicPlayer {
             final Image image = new Image(imageUrl, 40, 40, false, false, true);
             CUR_MUSIC_PLAY_IMAGE.set(image);
 
-            CUR_MUSIC_PLAY_MID.set(music.getMid());
+            CUR_MUSIC_PLAY_MID.set(music.getId());
             CUR_MUSIC_PLAY_NAME.set(music.getName().getText() + " - " + music.getSinger().getText());
             CUR_MUSIC_PLAY_ALBUM.set(music.getAlbumName().getText());
             CUR_MUSIC_TOTAL_SECONDS.set(music.getDuration().getText());

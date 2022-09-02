@@ -2,7 +2,6 @@
 package com.durex.music.response.qq;
 
 import com.durex.music.model.qq.Banner;
-import lombok.Data;
 
 import java.util.List;
 

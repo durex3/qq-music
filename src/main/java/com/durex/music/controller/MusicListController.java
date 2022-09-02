@@ -68,7 +68,7 @@ public class MusicListController implements Initializable {
         } else {
             musicList.forEach(music -> {
                 MusicProperty musicProperty = new MusicProperty();
-                musicProperty.setId(music.getAlbumid());
+                musicProperty.setId(music.getSongmid());
 
                 musicProperty.setName(new Label(music.getSongname()));
                 String singerName = music.getSinger().stream().map(Singer::getName).collect(Collectors.joining("/"));
@@ -80,14 +80,13 @@ public class MusicListController implements Initializable {
                 albumNameLabel.setTextFill(Color.BLACK);
                 musicProperty.setAlbumName(albumNameLabel);
 
-                musicProperty.setMid(music.getSongmid());
                 final Label intervalLabel = new Label(TimeUtils.format((double) music.getInterval()));
                 intervalLabel.setTextFill(Color.BLACK);
                 musicProperty.setDuration(intervalLabel);
                 musicProperty.setInterval(music.getInterval());
                 musicProperty.setMsgid(music.getMsgid());
                 musicProperty.setAlbummid(music.getAlbummid());
-                musicProperty.setPay(music.getPay());
+                musicProperty.setPayplay(music.getPay().getPayplay());
                 musicPropertyList.add(musicProperty);
             });
         }

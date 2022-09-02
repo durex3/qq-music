@@ -1,14 +1,12 @@
 package com.durex.music.model.qq;
 
-import java.io.Serializable;
-
-public class SingerDetail implements Serializable {
+public class SingerDetail {
     private int id;
     private String mid;
     private String name;
     private String title;
     private int type;
-    private int uin;
+    private long uin;
     private String pmid;
 
     public void setId(int id) {
@@ -51,12 +49,12 @@ public class SingerDetail implements Serializable {
         return type;
     }
 
-    public void setUin(int uin) {
-        this.uin = uin;
+    public long getUin() {
+        return uin;
     }
 
-    public int getUin() {
-        return uin;
+    public void setUin(long uin) {
+        this.uin = uin;
     }
 
     public void setPmid(String pmid) {
@@ -65,19 +63,5 @@ public class SingerDetail implements Serializable {
 
     public String getPmid() {
         return pmid;
-    }
-
-    @Override
-    public String toString() {
-        return
-                "SingerItem{" +
-                        "id = '" + id + '\'' +
-                        ",mid = '" + mid + '\'' +
-                        ",name = '" + name + '\'' +
-                        ",title = '" + title + '\'' +
-                        ",type = '" + type + '\'' +
-                        ",uin = '" + uin + '\'' +
-                        ",pmid = '" + pmid + '\'' +
-                        "}";
     }
 }

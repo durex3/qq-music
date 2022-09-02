@@ -27,7 +27,7 @@ public class JsonMapper {
         try {
             return src instanceof String ? (String) src : OBJECT_MAPPER.writeValueAsString(src);
         } catch (Exception e) {
-            //log.warn("parse object to string exception error:{}", e);
+            log.warn("parse object to string exception error: ", e);
             return null;
         }
     }
@@ -39,7 +39,7 @@ public class JsonMapper {
         try {
             return (T) (typeReference.getType().equals(String.class) ? src : OBJECT_MAPPER.readValue(src, typeReference));
         } catch (Exception e) {
-            //log.warn("parse string to object exception, String:{}, TypeReference<T>:{}, error:{}", src, typeReference.getType(), e);
+            log.warn("parse string to object exception, String:{}, TypeReference<T>: {}, error: ", src, typeReference.getType(), e);
             return null;
         }
     }

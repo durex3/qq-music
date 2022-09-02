@@ -1,14 +1,14 @@
 package com.durex.music.model.bind;
 
-import com.durex.music.model.qq.Pay;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Label;
 
 public class MusicProperty {
 
-    private Long id;
-
-    private String mid;
+    /**
+     * 获取播放链接
+     */
+    private String id;
 
     private final SimpleObjectProperty<Label> name = new SimpleObjectProperty<>();
 
@@ -20,35 +20,30 @@ public class MusicProperty {
 
     private Long interval;
 
+    /**
+     * 获取图片
+     */
     private String albummid;
 
     private Long msgid;
 
-    private Pay pay;
+    private long payplay;
 
 
     public boolean isVip() {
-        return pay.getPayplay() == 1;
+        return payplay == 1;
     }
 
     public boolean isNotCanPlay() {
         return msgid == 1 || msgid == 3;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public String getMid() {
-        return mid;
-    }
-
-    public void setMid(String mid) {
-        this.mid = mid;
     }
 
     public Label getName() {
@@ -123,11 +118,11 @@ public class MusicProperty {
         this.msgid = msgid;
     }
 
-    public Pay getPay() {
-        return pay;
+    public long getPayplay() {
+        return payplay;
     }
 
-    public void setPay(Pay pay) {
-        this.pay = pay;
+    public void setPayplay(long payplay) {
+        this.payplay = payplay;
     }
 }
