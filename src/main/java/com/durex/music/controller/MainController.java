@@ -3,12 +3,12 @@ package com.durex.music.controller;
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.MusicPlayer;
 import com.durex.music.ui.MainPane;
+import com.durex.music.ui.RecommendPane;
 import com.durex.music.ui.SoundPane;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.animation.Animation;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
 import javafx.scene.control.ContextMenu;
@@ -30,9 +30,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -169,12 +167,7 @@ public class MainController implements Initializable {
     @FXML
     public void handleRecommendClicked(MouseEvent e) {
         setMenuStyle((Pane) e.getSource());
-        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/recommend.fxml")));
-        try {
-            MainPane.getScrollPane().setContent(fxmlLoader.load());
-        } catch (IOException ex) {
-            log.error("加载推荐页面失败: ", ex);
-        }
+        MainPane.getScrollPane().setContent(RecommendPane.load());
     }
 
     @FXML

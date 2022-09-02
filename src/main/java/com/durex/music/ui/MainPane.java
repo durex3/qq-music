@@ -61,7 +61,7 @@ public class MainPane {
             loadWindowTool(playDetail, Color.WHITE);
 
             // 加载推荐内容面板
-            scrollPane.setContent(FXMLLoader.load(Objects.requireNonNull(MainPane.class.getResource("/fxml/recommend.fxml"))));
+            scrollPane.setContent(RecommendPane.load());
         } catch (IOException e) {
             log.error("初始化主面板失败: ", e);
             throw new MusicException(e);
