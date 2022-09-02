@@ -5,10 +5,11 @@ import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.qq.Music;
 import com.durex.music.model.qq.Singer;
 import com.durex.music.model.qq.SongDetail;
-import com.durex.music.ui.MusicPlayPane;
-import com.durex.music.ui.MusicNameTableCell;
+import com.durex.music.ui.MusicPlayListCell;
+import com.durex.music.ui.MusicTableNameCell;
 import com.durex.music.utils.TimeUtils;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
@@ -33,7 +35,7 @@ public class MusicListController implements Initializable {
     @FXML
     private TableColumn<MusicProperty, Integer> id;
     @FXML
-    private TableColumn<MusicProperty, Label> name;
+    private TableColumn<MusicProperty, HBox> name;
     @FXML
     private TableColumn<MusicProperty, Label> singer;
     @FXML
@@ -46,8 +48,11 @@ public class MusicListController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        name.setCellFactory(column -> new MusicNameTableCell());
+        name.setCellValueFactory(cell -> {
+            final SimpleObjectProperty<HBox> property = new SimpleObjectProperty<>();
+            property.set(MusicTableNameCell.build(cell.getValue()));
+            return property;
+        });
         singer.setCellValueFactory(new PropertyValueFactory<>("singer"));
         album.setCellValueFactory(new PropertyValueFactory<>("albumName"));
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
@@ -115,9 +120,8 @@ public class MusicListController implements Initializable {
 
             for (MusicProperty musicProperty : musicPropertyList) {
                 MusicPlayer.getMusicPlayList().getMusicPropertyList().add(musicProperty);
-                AnchorPane anchorPane = MusicPlayPane.build(musicProperty);
-                MusicPlayPane.bind(anchorPane, musicProperty);
-                MusicPlayer.getMusicPlayList().getMusicPaneList().add(anchorPane);
+                AnchorPane musicPlayListCell = MusicPlayListCell.build(musicProperty);
+                MusicPlayer.getMusicPlayList().getMusicPaneList().add(musicPlayListCell);
             }
 
             MusicPlayer.getMusicPlayList().setSize(String.valueOf(MusicPlayer.getMusicPlayList().getMusicPropertyList().size()));

@@ -9,19 +9,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 /**
  * @author liugelong
  * @date 2022/8/25 16:04
  */
-public class MusicPlayPane {
+public class MusicPlayListCell {
 
-    private MusicPlayPane() {
+    private MusicPlayListCell() {
 
     }
 
@@ -51,28 +48,18 @@ public class MusicPlayPane {
         HBox musicNameHBox = new HBox();
         musicNameHBox.setSpacing(5);
         final Label musicNameLabel = new Label(music.getName().getText());
-        musicNameLabel.setId("play-list-music-name");
-        musicNameLabel.setTextFill(Color.BLACK);
         musicNameLabel.setMaxWidth(100);
+        musicNameLabel.textFillProperty().bind(music.getName().textFillProperty());
         musicNameHBox.getChildren().add(musicNameLabel);
 
         if (music.isVip()) {
-            StackPane stackPane = new StackPane();
-            Rectangle rectangle = new Rectangle(20, 12);
-            rectangle.setFill(Color.WHITE);
-            rectangle.setStroke(MusicConstant.MENU_SELECTED_COLOR);
-            Label vipLabel = new Label("vip");
-            vipLabel.setFont(Font.font(10));
-            vipLabel.setTextFill(MusicConstant.MENU_SELECTED_COLOR);
-            stackPane.getChildren().addAll(rectangle, vipLabel);
-            musicNameHBox.getChildren().add(stackPane);
+            musicNameHBox.getChildren().add(MusicVipPane.build());
         }
 
         Label singerLabel = new Label(music.getSinger().getText());
         singerLabel.setMaxWidth(150);
-        singerLabel.setId("play-list-singer");
         singerLabel.setFont(Font.font(14));
-        singerLabel.setTextFill(Color.BLACK);
+        singerLabel.textFillProperty().bind(music.getSinger().textFillProperty());
         musicNameAndSingerVBox.getChildren().addAll(musicNameHBox, singerLabel);
 
         musicInfoHBox.getChildren().addAll(musicImage, musicNameAndSingerVBox);
@@ -82,18 +69,11 @@ public class MusicPlayPane {
         musicDurationHBox.setPrefHeight(50);
         musicDurationHBox.setAlignment(Pos.CENTER_LEFT);
         Label musicDuration = new Label(TimeUtils.format(Double.valueOf(music.getInterval())));
-        musicDuration.setId("play-list-music-duration");
-        musicDuration.setTextFill(Color.BLACK);
+        musicDuration.textFillProperty().bind(music.getDuration().textFillProperty());
         musicDurationHBox.getChildren().add(musicDuration);
         AnchorPane.setRightAnchor(musicDurationHBox, 0.0);
 
         anchorPane.getChildren().addAll(musicInfoHBox, musicDurationHBox);
         return anchorPane;
-    }
-
-    public static void bind(AnchorPane anchorPane, MusicProperty musicProperty) {
-        ((Label) anchorPane.lookup("#play-list-music-name")).textFillProperty().bind(musicProperty.getName().textFillProperty());
-        ((Label) anchorPane.lookup("#play-list-singer")).textFillProperty().bind(musicProperty.getSinger().textFillProperty());
-        ((Label) anchorPane.lookup("#play-list-music-duration")).textFillProperty().bind(musicProperty.getDuration().textFillProperty());
     }
 }
