@@ -27,9 +27,6 @@ import java.util.List;
 @Slf4j
 public class RecommendService {
 
-    private static final List<RecommendPlay> SONG_LIST = new ArrayList<>();
-
-
     private RecommendService() {
     }
 
@@ -40,9 +37,6 @@ public class RecommendService {
      * @return {@link  List<RecommendPlay>}
      */
     public static List<RecommendPlay> getRecommendSongList() {
-        if (!SONG_LIST.isEmpty()) {
-            return SONG_LIST;
-        }
 
         String url = MusicConstant.QQ_MUSIC_HOST + "/recommend/playlist/u";
         HttpClient client = HttpClient.newBuilder().build();
@@ -52,13 +46,12 @@ public class RecommendService {
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             RecommendPlayListUResp recommendPlayListUResp = JsonMapper.string2Object(response.body(), new TypeReference<>() {
             });
-            final List<RecommendPlay> songList = recommendPlayListUResp.getData().getList();
-            SONG_LIST.addAll(songList);
+            return recommendPlayListUResp.getData().getList();
         } catch (IOException | InterruptedException e) {
             log.error("获取推荐歌单失败: ", e);
         }
 
-        return SONG_LIST;
+        return new ArrayList<>();
     }
 
     /**

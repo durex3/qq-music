@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -40,8 +39,6 @@ public class RecommendController implements Initializable {
     private SongDetailController controller = null;
     private Parent songDetail = null;
 
-    private final List<VBox> vBoxList = new ArrayList<>();
-
     @FXML
     private TilePane songListPane;
     @FXML
@@ -52,20 +49,15 @@ public class RecommendController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initCarousel(RecommendService.getBannerList());
-
-        if (vBoxList.isEmpty()) {
-            final List<RecommendPlay> songList = RecommendService.getRecommendSongList();
-            vBoxList.addAll(buildSongList(songList));
-            final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml/song-detail.fxml")));
-            try {
-                songDetail = fxmlLoader.load();
-                controller = fxmlLoader.getController();
-            } catch (IOException e) {
-                log.error("加载歌单详情页面失败: ", e);
-            }
+        final List<RecommendPlay> songList = RecommendService.getRecommendSongList();
+        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml/song-detail.fxml")));
+        try {
+            songDetail = fxmlLoader.load();
+            controller = fxmlLoader.getController();
+        } catch (IOException e) {
+            log.error("加载歌单详情页面失败: ", e);
         }
-
-        songListPane.getChildren().addAll(vBoxList);
+        songListPane.getChildren().addAll(buildSongList(songList));
     }
 
     private List<VBox> buildSongList(List<RecommendPlay> songList) {
@@ -101,24 +93,12 @@ public class RecommendController implements Initializable {
             RXCarouselPane pane = new RXCarouselPane(new ImageView(image));
             carousel.getPaneList().add(pane);
         });
-        //给轮播图设置动画类型;
-        //CarouselAnimation 是接口. AnimVerBlinds是实现类
-        //所有的实现类都在 com.leewyatt.rxcontrols.animation.carousel.*;
+        // 给轮播图设置动画类型
         CarouselAnimation anim = new AnimAround();
         carousel.setCarouselAnimation(anim);
-        //设置页面切换的动画时间
-        //carousel.setAnimationTime(Duration.millis(600));
-        //设置导航条为显示
-        //carousel.setNavDisplayMode(DisplayMode.SHOW);
         //设置前进后退按钮为 鼠标移入显示. 鼠标移除隐藏
         carousel.setArrowDisplayMode(DisplayMode.AUTO);
-        //设置当鼠标移入轮播图时停止自动播放
-        //carousel.setHoverPause(true);
-        //设置每一页的显示时间
-        //carousel.setShowTime(Duration.millis(1500));
-        //设置初始选中下标为2的页面
-        //carousel.setSelectedIndex(2);
-        //设置自动播放/切换 轮播图
+        // 设置自动播放/切换 轮播图
         carousel.setAutoSwitch(true);
     }
 }
