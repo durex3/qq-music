@@ -19,13 +19,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="root" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.MainController">
+<AnchorPane id="root" minHeight="690.0" minWidth="1020.0" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.MainController">
    <children>
       <StackPane>
          <children>
-            <AnchorPane fx:id="mainPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1020.0" stylesheets="@../css/main.css">
+            <AnchorPane fx:id="mainPane" stylesheets="@../css/main.css">
                 <children>
-                    <AnchorPane id="left-Menu-pane" prefHeight="690.0" prefWidth="210.0" stylesheets="@../css/main.css">
+                    <AnchorPane id="left-Menu-pane" prefHeight="690.0" prefWidth="210.0" stylesheets="@../css/main.css" AnchorPane.leftAnchor="0.0">
                         <children>
                             <VBox id="logo-h" prefHeight="50.0" prefWidth="105.0" stylesheets="@../css/main.css" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="20.0">
                                 <children>
@@ -98,7 +98,7 @@
                             </VBox>
                         </children>
                     </AnchorPane>
-                    <AnchorPane id="content-pane" layoutX="210.0" prefHeight="690.0" prefWidth="810.0" stylesheets="@../css/main.css" AnchorPane.bottomAnchor="0.0">
+                    <AnchorPane id="content-pane" fx:id="leftPane" minHeight="690.0" minWidth="810.0" prefHeight="690.0" prefWidth="810.0" stylesheets="@../css/main.css" AnchorPane.leftAnchor="210.0">
                         <children>
                             <AnchorPane prefHeight="70.0" prefWidth="810.0" AnchorPane.topAnchor="0.0">
                                 <children>

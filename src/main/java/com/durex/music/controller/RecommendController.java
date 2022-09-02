@@ -48,6 +48,11 @@ public class RecommendController implements Initializable {
     private final List<MusicProperty> newMusicPropertyList = new ArrayList<>();
     private final List<AnchorPane> curShowNewMusicList = new ArrayList<>();
 
+    private int lastIndex = 0;
+    private final int size = 6;
+
+    private boolean isForward = true;
+
     @FXML
     private TilePane songListPane;
     @FXML
@@ -72,8 +77,20 @@ public class RecommendController implements Initializable {
 
     @FXML
     public void handleMusicForwardClicked(MouseEvent e) {
-        updateNewMusic(6);
+        curShowNewMusicList.forEach(musicPane -> musicListPane.getChildren().remove(musicPane));
+        curShowNewMusicList.clear();
+        newMusicForward();
+        setMusicListPane();
     }
+
+    @FXML
+    public void handleMusicBackClicked(MouseEvent e) {
+        curShowNewMusicList.forEach(musicPane -> musicListPane.getChildren().remove(musicPane));
+        curShowNewMusicList.clear();
+        newMusicBack();
+        setMusicListPane();
+    }
+
 
     private void initNewMusicList() {
 
@@ -99,7 +116,7 @@ public class RecommendController implements Initializable {
 
             final Label singerNameLabel = new Label(singerName);
             musicProperty.setSinger(singerNameLabel);
-            musicProperty.setAlbumName(new Label(musicDetail.getTitle()));
+            musicProperty.setAlbumName(new Label(musicDetail.getAlbum().getName()));
             final Label intervalLabel = new Label(TimeUtils.format((double) musicDetail.getInterval()));
             musicProperty.setDuration(intervalLabel);
             musicProperty.setInterval(musicProperty.getInterval());
@@ -110,23 +127,61 @@ public class RecommendController implements Initializable {
             newMusicPropertyList.add(musicProperty);
         });
 
-        updateNewMusic(0);
-    }
-
-    private void updateNewMusic(int index) {
-        curShowNewMusicList.forEach(musicPane -> musicListPane.getChildren().remove(musicPane));
-        for (int i = 0; i < 6; i++) {
-            curShowNewMusicList.add(MusicPane.build(newMusicPropertyList.get(index + i)));
+        for (int i = lastIndex; i < size; i++) {
+            curShowNewMusicList.add(MusicPane.build(newMusicPropertyList.get(i)));
         }
-
-        musicListPane.add(curShowNewMusicList.get(index), 0, 0);
-        musicListPane.add(curShowNewMusicList.get(index + 1), 0, 1);
-        musicListPane.add(curShowNewMusicList.get(index + 2), 0, 2);
-        musicListPane.add(curShowNewMusicList.get(index + 3), 1, 0);
-        musicListPane.add(curShowNewMusicList.get(index + 4), 1, 1);
-        musicListPane.add(curShowNewMusicList.get(index + 5), 1, 2);
+        lastIndex = size - 1;
+        setMusicListPane();
     }
 
+    private void newMusicForward() {
+        int newMusicSize = newMusicPropertyList.size();
+        if (!isForward) {
+            isForward = true;
+            lastIndex = (lastIndex + size - 1) % newMusicSize;
+        }
+        // 读取 size 个值 逆向读取
+        int curIndex = 0;
+        for (int i = lastIndex; i < lastIndex + size; i++) {
+            curIndex = (i + 1) % newMusicSize;
+            curShowNewMusicList.add(MusicPane.build(newMusicPropertyList.get(curIndex)));
+        }
+        lastIndex = curIndex;
+    }
+
+    private void newMusicBack() {
+        int newMusicSize = newMusicPropertyList.size();
+
+        if (isForward) {
+            isForward = false;
+            lastIndex = (lastIndex - size + 1 + newMusicSize) % newMusicSize;
+        }
+        // 读取 size 个值 如果超过了最大数量则从头读取
+        int curIndex = lastIndex;
+        for (int i = lastIndex; i > lastIndex - size; i--) {
+            curIndex = (i - 1 + newMusicSize) % newMusicSize;
+            curShowNewMusicList.add(MusicPane.build(newMusicPropertyList.get(curIndex)));
+        }
+        lastIndex = curIndex;
+    }
+
+    private void setMusicListPane() {
+        if (isForward) {
+            musicListPane.add(curShowNewMusicList.get(0), 0, 0);
+            musicListPane.add(curShowNewMusicList.get(1), 0, 1);
+            musicListPane.add(curShowNewMusicList.get(2), 0, 2);
+            musicListPane.add(curShowNewMusicList.get(3), 1, 0);
+            musicListPane.add(curShowNewMusicList.get(4), 1, 1);
+            musicListPane.add(curShowNewMusicList.get(5), 1, 2);
+        } else {
+            musicListPane.add(curShowNewMusicList.get(5), 0, 0);
+            musicListPane.add(curShowNewMusicList.get(4), 0, 1);
+            musicListPane.add(curShowNewMusicList.get(3), 0, 2);
+            musicListPane.add(curShowNewMusicList.get(2), 1, 0);
+            musicListPane.add(curShowNewMusicList.get(1), 1, 1);
+            musicListPane.add(curShowNewMusicList.get(0), 1, 2);
+        }
+    }
 
     private void initSongList() {
         final List<RecommendPlay> songList = RecommendService.getRecommendSongList();
@@ -162,7 +217,7 @@ public class RecommendController implements Initializable {
         final List<Banner> bannerList = RecommendService.getBannerList();
         // 为了保持更佳的切换效果,建议所有的RXCarouselPane和RXCarousel大小保持一致
         bannerList.forEach(banner -> {
-            final Image image = new Image(banner.getPicUrl(), 720, 200, true, false, true);
+            final Image image = new Image(banner.getPicUrl(), 730, 200, true, false, true);
             RXCarouselPane pane = new RXCarouselPane(new ImageView(image));
             carousel.getPaneList().add(pane);
         });

@@ -45,11 +45,14 @@ public class MusicPane {
         musicNameHBox.setSpacing(5);
         final Label musicNameLabel = new Label(music.getName().getText());
         musicNameLabel.setFont(Font.font(14));
+        musicNameLabel.setMaxWidth(280);
         musicNameLabel.textFillProperty().bind(music.getName().textFillProperty());
         musicNameHBox.getChildren().add(musicNameLabel);
 
         Label singerLabel = new Label(music.getSinger().getText());
         singerLabel.setFont(Font.font(14));
+        singerLabel.setMaxWidth(280);
+
         music.getSinger().setTextFill(Color.web("#777777"));
         singerLabel.textFillProperty().bind(music.getSinger().textFillProperty());
         musicNameAndSingerVBox.getChildren().addAll(musicNameHBox, singerLabel);

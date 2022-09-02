@@ -43,12 +43,12 @@ public class SongVBox {
         StackPane stackPane = new StackPane();
 
         // 封面图
-        RXAvatar songImage = new RXAvatar(new Image(imageUrl, 170, 170, false, false, true));
+        RXAvatar songImage = new RXAvatar(new Image(imageUrl, 167, 167, false, false, true));
         songImage.setId("song-image");
         songImage.setUserData(id);
         songImage.setShapeType(RXAvatar.Type.SQUARE);
-        songImage.setPrefWidth(170);
-        songImage.setPrefHeight(170);
+        songImage.setPrefWidth(167);
+        songImage.setPrefHeight(167);
 
         Rectangle clip = new Rectangle(
                 songImage.getPrefWidth(), songImage.getPrefHeight()

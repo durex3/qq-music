@@ -10,10 +10,10 @@
       <TableView id="music-table" fx:id="musicListTable" stylesheets="@../css/music-list.css" AnchorPane.topAnchor="0.0" StackPane.alignment="CENTER_LEFT">
         <columns>
             <TableColumn fx:id="id" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="id" visible="false" />
-          <TableColumn fx:id="name" maxWidth="330.0" minWidth="330.0" prefWidth="330.0" text="歌曲" />
-          <TableColumn fx:id="singer" maxWidth="170.0" minWidth="170.0" prefWidth="170.0" text="歌手" />
-            <TableColumn fx:id="album" maxWidth="170.0" minWidth="170.0" prefWidth="170.0" text="专辑" />
-            <TableColumn fx:id="duration" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="时长" />
+          <TableColumn fx:id="name" maxWidth="313.0" minWidth="313.0" prefWidth="313.0" text="歌曲" />
+          <TableColumn fx:id="singer" maxWidth="168.0" minWidth="168.0" prefWidth="168.0" text="歌手" />
+            <TableColumn fx:id="album" maxWidth="175.0" minWidth="175.0" prefWidth="175.0" text="专辑" />
+            <TableColumn fx:id="duration" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="时长" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

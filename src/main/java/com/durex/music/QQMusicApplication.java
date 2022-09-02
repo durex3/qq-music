@@ -16,6 +16,8 @@ public class QQMusicApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         MainPane.load(stage);
+        stage.setMinWidth(1020);
+        stage.setMinHeight(690);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(false);
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/logo.png"))));
