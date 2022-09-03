@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
 public class RecommendController implements Initializable {
 
     private final List<MusicProperty> newMusicPropertyList = new ArrayList<>();
-    private final List<AnchorPane> curShowNewMusicList = new ArrayList<>();
+    private final List<VBox> curShowNewMusicList = new ArrayList<>();
 
     private int lastIndex = 0;
     private final int size = 6;

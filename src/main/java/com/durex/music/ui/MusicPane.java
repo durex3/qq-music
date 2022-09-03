@@ -21,8 +21,9 @@ public class MusicPane {
     private MusicPane() {
     }
 
-    public static AnchorPane build(MusicProperty music) {
-        AnchorPane anchorPane = new AnchorPane();
+    public static VBox build(MusicProperty music) {
+        VBox vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER_LEFT);
         // 歌曲图片
         HBox musicInfoHBox = new HBox();
         musicInfoHBox.setAlignment(Pos.CENTER_LEFT);
@@ -59,8 +60,8 @@ public class MusicPane {
 
         musicInfoHBox.getChildren().addAll(musicImage, musicNameAndSingerVBox);
 
-        anchorPane.getChildren().add(musicInfoHBox);
+        vBox.getChildren().add(musicInfoHBox);
 
-        return anchorPane;
+        return vBox;
     }
 }
