@@ -1,5 +1,8 @@
 package com.durex.music.controller;
 
+import com.durex.music.model.MusicPlayer;
+import com.durex.music.model.PlayListContext;
+import com.durex.music.model.PlayType;
 import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.qq.Banner;
 import com.durex.music.model.qq.MusicDetail;
@@ -33,10 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -48,7 +48,7 @@ public class RecommendController implements Initializable {
     private final List<MusicProperty> newMusicPropertyList = new ArrayList<>();
     private final List<VBox> curShowNewMusicList = new ArrayList<>();
 
-    private int lastIndex = 0;
+    private int lastMusicShowIndex = 0;
     private final int size = 6;
 
     private boolean isForward = true;
@@ -119,7 +119,7 @@ public class RecommendController implements Initializable {
             musicProperty.setAlbumName(new Label(musicDetail.getAlbum().getName()));
             final Label intervalLabel = new Label(TimeUtils.format((double) musicDetail.getInterval()));
             musicProperty.setDuration(intervalLabel);
-            musicProperty.setInterval(musicProperty.getInterval());
+            musicProperty.setInterval((long) musicDetail.getInterval());
             musicProperty.setAlbummid(musicDetail.getAlbum().getMid());
             musicProperty.setMsgid((long) musicDetail.getAction().getMsgid());
             musicProperty.setPayplay(musicDetail.getPay().getPayPlay());
@@ -127,26 +127,49 @@ public class RecommendController implements Initializable {
             newMusicPropertyList.add(musicProperty);
         });
 
-        for (int i = lastIndex; i < size; i++) {
+        for (int i = lastMusicShowIndex; i < size; i++) {
             curShowNewMusicList.add(MusicPane.build(newMusicPropertyList.get(i)));
         }
-        lastIndex = size - 1;
+        lastMusicShowIndex = size - 1;
         setMusicListPane();
+    }
+
+    private void bindPlayClicked() {
+        PlayListContext context = MusicPlayer.getMusicPlayList().getContext();
+
+        for (int i = 0; i < curShowNewMusicList.size(); i++) {
+            VBox vBox = curShowNewMusicList.get(i);
+            int curIndex = i;
+            vBox.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    if (context.getType() != PlayType.NEW_MUSIC) {
+                        MusicPlayer.refreshPlayList(PlayType.NEW_MUSIC, "-1", newMusicPropertyList);
+                    }
+                    int playListIndex;
+                    if (isForward) {
+                        playListIndex = (lastMusicShowIndex + 1 - size + curIndex) % newMusicPropertyList.size();
+                    } else {
+                        playListIndex = (lastMusicShowIndex + curIndex) % newMusicPropertyList.size();
+                    }
+                    MusicPlayer.play(playListIndex, newMusicPropertyList.get(playListIndex));
+                }
+            });
+        }
     }
 
     private void newMusicForward() {
         int newMusicSize = newMusicPropertyList.size();
         if (!isForward) {
             isForward = true;
-            lastIndex = (lastIndex + size - 1) % newMusicSize;
+            lastMusicShowIndex = (lastMusicShowIndex + size - 1) % newMusicSize;
         }
         // 读取 size 个值 逆向读取
         int curIndex = 0;
-        for (int i = lastIndex; i < lastIndex + size; i++) {
+        for (int i = lastMusicShowIndex; i < lastMusicShowIndex + size; i++) {
             curIndex = (i + 1) % newMusicSize;
             curShowNewMusicList.add(MusicPane.build(newMusicPropertyList.get(curIndex)));
         }
-        lastIndex = curIndex;
+        lastMusicShowIndex = curIndex;
     }
 
     private void newMusicBack() {
@@ -154,33 +177,26 @@ public class RecommendController implements Initializable {
 
         if (isForward) {
             isForward = false;
-            lastIndex = (lastIndex - size + 1 + newMusicSize) % newMusicSize;
+            lastMusicShowIndex = (lastMusicShowIndex - size + 1 + newMusicSize) % newMusicSize;
         }
         // 读取 size 个值 如果超过了最大数量则从头读取
-        int curIndex = lastIndex;
-        for (int i = lastIndex; i > lastIndex - size; i--) {
+        int curIndex = lastMusicShowIndex;
+        for (int i = lastMusicShowIndex; i > lastMusicShowIndex - size; i--) {
             curIndex = (i - 1 + newMusicSize) % newMusicSize;
             curShowNewMusicList.add(MusicPane.build(newMusicPropertyList.get(curIndex)));
         }
-        lastIndex = curIndex;
+        Collections.reverse(curShowNewMusicList);
+        lastMusicShowIndex = curIndex;
     }
 
     private void setMusicListPane() {
-        if (isForward) {
-            musicListPane.add(curShowNewMusicList.get(0), 0, 0);
-            musicListPane.add(curShowNewMusicList.get(1), 0, 1);
-            musicListPane.add(curShowNewMusicList.get(2), 0, 2);
-            musicListPane.add(curShowNewMusicList.get(3), 1, 0);
-            musicListPane.add(curShowNewMusicList.get(4), 1, 1);
-            musicListPane.add(curShowNewMusicList.get(5), 1, 2);
-        } else {
-            musicListPane.add(curShowNewMusicList.get(5), 0, 0);
-            musicListPane.add(curShowNewMusicList.get(4), 0, 1);
-            musicListPane.add(curShowNewMusicList.get(3), 0, 2);
-            musicListPane.add(curShowNewMusicList.get(2), 1, 0);
-            musicListPane.add(curShowNewMusicList.get(1), 1, 1);
-            musicListPane.add(curShowNewMusicList.get(0), 1, 2);
-        }
+        bindPlayClicked();
+        musicListPane.add(curShowNewMusicList.get(0), 0, 0);
+        musicListPane.add(curShowNewMusicList.get(1), 0, 1);
+        musicListPane.add(curShowNewMusicList.get(2), 0, 2);
+        musicListPane.add(curShowNewMusicList.get(3), 1, 0);
+        musicListPane.add(curShowNewMusicList.get(4), 1, 1);
+        musicListPane.add(curShowNewMusicList.get(5), 1, 2);
     }
 
     private void initSongList() {

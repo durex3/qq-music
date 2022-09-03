@@ -54,8 +54,7 @@ public class MusicPane {
         singerLabel.setFont(Font.font(14));
         singerLabel.setMaxWidth(280);
 
-        music.getSinger().setTextFill(Color.web("#777777"));
-        singerLabel.textFillProperty().bind(music.getSinger().textFillProperty());
+        singerLabel.setTextFill(Color.web("#777777"));
         musicNameAndSingerVBox.getChildren().addAll(musicNameHBox, singerLabel);
 
         musicInfoHBox.getChildren().addAll(musicImage, musicNameAndSingerVBox);

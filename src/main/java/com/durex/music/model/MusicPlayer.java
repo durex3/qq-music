@@ -5,6 +5,7 @@ import com.durex.music.model.bind.CurrPlaySecondsBinding;
 import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.bind.PlayListMusic;
 import com.durex.music.service.MusicService;
+import com.durex.music.ui.MusicPlayListCell;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -15,11 +16,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.util.List;
 import java.util.Objects;
 
 public class MusicPlayer {
@@ -45,7 +48,7 @@ public class MusicPlayer {
     private static MediaPlayer player;
     private static RXMediaProgressBar currMusicProgress;
 
-    public static synchronized void play(MusicProperty music) {
+    private static synchronized void play(MusicProperty music) {
         final String playUrl = MusicService.getMusicPlay(music.getId());
         if (playUrl == null || playUrl.isBlank()) {
             return;
@@ -102,6 +105,7 @@ public class MusicPlayer {
 
             PLAY_BUTTON_SELECTED.set(true);
         });
+        setCurrPlayMusicColor(music, MusicConstant.MENU_SELECTED_COLOR);
         player.play();
     }
 
@@ -120,7 +124,6 @@ public class MusicPlayer {
             if (lastMusic != null) {
                 setCurrPlayMusicColor(lastMusic, Color.BLACK);
             }
-            setCurrPlayMusicColor(music, MusicConstant.MENU_SELECTED_COLOR);
             MUSIC_PLAY_LIST.setLastMusicIndex(index);
             play(music);
         }
@@ -160,7 +163,6 @@ public class MusicPlayer {
             nextMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
         }
 
-        setCurrPlayMusicColor(nextMusic, MusicConstant.MENU_SELECTED_COLOR);
         MUSIC_PLAY_LIST.setLastMusicIndex(index);
         play(nextMusic);
     }
@@ -187,7 +189,6 @@ public class MusicPlayer {
             preMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
         }
 
-        setCurrPlayMusicColor(preMusic, MusicConstant.MENU_SELECTED_COLOR);
         MUSIC_PLAY_LIST.setLastMusicIndex(index);
         play(preMusic);
     }
@@ -197,6 +198,28 @@ public class MusicPlayer {
         music.getName().setTextFill(menuSelectedColor);
         music.getAlbumName().setTextFill(menuSelectedColor);
         music.getDuration().setTextFill(menuSelectedColor);
+    }
+
+    public static void refreshPlayList(PlayType type, String dataId, List<MusicProperty> musicPropertyList) {
+        MusicPlayer.getMusicPlayList().getMusicPropertyList().forEach(musicProperty -> {
+            if (musicProperty.getName().getTextFill() == MusicConstant.MENU_SELECTED_COLOR) {
+                setCurrPlayMusicColor(musicProperty, Color.BLACK);
+            }
+        });
+        MusicPlayer.getMusicPlayList().getMusicPropertyList().clear();
+        MusicPlayer.getMusicPlayList().getMusicPaneList().clear();
+        MusicPlayer.getMusicPlayList().getContext().setType(type);
+        MusicPlayer.getMusicPlayList().getContext().setDataId(dataId);
+
+        for (MusicProperty musicProperty : musicPropertyList) {
+            MusicPlayer.getMusicPlayList().getMusicPropertyList().add(musicProperty);
+            AnchorPane musicPlayListCell = MusicPlayListCell.build(musicProperty);
+            MusicPlayer.getMusicPlayList().getMusicPaneList().add(musicPlayListCell);
+        }
+
+        MusicPlayer.getMusicPlayList().setSize(String.valueOf(MusicPlayer.getMusicPlayList().getMusicPropertyList().size()));
+
+        MusicPlayer.getMusicPlayList().setLastMusicIndex(-1);
     }
 
     private static void disposeMediaPlayer() {

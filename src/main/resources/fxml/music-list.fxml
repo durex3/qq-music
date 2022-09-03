@@ -7,7 +7,7 @@
 
 <AnchorPane fx:id="musicListPane" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.MusicListController">
    <children>
-      <TableView id="music-table" fx:id="musicListTable" stylesheets="@../css/music-list.css" AnchorPane.topAnchor="0.0" StackPane.alignment="CENTER_LEFT">
+      <TableView id="music-table" fx:id="musicListTable" prefWidth="730.0" stylesheets="@../css/music-list.css" AnchorPane.topAnchor="0.0" StackPane.alignment="CENTER_LEFT">
         <columns>
             <TableColumn fx:id="id" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="id" visible="false" />
           <TableColumn fx:id="name" maxWidth="313.0" minWidth="313.0" prefWidth="313.0" text="歌曲" />

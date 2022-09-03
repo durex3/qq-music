@@ -1,6 +1,8 @@
 package com.durex.music.controller;
 
 import com.durex.music.model.MusicPlayer;
+import com.durex.music.model.PlayListContext;
+import com.durex.music.model.PlayType;
 import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.qq.Music;
 import com.durex.music.model.qq.Singer;
@@ -63,7 +65,8 @@ public class MusicListController implements Initializable {
     public void init(SongDetail songDetail) {
         this.songId = songDetail.getDissid();
         final List<Music> musicList = songDetail.getSonglist();
-        if (songDetail.getDissid() == MusicPlayer.getMusicPlayList().getCurrentSongId()) {
+        PlayListContext context = MusicPlayer.getMusicPlayList().getContext();
+        if (context.getType() == PlayType.SONG && context.getDataId().equals(String.valueOf(songId))) {
             musicPropertyList.addAll(MusicPlayer.getMusicPlayList().getMusicPropertyList());
         } else {
             musicList.forEach(music -> {
@@ -112,20 +115,10 @@ public class MusicListController implements Initializable {
 
     private void initPlayList() {
         // 不是当前播放列表的歌单
-        if (MusicPlayer.getMusicPlayList().getCurrentSongId() != songId) {
-            MusicPlayer.getMusicPlayList().getMusicPropertyList().clear();
-            MusicPlayer.getMusicPlayList().getMusicPaneList().clear();
-            MusicPlayer.getMusicPlayList().setCurrentSongId(songId);
-
-            for (MusicProperty musicProperty : musicPropertyList) {
-                MusicPlayer.getMusicPlayList().getMusicPropertyList().add(musicProperty);
-                AnchorPane musicPlayListCell = MusicPlayListCell.build(musicProperty);
-                MusicPlayer.getMusicPlayList().getMusicPaneList().add(musicPlayListCell);
-            }
-
-            MusicPlayer.getMusicPlayList().setSize(String.valueOf(MusicPlayer.getMusicPlayList().getMusicPropertyList().size()));
-
-            MusicPlayer.getMusicPlayList().setLastMusicIndex(-1);
+        PlayListContext context = MusicPlayer.getMusicPlayList().getContext();
+        if (context.getType() != PlayType.SONG || !context.getDataId().equals(String.valueOf(songId))) {
+            MusicPlayer.refreshPlayList(PlayType.SONG, String.valueOf(songId), musicPropertyList);
         }
     }
+
 }

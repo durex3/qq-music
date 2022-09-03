@@ -1,5 +1,6 @@
 package com.durex.music.model.bind;
 
+import com.durex.music.model.PlayListContext;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -15,11 +16,9 @@ public class PlayListMusic {
     private final ObservableList<MusicProperty> musicPropertyList = FXCollections.observableArrayList();
     private final ObservableList<AnchorPane> musicPaneList = FXCollections.observableArrayList();
 
-
-    // 当前播放队列的播放歌单 id
-    private final SimpleLongProperty currentSongId = new SimpleLongProperty(-1);
-
     private final SimpleStringProperty size = new SimpleStringProperty("0");
+
+    private final PlayListContext context = new PlayListContext();
 
     private int lastMusicIndex;
 
@@ -33,18 +32,6 @@ public class PlayListMusic {
 
     public ObservableList<AnchorPane> getMusicPaneList() {
         return musicPaneList;
-    }
-
-    public long getCurrentSongId() {
-        return currentSongId.get();
-    }
-
-    public SimpleLongProperty currentSongIdProperty() {
-        return currentSongId;
-    }
-
-    public void setCurrentSongId(long currentSongId) {
-        this.currentSongId.set(currentSongId);
     }
 
     public String getSize() {
@@ -65,5 +52,9 @@ public class PlayListMusic {
 
     public void setLastMusicIndex(int lastMusicIndex) {
         this.lastMusicIndex = lastMusicIndex;
+    }
+
+    public PlayListContext getContext() {
+        return context;
     }
 }
