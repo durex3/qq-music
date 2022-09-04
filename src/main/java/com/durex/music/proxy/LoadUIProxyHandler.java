@@ -1,5 +1,10 @@
 package com.durex.music.proxy;
 
+import com.durex.music.model.PaneType;
+import com.durex.music.ui.BasePagePane;
+import com.durex.music.ui.MainPane;
+import javafx.scene.layout.Pane;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -13,10 +18,11 @@ public class LoadUIProxyHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("Before invoke " + method.getName());
-        Object result = method.invoke(target, args);
-        System.out.println("After invoke " + method.getName());
+        BasePagePane pane = (BasePagePane) target;
+        if (pane.getType() == PaneType.MENU && args[0] != null) {
+            MainPane.setMenuStyle((Pane) args[0]);
+        }
 
-        return result;
+        return method.invoke(target, args);
     }
 }

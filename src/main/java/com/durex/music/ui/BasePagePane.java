@@ -1,8 +1,11 @@
 package com.durex.music.ui;
 
+import com.durex.music.model.PaneType;
 import javafx.scene.Parent;
 
-public interface BasePagePane<T> {
+public interface BasePagePane {
 
-    Parent load(T param);
+    Parent load(Object param);
+
+    PaneType getType();
 }

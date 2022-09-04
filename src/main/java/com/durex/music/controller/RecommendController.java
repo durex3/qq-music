@@ -1,6 +1,7 @@
 package com.durex.music.controller;
 
 import com.durex.music.model.MusicPlayer;
+import com.durex.music.model.PaneType;
 import com.durex.music.model.PlayListContext;
 import com.durex.music.model.PlayType;
 import com.durex.music.model.bind.MusicProperty;
@@ -210,7 +211,7 @@ public class RecommendController implements Initializable {
                 // 传递数据
                 RXAvatar image = (RXAvatar) event.getSource();
                 String dissId = image.getUserData().toString();
-                BasePagePane<String> pane = PaneFactory.newInstance(SongDetailPagePane.class);
+                BasePagePane pane = PaneFactory.newInstance(SongDetailPagePane.class);
                 Parent songDetail = pane.load(dissId);
                 if (songDetail != null) {
                     MainPane.getScrollPane().setContent(songDetail);

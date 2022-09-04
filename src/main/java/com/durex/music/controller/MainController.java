@@ -1,7 +1,7 @@
 package com.durex.music.controller;
 
-import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.MusicPlayer;
+import com.durex.music.model.PaneType;
 import com.durex.music.ui.*;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
@@ -12,7 +12,6 @@ import javafx.geometry.Bounds;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +30,6 @@ public class MainController implements Initializable {
 
     private double dragOffsetX;
     private double dragOffsetY;
-    private Pane curSelectedPane;
     private ContextMenu soundPopup;
 
     @FXML
@@ -69,9 +67,6 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // 默认选中的菜单
-        curSelectedPane = (Pane) mainPane.lookup("#recommend-pane");
-
         // 当前播放歌曲的图片
         curMusicPlayImage.imageProperty().bind(MusicPlayer.getCurMusicPlayImage());
         curMusicPlayImagePane.setOnMouseEntered(event -> {
@@ -153,27 +148,23 @@ public class MainController implements Initializable {
 
     @FXML
     public void handleRecommendClicked(MouseEvent e) {
-        setMenuStyle((Pane) e.getSource());
-        BasePagePane<Object> pane = PaneFactory.newInstance(RecommendPagePane.class);
-        MainPane.getScrollPane().setContent(pane.load(null));
+        BasePagePane pane = PaneFactory.newInstance(RecommendPagePane.class);
+        MainPane.getScrollPane().setContent(pane.load(MainPane.getMenuList().get(0)));
     }
 
     @FXML
     public void handleMusicClicked(MouseEvent e) {
-        setMenuStyle((Pane) e.getSource());
         MainPane.getScrollPane().setContent(new Label("音乐馆"));
     }
 
 
     @FXML
     public void handleVideoClicked(MouseEvent e) {
-        setMenuStyle((Pane) e.getSource());
         MainPane.getScrollPane().setContent(new Label("视频"));
     }
 
     @FXML
     public void handleRadioClicked(MouseEvent e) {
-        setMenuStyle((Pane) e.getSource());
         MainPane.getScrollPane().setContent(new Label("电台"));
     }
 
@@ -210,16 +201,6 @@ public class MainController implements Initializable {
     public void handleSoundPopupClick(MouseEvent e) {
         Bounds bounds = soundBtn.localToScreen(soundBtn.getBoundsInLocal());
         soundPopup.show(mainPane.getScene().getWindow(), bounds.getMinX() - 20, bounds.getMinY() - 165);
-    }
-
-    private void setMenuStyle(Pane source) {
-        curSelectedPane.setBackground(null);
-        curSelectedPane.getChildren().forEach(node -> ((Label) node).setTextFill(Color.BLACK));
-
-        source.getChildren().forEach(node -> ((Label) node).setTextFill(Color.WHITE));
-        source.setBackground(new Background(new BackgroundFill(MusicConstant.MENU_SELECTED_COLOR, MusicConstant.MENU_CORNER_RADII, null)));
-
-        this.curSelectedPane = source;
     }
 
     private Stage getStage() {

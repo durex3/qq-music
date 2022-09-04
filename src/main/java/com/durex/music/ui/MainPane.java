@@ -2,6 +2,7 @@ package com.durex.music.ui;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.exception.MusicException;
+import com.durex.music.model.PaneType;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -10,7 +11,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -18,6 +22,8 @@ import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -33,6 +39,8 @@ public class MainPane {
     private static Timeline hidePlayListAnim;
     private static Timeline showPlayDetailAnim;
     private static Timeline hidePlayDetailAnim;
+    private static final List<Pane> menuList = new ArrayList<>();
+    private static Pane curSelectedPane;
 
     private static final Font MENU = Font.loadFont(MainPane.class.getResourceAsStream("/font/qq-music-menu.ttf"), 25);
     private static final Font TOOL = Font.loadFont(MainPane.class.getResourceAsStream("/font/qq-music-tool.ttf"), 13);
@@ -58,7 +66,7 @@ public class MainPane {
             loadWindowTool(playDetail, Color.WHITE);
 
             // 加载推荐内容面板
-            BasePagePane<Object> pane = PaneFactory.newInstance(RecommendPagePane.class);
+            BasePagePane pane = PaneFactory.newInstance(RecommendPagePane.class);
             scrollPane.setContent(pane.load(null));
         } catch (IOException e) {
             log.error("初始化主面板失败: ", e);
@@ -69,6 +77,16 @@ public class MainPane {
         loadBottomPlayInfo(root);
         initAnim();
         stage.setScene(new Scene(root));
+    }
+
+    public static void setMenuStyle(Pane pane) {
+        curSelectedPane.setBackground(null);
+        curSelectedPane.getChildren().forEach(node -> ((Label) node).setTextFill(Color.BLACK));
+
+        pane.getChildren().forEach(node -> ((Label) node).setTextFill(Color.WHITE));
+        pane.setBackground(new Background(new BackgroundFill(MusicConstant.MENU_SELECTED_COLOR, MusicConstant.MENU_CORNER_RADII, null)));
+
+        curSelectedPane = pane;
     }
 
     public static ScrollPane getScrollPane() {
@@ -97,6 +115,18 @@ public class MainPane {
 
     public static Timeline getHidePlayDetailAnim() {
         return hidePlayDetailAnim;
+    }
+
+    public static Pane getCurSelectedPane() {
+        return curSelectedPane;
+    }
+
+    public static void setCurSelectedPane(Pane curSelectedPane) {
+        MainPane.curSelectedPane = curSelectedPane;
+    }
+
+    public static List<Pane> getMenuList() {
+        return menuList;
     }
 
     /**
@@ -136,7 +166,6 @@ public class MainPane {
         closeLabel.setText("\ue661;");
         closeLabel.setFont(TOOL);
         closeLabel.setTextFill(color);
-
     }
 
     /**
@@ -148,7 +177,9 @@ public class MainPane {
 
         // 默认选择推荐
         Pane recommendPane = (Pane) root.lookup("#recommend-pane");
-        recommendPane.setBackground(new Background(new BackgroundFill(MusicConstant.MENU_SELECTED_COLOR, MusicConstant.MENU_CORNER_RADII, null)));
+        curSelectedPane = recommendPane;
+        setMenuStyle(recommendPane);
+        menuList.add(recommendPane);
 
         Label recommendLabel = (Label) root.lookup("#recommend-label");
         recommendLabel.setTextFill(Color.WHITE);
@@ -159,19 +190,25 @@ public class MainPane {
         recommendText.setTextFill(Color.WHITE);
 
         // 音乐馆
+        Pane musicPane = (Pane) root.lookup("#music-pane");
         Label musicLabel = (Label) root.lookup("#music-label");
         musicLabel.setText("\ue644;;");
         musicLabel.setFont(MENU);
+        menuList.add(musicPane);
 
         // 视频
+        Pane videoPane = (Pane) root.lookup("#video-pane");
         Label videoLabel = (Label) root.lookup("#video-label");
         videoLabel.setText("\ue6e7;");
         videoLabel.setFont(MENU);
+        menuList.add(videoPane);
 
         // 电台
+        Pane radioPane = (Pane) root.lookup("#radio-pane");
         Label radioLabel = (Label) root.lookup("#radio-label");
         radioLabel.setText("\ue693;");
         radioLabel.setFont(MENU);
+        menuList.add(radioPane);
     }
 
     private static void initAnim() {
@@ -183,5 +220,4 @@ public class MainPane {
         hidePlayDetailAnim = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(MainPane.getPlayDetailPane().translateYProperty(), 690)));
         hidePlayDetailAnim.setOnFinished(actionEvent -> MainPane.getPlayDetailPane().setVisible(false));
     }
-
 }
