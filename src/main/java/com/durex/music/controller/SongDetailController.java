@@ -8,6 +8,7 @@ import com.durex.music.ui.MainPane;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -27,11 +28,15 @@ import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 @Slf4j
-public class SongDetailController {
+public class SongDetailController implements Initializable {
+
+    private String songId;
 
     @FXML
     private RXAvatar songImage;
@@ -63,9 +68,16 @@ public class SongDetailController {
 
     private Node curSelectedTab;
 
-    public void init(String dissId) {
+
+    public SongDetailController(String songId) {
+        this.songId = songId;
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         MainPane.getScrollPane().setVvalue(0);
-        final SongDetail songDetail = SongDetailService.getSongDetail(dissId);
+        final SongDetail songDetail = SongDetailService.getSongDetail(songId);
         if (songDetail == null) {
             return;
         }

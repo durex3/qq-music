@@ -11,6 +11,7 @@ import com.durex.music.model.qq.SingerDetail;
 import com.durex.music.service.RecommendService;
 import com.durex.music.ui.MainPane;
 import com.durex.music.ui.MusicPane;
+import com.durex.music.ui.SongDetailPane;
 import com.durex.music.ui.SongVBox;
 import com.durex.music.utils.TimeUtils;
 import com.leewyatt.rxcontrols.animation.carousel.AnimAround;
@@ -20,7 +21,6 @@ import com.leewyatt.rxcontrols.controls.RXCarousel;
 import com.leewyatt.rxcontrols.enums.DisplayMode;
 import com.leewyatt.rxcontrols.pane.RXCarouselPane;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -34,9 +34,11 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
@@ -202,31 +204,22 @@ public class RecommendController implements Initializable {
     private void initSongList() {
         final List<RecommendPlay> songList = RecommendService.getRecommendSongList();
 
-        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/fxml/song-detail.fxml")));
-        try {
 
-            Parent songDetail = fxmlLoader.load();
-            SongDetailController controller = fxmlLoader.getController();
-            final List<VBox> songVboxList = songList.stream().map(song -> SongVBox.build(String.valueOf(song.getContentId()), song.getCover(), song.getTitle(), song.getListenNum())).toList();
+        final List<VBox> songVboxList = songList.stream().map(song -> SongVBox.build(String.valueOf(song.getContentId()), song.getCover(), song.getTitle(), song.getListenNum())).toList();
 
-            songVboxList.forEach(song -> {
-                Node songImage = song.lookup("#song-image");
-                songImage.setOnMouseClicked(event -> {
-                    // 传递数据
-                    RXAvatar image = (RXAvatar) event.getSource();
-                    String dissId = image.getUserData().toString();
-                    if (controller != null) {
-                        controller.init(dissId);
-                    }
-                    if (songDetail != null) {
-                        MainPane.getScrollPane().setContent(songDetail);
-                    }
-                });
+        songVboxList.forEach(song -> {
+            Node songImage = song.lookup("#song-image");
+            songImage.setOnMouseClicked(event -> {
+                // 传递数据
+                RXAvatar image = (RXAvatar) event.getSource();
+                String dissId = image.getUserData().toString();
+                Parent songDetail = SongDetailPane.load(dissId);
+                if (songDetail != null) {
+                    MainPane.getScrollPane().setContent(songDetail);
+                }
             });
-            songListPane.getChildren().addAll(songVboxList);
-        } catch (IOException e) {
-            log.error("加载歌单详情页面失败: ", e);
-        }
+        });
+        songListPane.getChildren().addAll(songVboxList);
     }
 
     private void initCarousel() {
