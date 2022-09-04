@@ -5,8 +5,6 @@ import com.durex.music.exception.MusicException;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -60,7 +58,8 @@ public class MainPane {
             loadWindowTool(playDetail, Color.WHITE);
 
             // 加载推荐内容面板
-            scrollPane.setContent(RecommendPane.load());
+            BasePagePane<Object> pane = PaneFactory.newInstance(RecommendPagePane.class);
+            scrollPane.setContent(pane.load(null));
         } catch (IOException e) {
             log.error("初始化主面板失败: ", e);
             throw new MusicException(e);

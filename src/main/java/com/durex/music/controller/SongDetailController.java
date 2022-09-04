@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
 @Slf4j
 public class SongDetailController implements Initializable {
 
-    private String songId;
+    private final String songId;
 
     @FXML
     private RXAvatar songImage;

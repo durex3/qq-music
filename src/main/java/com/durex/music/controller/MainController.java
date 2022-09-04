@@ -2,9 +2,7 @@ package com.durex.music.controller;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.MusicPlayer;
-import com.durex.music.ui.MainPane;
-import com.durex.music.ui.RecommendPane;
-import com.durex.music.ui.SoundPane;
+import com.durex.music.ui.*;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.animation.Animation;
@@ -156,7 +154,8 @@ public class MainController implements Initializable {
     @FXML
     public void handleRecommendClicked(MouseEvent e) {
         setMenuStyle((Pane) e.getSource());
-        MainPane.getScrollPane().setContent(RecommendPane.load());
+        BasePagePane<Object> pane = PaneFactory.newInstance(RecommendPagePane.class);
+        MainPane.getScrollPane().setContent(pane.load(null));
     }
 
     @FXML

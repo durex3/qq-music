@@ -9,14 +9,11 @@ import java.io.IOException;
 import java.util.Objects;
 
 @Slf4j
-public class SongDetailPane {
+public class SongDetailPagePane implements BasePagePane<String> {
 
-    private SongDetailPane() {
-
-    }
-
-    public static synchronized Parent load(String songId) {
-        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(SongDetailPane.class.getResource("/fxml/song-detail.fxml")));
+    @Override
+    public Parent load(String songId) {
+        final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(SongDetailPagePane.class.getResource("/fxml/song-detail.fxml")));
 
         fxmlLoader.setControllerFactory(c -> new SongDetailController(songId));
         Parent songDetail = null;
