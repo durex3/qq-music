@@ -10,98 +10,110 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane prefWidth="810.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.SongDetailController">
-   <children>
-      <VBox id="song-detail-vbox" fx:id="songDetailVbox" prefHeight="690.0" spacing="15.0" stylesheets="@../css/song-detail.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
-          <children>
-              <HBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="810.0" spacing="30.0">
-                  <children>
-                      <RXAvatar fx:id="songImage" maxHeight="170.0" maxWidth="170.0" prefHeight="170.0" prefWidth="170.0" />
-                      <VBox alignment="CENTER_LEFT" maxHeight="170.0" prefHeight="170.0" prefWidth="610.0" spacing="20.0">
-                          <children>
-                              <StackPane alignment="CENTER_LEFT" prefHeight="40.0">
-                                  <children>
-                                      <Label fx:id="songName" prefHeight="40.0" text="喂娃十大是的撒" StackPane.alignment="CENTER_LEFT">
-                                 <font>
-                                    <Font name="System Bold" size="32.0" />
-                                 </font>
-                              </Label>
-                                  </children>
-                              </StackPane>
-                              <VBox alignment="CENTER_LEFT" prefHeight="60.0">
-                           <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
-                                 <children>
-                                    <RXAvatar fx:id="headImage" prefHeight="25.0" prefWidth="25.0" />
-                                    <Label fx:id="nickname" text="Label">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <HBox fx:id="tagBox" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-                                       <padding>
-                                          <Insets left="20.0" />
-                                       </padding>
-                                    </HBox>
-                                 </children>
-                              </HBox>
-                              <Label fx:id="songDesc" prefWidth="460.0" text="Label" textFill="#7b7b7b">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
+<AnchorPane prefWidth="810.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.durex.music.controller.SongDetailController">
+    <children>
+        <VBox id="song-detail-vbox" fx:id="songDetailVbox" prefHeight="690.0" spacing="15.0"
+              stylesheets="@../css/song-detail.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="810.0" spacing="30.0">
+                    <children>
+                        <RXAvatar fx:id="songImage" maxHeight="170.0" maxWidth="170.0" prefHeight="170.0"
+                                  prefWidth="170.0"/>
+                        <VBox alignment="CENTER_LEFT" maxHeight="170.0" prefHeight="170.0" prefWidth="610.0"
+                              spacing="20.0">
+                            <children>
+                                <StackPane alignment="CENTER_LEFT" prefHeight="40.0">
+                                    <children>
+                                        <Label fx:id="songName" prefHeight="40.0" text="测试"
+                                               StackPane.alignment="CENTER_LEFT">
+                                            <font>
+                                                <Font name="System Bold" size="32.0"/>
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </StackPane>
+                                <VBox alignment="CENTER_LEFT" prefHeight="60.0">
+                                    <children>
+                                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0"
+                                              spacing="5.0">
+                                            <children>
+                                                <RXAvatar fx:id="headImage" prefHeight="25.0" prefWidth="25.0"/>
+                                                <Label fx:id="nickname" text="Label">
+                                                    <font>
+                                                        <Font size="14.0"/>
+                                                    </font>
+                                                </Label>
+                                                <HBox fx:id="tagBox" alignment="CENTER_LEFT" prefHeight="100.0"
+                                                      prefWidth="200.0" spacing="20.0">
+                                                    <padding>
+                                                        <Insets left="20.0"/>
+                                                    </padding>
+                                                </HBox>
+                                            </children>
+                                        </HBox>
+                                        <Label fx:id="songDesc" prefWidth="460.0" text="Label" textFill="#7b7b7b">
+                                            <font>
+                                                <Font size="14.0"/>
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label fx:id="playAll" prefHeight="30.0" prefWidth="110.0" text="播放全部">
+                                            <font>
+                                                <Font size="14.0"/>
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="songCollection" prefHeight="30.0" prefWidth="110.0" text="收藏">
+                                            <font>
+                                                <Font size="14.0"/>
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="songMore" prefHeight="35.0" prefWidth="35.0" text="..."
+                                               textAlignment="JUSTIFY" textOverrun="CLIP">
+                                            <font>
+                                                <Font size="18.0"/>
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                            </children>
                         </VBox>
-                              <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                  <children>
-                                      <Label fx:id="playAll" prefHeight="30.0" prefWidth="110.0" text="播放全部">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                                      <Label fx:id="songCollection" prefHeight="30.0" prefWidth="110.0" text="收藏">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                                      <Label fx:id="songMore" prefHeight="35.0" prefWidth="35.0" text="..." textAlignment="JUSTIFY" textOverrun="CLIP">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                                  </children>
-                              </HBox>
-                          </children>
-                      </VBox>
-                  </children>
-              </HBox>
-            <HBox fx:id="tabHBox" alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="200.0" spacing="60.0">
-               <children>
-                  <VBox alignment="TOP_CENTER" spacing="5.0">
-                     <children>
-                        <Label id="song-num" fx:id="songNum" styleClass="tab-label" stylesheets="@../css/song-detail.css" text="歌曲411">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1ecf9d" height="3.0" stroke="#73c350" strokeType="INSIDE" styleClass="song-num-bottom" visible="false" width="25.0" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="TOP_CENTER" spacing="5.0">
-                     <children>
-                        <Label styleClass="tab-label" stylesheets="@../css/song-detail.css" text="评论0">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1ecf9d" height="3.0" stroke="#73c350" strokeType="INSIDE" styleClass="song-num-bottom" visible="false" width="25.0" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <BorderPane id="song-detail-pane" fx:id="songDetailPane" stylesheets="@../css/song-detail.css" />
-          </children>
-      </VBox>
-   </children>
+                    </children>
+                </HBox>
+                <HBox fx:id="tabHBox" alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="200.0" spacing="60.0">
+                    <children>
+                        <VBox alignment="TOP_CENTER" spacing="5.0">
+                            <children>
+                                <Label id="song-num" fx:id="songNum" styleClass="tab-label"
+                                       stylesheets="@../css/song-detail.css" text="歌曲411">
+                                    <font>
+                                        <Font size="14.0"/>
+                                    </font>
+                                </Label>
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1ecf9d" height="3.0" stroke="#73c350"
+                                           strokeType="INSIDE" styleClass="song-num-bottom" visible="false"
+                                           width="25.0"/>
+                            </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" spacing="5.0">
+                            <children>
+                                <Label styleClass="tab-label" stylesheets="@../css/song-detail.css" text="评论0">
+                                    <font>
+                                        <Font size="14.0"/>
+                                    </font>
+                                </Label>
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1ecf9d" height="3.0" stroke="#73c350"
+                                           strokeType="INSIDE" styleClass="song-num-bottom" visible="false"
+                                           width="25.0"/>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+                <BorderPane id="song-detail-pane" fx:id="songDetailPane" stylesheets="@../css/song-detail.css"/>
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>

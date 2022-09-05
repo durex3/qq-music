@@ -49,7 +49,7 @@ public class RecommendController implements Initializable {
     private final List<VBox> curShowNewMusicList = new ArrayList<>();
 
     private int lastMusicShowIndex = 0;
-    private final int size = 6;
+    private static final int MUSIC_SIZE = 6;
 
     private boolean isForward = true;
 
@@ -127,10 +127,10 @@ public class RecommendController implements Initializable {
             newMusicPropertyList.add(musicProperty);
         });
 
-        for (int i = lastMusicShowIndex; i < size; i++) {
+        for (int i = lastMusicShowIndex; i < MUSIC_SIZE; i++) {
             curShowNewMusicList.add(MusicPane.build(newMusicPropertyList.get(i)));
         }
-        lastMusicShowIndex = size - 1;
+        lastMusicShowIndex = MUSIC_SIZE - 1;
         setMusicListPane();
     }
 
@@ -147,7 +147,7 @@ public class RecommendController implements Initializable {
                     }
                     int playListIndex;
                     if (isForward) {
-                        playListIndex = (lastMusicShowIndex + 1 - size + curIndex) % newMusicPropertyList.size();
+                        playListIndex = (lastMusicShowIndex + 1 - MUSIC_SIZE + curIndex) % newMusicPropertyList.size();
                     } else {
                         playListIndex = (lastMusicShowIndex + curIndex) % newMusicPropertyList.size();
                     }
@@ -161,11 +161,11 @@ public class RecommendController implements Initializable {
         int newMusicSize = newMusicPropertyList.size();
         if (!isForward) {
             isForward = true;
-            lastMusicShowIndex = (lastMusicShowIndex + size - 1) % newMusicSize;
+            lastMusicShowIndex = (lastMusicShowIndex + MUSIC_SIZE - 1) % newMusicSize;
         }
         // 读取 size 个值 逆向读取
         int curIndex = 0;
-        for (int i = lastMusicShowIndex; i < lastMusicShowIndex + size; i++) {
+        for (int i = lastMusicShowIndex; i < lastMusicShowIndex + MUSIC_SIZE; i++) {
             curIndex = (i + 1) % newMusicSize;
             curShowNewMusicList.add(MusicPane.build(newMusicPropertyList.get(curIndex)));
         }
@@ -177,11 +177,11 @@ public class RecommendController implements Initializable {
 
         if (isForward) {
             isForward = false;
-            lastMusicShowIndex = (lastMusicShowIndex - size + 1 + newMusicSize) % newMusicSize;
+            lastMusicShowIndex = (lastMusicShowIndex - MUSIC_SIZE + 1 + newMusicSize) % newMusicSize;
         }
         // 读取 size 个值 如果超过了最大数量则从头读取
         int curIndex = lastMusicShowIndex;
-        for (int i = lastMusicShowIndex; i > lastMusicShowIndex - size; i--) {
+        for (int i = lastMusicShowIndex; i > lastMusicShowIndex - MUSIC_SIZE; i--) {
             curIndex = (i - 1 + newMusicSize) % newMusicSize;
             curShowNewMusicList.add(MusicPane.build(newMusicPropertyList.get(curIndex)));
         }

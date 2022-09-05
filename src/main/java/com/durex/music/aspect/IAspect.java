@@ -8,11 +8,11 @@ package com.durex.music.aspect;
  */
 public interface IAspect {
 
-    default void before(Object... args) {
+    default void before(Object instance, Object... args) {
 
     }
 
-    default void after(Object... args) {
+    default void after(Object instance, Object... args) {
 
     }
 }

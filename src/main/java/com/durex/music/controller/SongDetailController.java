@@ -36,8 +36,6 @@ import java.util.ResourceBundle;
 @Slf4j
 public class SongDetailController implements Initializable {
 
-    private final String songId;
-
     @FXML
     private RXAvatar songImage;
     @FXML
@@ -65,9 +63,8 @@ public class SongDetailController implements Initializable {
     @FXML
     private VBox songDetailVbox;
 
-
     private Node curSelectedTab;
-
+    private final String songId;
 
     public SongDetailController(String songId) {
         this.songId = songId;
@@ -153,10 +150,9 @@ public class SongDetailController implements Initializable {
         // 歌曲列表
         final FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(MainPane.class.getResource("/fxml/music-list.fxml")));
         try {
+            fxmlLoader.setControllerFactory(c -> new MusicListController(songDetail));
             Parent musicList = fxmlLoader.load();
             songDetailPane.setCenter(musicList);
-            MusicListController controller = fxmlLoader.getController();
-            controller.init(songDetail);
             // 单向绑定高度变化
             songDetailVbox.prefHeightProperty().bind(
                     songDetailPane.prefHeightProperty()

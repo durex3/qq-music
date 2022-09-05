@@ -7,7 +7,6 @@ import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.qq.Music;
 import com.durex.music.model.qq.Singer;
 import com.durex.music.model.qq.SongDetail;
-import com.durex.music.ui.MusicPlayListCell;
 import com.durex.music.ui.MusicTableNameCell;
 import com.durex.music.utils.TimeUtils;
 import javafx.beans.binding.Bindings;
@@ -21,7 +20,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
@@ -45,7 +43,13 @@ public class MusicListController implements Initializable {
     @FXML
     private TableColumn<MusicProperty, Label> duration;
     private final ObservableList<MusicProperty> musicPropertyList = FXCollections.observableArrayList();
-    private long songId;
+    private final long songId;
+    private final List<Music> musicList;
+
+    public MusicListController(SongDetail songDetail) {
+        this.songId = songDetail.getDissid();
+        this.musicList = songDetail.getSonglist();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,11 +64,10 @@ public class MusicListController implements Initializable {
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         musicPropertyList.clear();
         musicListTable.setItems(musicPropertyList);
+        init();
     }
 
-    public void init(SongDetail songDetail) {
-        this.songId = songDetail.getDissid();
-        final List<Music> musicList = songDetail.getSonglist();
+    private void init() {
         PlayListContext context = MusicPlayer.getMusicPlayList().getContext();
         if (context.getType() == PlayType.SONG && context.getDataId().equals(String.valueOf(songId))) {
             musicPropertyList.addAll(MusicPlayer.getMusicPlayList().getMusicPropertyList());
@@ -120,5 +123,4 @@ public class MusicListController implements Initializable {
             MusicPlayer.refreshPlayList(PlayType.SONG, String.valueOf(songId), musicPropertyList);
         }
     }
-
 }

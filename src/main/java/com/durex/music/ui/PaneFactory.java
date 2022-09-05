@@ -24,8 +24,8 @@ public class PaneFactory {
 
         try {
             for (Annotation annotation : annotations) {
-                if (annotation instanceof Aspect) {
-                    final Class<?>[] types = ((Aspect) annotation).types();
+                if (annotation instanceof Aspect aspect) {
+                    final Class<?>[] types = aspect.types();
                     for (Class<?> type : types) {
                         final IAspect iAspect = (IAspect) (type.getConstructor().newInstance());
                         aspectLinkedList.push(iAspect);
@@ -38,9 +38,9 @@ public class PaneFactory {
                     clazz.getClassLoader(),
                     clazz.getInterfaces(),
                     (proxy, method, args) -> {
-                        aspectLinkedList.forEach(aspect -> aspect.before(args));
+                        aspectLinkedList.forEach(aspect -> aspect.before(instance, args));
                         final Object result = method.invoke(instance, args);
-                        aspectLinkedList.forEach(aspect -> aspect.after(args));
+                        aspectLinkedList.forEach(aspect -> aspect.after(instance, args));
                         return result;
                     }
             );

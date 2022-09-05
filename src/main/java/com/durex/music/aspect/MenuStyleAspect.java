@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 public class MenuStyleAspect implements IAspect {
 
     @Override
-    public void before(Object... args) {
+    public void before(Object instance, Object... args) {
         if (args[0] != null) {
             MainPane.setMenuStyle((Pane) args[0]);
         }
