@@ -9,6 +9,7 @@ import com.durex.music.model.qq.Singer;
 import com.durex.music.model.qq.SongDetail;
 import com.durex.music.ui.MusicTableNameCell;
 import com.durex.music.utils.TimeUtils;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -64,7 +65,7 @@ public class MusicListController implements Initializable {
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         musicPropertyList.clear();
         musicListTable.setItems(musicPropertyList);
-        init();
+        Platform.runLater(this::init);
     }
 
     private void init() {
@@ -72,6 +73,7 @@ public class MusicListController implements Initializable {
         if (context.getType() == PlayType.SONG && context.getDataId().equals(String.valueOf(songId))) {
             musicPropertyList.addAll(MusicPlayer.getMusicPlayList().getMusicPropertyList());
         } else {
+
             musicList.forEach(music -> {
                 MusicProperty musicProperty = new MusicProperty();
                 musicProperty.setId(music.getSongmid());
