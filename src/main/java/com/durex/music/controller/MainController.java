@@ -231,19 +231,16 @@ public class MainController implements Initializable {
     @FXML
     public void handleBackClicked(MouseEvent e) {
         final HistoryStack.History history = HistoryStack.back();
-        if (history == null) {
-            return;
-        }
-        if (history.getMenu() != null) {
-            MainPane.setMenuStyle(history.getMenu());
-        }
-        MainPane.getScrollPane().setContent(null);
-        MainPane.getScrollPane().setContent(history.getNode());
+        setHistoryNode(history);
     }
 
     @FXML
     public void handleForwardClicked(MouseEvent e) {
         final HistoryStack.History history = HistoryStack.forward();
+        setHistoryNode(history);
+    }
+
+    private static void setHistoryNode(HistoryStack.History history) {
         if (history == null) {
             return;
         }
