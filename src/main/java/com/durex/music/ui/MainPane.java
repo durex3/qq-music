@@ -223,11 +223,12 @@ public class MainPane {
         loadWindowTool(playDetail, Color.WHITE);
 
         // 加载推荐内容面板
-        scrollPane.setContent(new RecommendPagePane().load(null));
-        final HistoryStack.History history = new HistoryStack.History();
-        history.setMenu(menuList.get(1));
-        history.setNode(new MusicHallPagePane().load(null));
+        Parent recommendPane = new RecommendPagePane().load(null);
+        scrollPane.setContent(recommendPane);
+        final HistoryStack.History recommend = new HistoryStack.History();
+        recommend.setMenu(menuList.get(0));
+        recommend.setNode(recommendPane);
 
-        HistoryStack.push(history);
+        HistoryStack.push(recommend);
     }
 }

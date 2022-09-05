@@ -86,8 +86,9 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // 后退按钮
+        // 后退和前进按钮
         backBtn.disableProperty().bind(HistoryStack.getBackStackIsEmpty());
+        forwardBtn.disableProperty().bind(HistoryStack.getForwardStackIsEmpty());
         // 当前播放歌曲的图片
         curMusicPlayImage.imageProperty().bind(MusicPlayer.getCurMusicPlayImage());
         curMusicPlayImagePane.setOnMouseEntered(event -> {
@@ -242,7 +243,15 @@ public class MainController implements Initializable {
 
     @FXML
     public void handleForwardClicked(MouseEvent e) {
-
+        final HistoryStack.History history = HistoryStack.forward();
+        if (history == null) {
+            return;
+        }
+        if (history.getMenu() != null) {
+            MainPane.setMenuStyle(history.getMenu());
+        }
+        MainPane.getScrollPane().setContent(null);
+        MainPane.getScrollPane().setContent(history.getNode());
     }
 
     private Stage getStage() {

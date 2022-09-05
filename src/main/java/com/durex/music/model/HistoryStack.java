@@ -17,6 +17,8 @@ public class HistoryStack {
 
     private static final SimpleBooleanProperty BACK_STACK_IS_EMPTY = new SimpleBooleanProperty(true);
 
+    private static final SimpleBooleanProperty FORWARD_STACK_IS_EMPTY = new SimpleBooleanProperty(true);
+
     private static final Deque<History> BACK_STACK = new ArrayDeque<>(STACK_SIZE);
 
     private static final Deque<History> FORWARD_STACK = new ArrayDeque<>(STACK_SIZE);
@@ -29,24 +31,32 @@ public class HistoryStack {
             BACK_STACK.removeLast();
         }
 
+        History node = FORWARD_STACK.pop();
+
+        BACK_STACK.push(node);
+        BACK_STACK_IS_EMPTY.set(false);
+
+
         if (FORWARD_STACK.isEmpty()) {
-            return null;
+            FORWARD_STACK_IS_EMPTY.set(true);
         }
 
-        BACK_STACK.push(FORWARD_STACK.pop());
-
-        return FORWARD_STACK.peek();
+        return node;
     }
 
     public static History back() {
         if (FORWARD_STACK.size() == STACK_SIZE) {
             FORWARD_STACK.removeLast();
         }
-        if (BACK_STACK.isEmpty()) {
-            BACK_STACK_IS_EMPTY.set(true);
-            return null;
+        if (BACK_STACK.size() == 1) {
+            return BACK_STACK.peek();
+        } else {
+            FORWARD_STACK.push(BACK_STACK.pop());
+            FORWARD_STACK_IS_EMPTY.set(false);
+            if (BACK_STACK.size() == 1) {
+                BACK_STACK_IS_EMPTY.set(true);
+            }
         }
-        FORWARD_STACK.push(BACK_STACK.pop());
 
         return BACK_STACK.peek();
     }
@@ -56,10 +66,13 @@ public class HistoryStack {
             BACK_STACK.removeLast();
         }
         BACK_STACK.push(history);
-        BACK_STACK_IS_EMPTY.set(false);
+        if (BACK_STACK.size() > 1) {
+            BACK_STACK_IS_EMPTY.set(false);
+        }
 
         if (!FORWARD_STACK.isEmpty()) {
             FORWARD_STACK.clear();
+            FORWARD_STACK_IS_EMPTY.set(true);
         }
     }
 
@@ -87,5 +100,9 @@ public class HistoryStack {
 
     public static SimpleBooleanProperty getBackStackIsEmpty() {
         return BACK_STACK_IS_EMPTY;
+    }
+
+    public static SimpleBooleanProperty getForwardStackIsEmpty() {
+        return FORWARD_STACK_IS_EMPTY;
     }
 }
