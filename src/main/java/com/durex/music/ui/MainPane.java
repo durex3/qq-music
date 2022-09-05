@@ -2,6 +2,7 @@ package com.durex.music.ui;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.exception.MusicException;
+import com.durex.music.model.HistoryStack;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -52,35 +53,24 @@ public class MainPane {
         try {
             // 主面板
             root = FXMLLoader.load(Objects.requireNonNull(MainPane.class.getResource("/fxml/main.fxml")));
-
-            // 播放器内容滚动面板 和播放队列面板
-            MainPane.scrollPane = (ScrollPane) root.lookup("#scroll-pane");
-            MainPane.playListPane = (AnchorPane) root.lookup("#play-list-pane");
-
-            // 加载播放详情面板
-            AnchorPane playDetailPane = (AnchorPane) root.lookup("#play-detail-pane");
-            MainPane.playDetailPane = playDetailPane;
-            final AnchorPane playDetail = FXMLLoader.load(Objects.requireNonNull(MainPane.class.getResource("/fxml/play-detail.fxml")));
-            playDetailPane.getChildren().add(playDetail);
-            loadWindowTool(playDetail, Color.WHITE);
-
-            // 加载推荐内容面板
-            BasePagePane pane = PaneFactory.newInstance(RecommendPagePane.class);
-            scrollPane.setContent(pane.load(null));
+            loadLeftMenu(root);
+            loadTopInfo(root);
+            loadBottomPlayInfo(root);
+            loadContentPane(root);
         } catch (IOException e) {
             log.error("初始化主面板失败: ", e);
             throw new MusicException(e);
         }
-        loadLeftMenu(root);
-        loadTopInfo(root);
-        loadBottomPlayInfo(root);
         initAnim();
         stage.setScene(new Scene(root));
     }
 
+
     public static void setMenuStyle(Pane pane) {
-        pane.setBackground(null);
-        pane.getChildren().forEach(node -> ((Label) node).setTextFill(Color.BLACK));
+        if (curSelectedPane != null) {
+            curSelectedPane.setBackground(null);
+            curSelectedPane.getChildren().forEach(node -> ((Label) node).setTextFill(Color.BLACK));
+        }
 
         pane.getChildren().forEach(node -> ((Label) node).setTextFill(Color.WHITE));
         pane.setBackground(new Background(new BackgroundFill(MusicConstant.MENU_SELECTED_COLOR, MusicConstant.MENU_CORNER_RADII, null)));
@@ -122,14 +112,6 @@ public class MainPane {
 
     public static Timeline getHidePlayDetailAnim() {
         return hidePlayDetailAnim;
-    }
-
-    public static Pane getCurSelectedPane() {
-        return curSelectedPane;
-    }
-
-    public static void setCurSelectedPane(Pane curSelectedPane) {
-        MainPane.curSelectedPane = curSelectedPane;
     }
 
     public static List<Pane> getMenuList() {
@@ -226,5 +208,26 @@ public class MainPane {
         showPlayDetailAnim = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(MainPane.getPlayDetailPane().translateYProperty(), 0)));
         hidePlayDetailAnim = new Timeline(new KeyFrame(Duration.millis(300), new KeyValue(MainPane.getPlayDetailPane().translateYProperty(), 690)));
         hidePlayDetailAnim.setOnFinished(actionEvent -> MainPane.getPlayDetailPane().setVisible(false));
+    }
+
+    private static void loadContentPane(AnchorPane root) throws IOException {
+        // 播放器内容滚动面板 和播放队列面板
+        MainPane.scrollPane = (ScrollPane) root.lookup("#scroll-pane");
+        MainPane.playListPane = (AnchorPane) root.lookup("#play-list-pane");
+
+        // 加载播放详情面板
+        AnchorPane playDetailPane = (AnchorPane) root.lookup("#play-detail-pane");
+        MainPane.playDetailPane = playDetailPane;
+        final AnchorPane playDetail = FXMLLoader.load(Objects.requireNonNull(MainPane.class.getResource("/fxml/play-detail.fxml")));
+        playDetailPane.getChildren().add(playDetail);
+        loadWindowTool(playDetail, Color.WHITE);
+
+        // 加载推荐内容面板
+        scrollPane.setContent(new RecommendPagePane().load(null));
+        final HistoryStack.History history = new HistoryStack.History();
+        history.setMenu(menuList.get(1));
+        history.setNode(new MusicHallPagePane().load(null));
+
+        HistoryStack.push(history);
     }
 }

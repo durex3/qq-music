@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="root" minHeight="690.0" minWidth="1020.0" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.MainController">
+<AnchorPane id="root" minHeight="690.0" minWidth="1020.0" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.MainController">
    <children>
       <StackPane>
          <children>
@@ -100,38 +100,48 @@
                     </AnchorPane>
                     <AnchorPane id="content-pane" fx:id="leftPane" minHeight="690.0" minWidth="810.0" prefHeight="690.0" prefWidth="810.0" stylesheets="@../css/main.css" AnchorPane.leftAnchor="210.0">
                         <children>
-                            <AnchorPane prefHeight="70.0" prefWidth="810.0" AnchorPane.topAnchor="0.0">
-                                <children>
-                              <StackPane layoutX="100.0" layoutY="20.0">
+                        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="730.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" spacing="20.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <AnchorPane>
+                                    <Label fx:id="backBtn" onMouseClicked="#handleBackClicked" prefWidth="10.0" styleClass="back-btn" stylesheets="@../css/main.css" />
+                                    <Label fx:id="forwardBtn" onMouseClicked="#handleForwardClicked" prefWidth="10.0" styleClass="forward-btn" stylesheets="@../css/main.css" />
+                                    <StackPane>
                                        <children>
-                                                <TextField id="search-text-field" prefHeight="30.0" promptText="搜索音乐" stylesheets="@../css/main.css" />
-                                                <Label id="search-icon-label" prefHeight="15.0" prefWidth="16.0" textFill="#979797" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                                                <TextField id="search-text-field" prefHeight="30.0" prefWidth="200.0" promptText="搜索音乐" stylesheets="@../css/main.css" />
+                                                <Label id="search-icon-label" prefHeight="15.0" prefWidth="16.0" textFill="#979797" StackPane.alignment="CENTER_RIGHT">
+                                             <StackPane.margin>
+                                                <Insets right="5.0" />
+                                             </StackPane.margin>
+                                          </Label>
                                        </children>
-                                    </AnchorPane>
+                                    </StackPane>
                                  </children>
-                              </StackPane>
-                                    <Label id="minimize-label" fx:id="minimizeLabel" onMouseClicked="#handleMinimizeClicked" prefHeight="17.0" prefWidth="15.0" text="Label" AnchorPane.rightAnchor="95.0" AnchorPane.topAnchor="20.0" />
-                                    <Label id="maximize-label" prefHeight="15.0" prefWidth="15.0" text="Label" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="20.0" />
-                                    <Label id="close-label" fx:id="closeLabel" onMouseClicked="#handleCloseClicked" prefHeight="15.0" prefWidth="15.0" text="Label" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="20.0" />
-                                </children>
-                            </AnchorPane>
+                              </HBox>
+                              <HBox alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                          <Label id="minimize-label" fx:id="minimizeLabel" onMouseClicked="#handleMinimizeClicked" prefHeight="17.0" prefWidth="15.0" text="Label" />
+                                          <Label id="maximize-label" prefHeight="15.0" prefWidth="15.0" text="Label" />
+                                          <Label id="close-label" fx:id="closeLabel" onMouseClicked="#handleCloseClicked" prefHeight="15.0" prefWidth="15.0" text="Label" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
                         <AnchorPane id="bottom-pane" prefHeight="70.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="620.0">
                            <children>
                               <RXMediaProgressBar fx:id="currMusicProgress" prefHeight="10.0" prefWidth="810.0" />
-                              <HBox alignment="CENTER" prefHeight="60.0" prefWidth="810.0" spacing="80.0" AnchorPane.topAnchor="10.0">
+                              <HBox alignment="CENTER" prefHeight="60.0" prefWidth="770.0" spacing="80.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="10.0">
                                  <children>
-                                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                    <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                        <children>
                                           <StackPane fx:id="curMusicPlayImagePane">
                                              <children>
-                                                <RXAvatar id="cur-play-image" fx:id="curMusicPlayImage" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#handleShowPlayDetailPaneClick" prefHeight="40.0" prefWidth="40.0" shapeType="SQUARE">
+                                                <RXAvatar id="cur-play-image" fx:id="curMusicPlayImage" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#handleShowPlayDetailPaneClicked" prefHeight="40.0" prefWidth="40.0" shapeType="SQUARE">
                                                    <image>
                                                       <Image url="@../image/qilixiang.jpeg" />
                                                    </image>
                                                 </RXAvatar>
-                                                <Label fx:id="showPlayDetailIcon" minHeight="17.0" minWidth="17.0" onMouseClicked="#handleShowPlayDetailPaneClick" styleClass="show-play-detail-icon" stylesheets="@../css/main.css" visible="false" />
+                                                <Label fx:id="showPlayDetailIcon" minHeight="17.0" minWidth="17.0" onMouseClicked="#handleShowPlayDetailPaneClicked" styleClass="show-play-detail-icon" stylesheets="@../css/main.css" visible="false" />
                                              </children>
                                           </StackPane>
                                           <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
@@ -176,7 +186,7 @@
                                           </VBox>
                                        </children>
                                     </HBox>
-                                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" spacing="20.0" HBox.hgrow="ALWAYS">
+                                    <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" spacing="20.0" HBox.hgrow="ALWAYS">
                                        <children>
                                           <StackPane maxHeight="16.0" maxWidth="16.0" stylesheets="@../css/main.css">
                                              <children>
@@ -203,7 +213,7 @@
                                           </StackPane>
                                        </children>
                                     </HBox>
-                                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="220.0" spacing="15.0" HBox.hgrow="ALWAYS">
+                                    <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="220.0" spacing="15.0" HBox.hgrow="ALWAYS">
                                        <children>
                                           <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                                              <children>
@@ -212,7 +222,7 @@
                                                 <Label id="cur_play_interval" fx:id="curMusicTotalSeconds" minWidth="36.0" text="00:00" textFill="#7b7b7a" />
                                              </children>
                                           </HBox>
-                                          <StackPane fx:id="soundBtn" onMouseClicked="#handleSoundPopupClick" prefHeight="150.0" prefWidth="200.0" stylesheets="@../css/main.css">
+                                          <StackPane fx:id="soundBtn" onMouseClicked="#handleSoundPopupClicked" prefHeight="150.0" prefWidth="200.0" stylesheets="@../css/main.css">
                                              <children>
                                                 <Region prefHeight="200.0" prefWidth="200.0" />
                                              </children>
@@ -226,10 +236,10 @@
                                                 <Font size="16.0" />
                                              </font>
                                           </Label>
-                                          <HBox alignment="CENTER_LEFT" onMouseClicked="#handleShowPlayListPaneClick" prefWidth="50.0" styleClass="show-list-btn" stylesheets="@../css/main.css" HBox.hgrow="ALWAYS">
+                                          <HBox alignment="CENTER_LEFT" onMouseClicked="#handleShowPlayListPaneClicked" prefWidth="50.0" styleClass="show-list-btn" stylesheets="@../css/main.css" HBox.hgrow="ALWAYS">
                                              <children>
                                                 <Label minHeight="16.0" minWidth="16.0" prefHeight="16.0" prefWidth="16.0" styleClass="show-list-icon" stylesheets="@../css/main.css" />
-                                                <Label fx:id="bottomPlayListNum" onMouseClicked="#handleShowPlayListPaneClick" text="100" textFill="#7b7a7a">
+                                                <Label fx:id="bottomPlayListNum" onMouseClicked="#handleShowPlayListPaneClicked" text="100" textFill="#7b7a7a">
                                                    <font>
                                                       <Font size="12.0" />
                                                    </font>
@@ -250,7 +260,7 @@
             <AnchorPane id="play-detail-pane" prefHeight="200.0" prefWidth="200.0" translateY="690.0" visible="false" />
             <AnchorPane id="play-list-pane" fx:id="playListPane" prefHeight="690.0" prefWidth="300.0" stylesheets="@../css/main.css" translateX="300.0" visible="false" StackPane.alignment="TOP_RIGHT">
                <children>
-                  <AnchorPane onMouseClicked="#handleHidePlayListPaneClick" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <AnchorPane onMouseClicked="#handleHidePlayListPaneClicked" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <AnchorPane id="list-pane" prefWidth="300.0" stylesheets="@../css/main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <VBox prefHeight="690.0" prefWidth="265.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="20.0">
@@ -312,7 +322,7 @@
                                  </children></AnchorPane>
                               <HBox alignment="CENTER_RIGHT" prefHeight="65.0" prefWidth="265.0" spacing="2.0">
                                  <children>
-                                    <HBox alignment="CENTER" onMouseClicked="#handleHidePlayListPaneClick" styleClass="hide-list-btn" stylesheets="@../css/main.css">
+                                    <HBox alignment="CENTER" onMouseClicked="#handleHidePlayListPaneClicked" styleClass="hide-list-btn" stylesheets="@../css/main.css">
                                        <children>
                                           <Label minHeight="16.0" minWidth="16.0" prefHeight="16.0" prefWidth="16.0" styleClass="hide-list-icon" stylesheets="@../css/main.css" />
                                           <Label text="收起" textFill="#7b7a7a">

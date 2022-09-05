@@ -1,5 +1,6 @@
 package com.durex.music.controller;
 
+import com.durex.music.model.HistoryStack;
 import com.durex.music.model.MusicPlayer;
 import com.durex.music.ui.BasePagePane;
 import com.durex.music.ui.MainPane;
@@ -78,9 +79,15 @@ public class MainController implements Initializable {
     private ListView<AnchorPane> playListView;
     @FXML
     private StackPane soundBtn;
+    @FXML
+    private Label backBtn;
+    @FXML
+    private Label forwardBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // 后退按钮
+        backBtn.disableProperty().bind(HistoryStack.getBackStackIsEmpty());
         // 当前播放歌曲的图片
         curMusicPlayImage.imageProperty().bind(MusicPlayer.getCurMusicPlayImage());
         curMusicPlayImagePane.setOnMouseEntered(event -> {
@@ -186,7 +193,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void handleShowPlayListPaneClick(MouseEvent e) {
+    public void handleShowPlayListPaneClicked(MouseEvent e) {
         MainPane.getPlayListPane().setVisible(true);
         if (MainPane.getHidePlayListAnim().getStatus() == Animation.Status.RUNNING) {
             MainPane.getHidePlayListAnim().stop();
@@ -195,7 +202,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void handleHidePlayListPaneClick(MouseEvent e) {
+    public void handleHidePlayListPaneClicked(MouseEvent e) {
         if (MainPane.getShowPlayListAnim().getStatus() == Animation.Status.RUNNING) {
             MainPane.getShowPlayListAnim().stop();
         }
@@ -203,7 +210,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void handleShowPlayDetailPaneClick(MouseEvent e) {
+    public void handleShowPlayDetailPaneClicked(MouseEvent e) {
         if (MusicPlayer.getPlayer() == null) {
             return;
         }
@@ -215,9 +222,27 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void handleSoundPopupClick(MouseEvent e) {
+    public void handleSoundPopupClicked(MouseEvent e) {
         Bounds bounds = soundBtn.localToScreen(soundBtn.getBoundsInLocal());
         soundPopup.show(mainPane.getScene().getWindow(), bounds.getMinX() - 20, bounds.getMinY() - 165);
+    }
+
+    @FXML
+    public void handleBackClicked(MouseEvent e) {
+        final HistoryStack.History history = HistoryStack.back();
+        if (history == null) {
+            return;
+        }
+        if (history.getMenu() != null) {
+            MainPane.setMenuStyle(history.getMenu());
+        }
+        MainPane.getScrollPane().setContent(null);
+        MainPane.getScrollPane().setContent(history.getNode());
+    }
+
+    @FXML
+    public void handleForwardClicked(MouseEvent e) {
+
     }
 
     private Stage getStage() {

@@ -1,0 +1,91 @@
+package com.durex.music.model;
+
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.Parent;
+import javafx.scene.layout.Pane;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+/**
+ * @author liugelong
+ * @date 2022/9/5 15:39
+ */
+public class HistoryStack {
+
+    private static final int STACK_SIZE = 10;
+
+    private static final SimpleBooleanProperty BACK_STACK_IS_EMPTY = new SimpleBooleanProperty(true);
+
+    private static final Deque<History> BACK_STACK = new ArrayDeque<>(STACK_SIZE);
+
+    private static final Deque<History> FORWARD_STACK = new ArrayDeque<>(STACK_SIZE);
+
+    private HistoryStack() {
+    }
+
+    public static History forward() {
+        if (BACK_STACK.size() == STACK_SIZE) {
+            BACK_STACK.removeLast();
+        }
+
+        if (FORWARD_STACK.isEmpty()) {
+            return null;
+        }
+
+        BACK_STACK.push(FORWARD_STACK.pop());
+
+        return FORWARD_STACK.peek();
+    }
+
+    public static History back() {
+        if (FORWARD_STACK.size() == STACK_SIZE) {
+            FORWARD_STACK.removeLast();
+        }
+        if (BACK_STACK.isEmpty()) {
+            BACK_STACK_IS_EMPTY.set(true);
+            return null;
+        }
+        FORWARD_STACK.push(BACK_STACK.pop());
+
+        return BACK_STACK.peek();
+    }
+
+    public static void push(History history) {
+        if (BACK_STACK.size() == STACK_SIZE) {
+            BACK_STACK.removeLast();
+        }
+        BACK_STACK.push(history);
+        BACK_STACK_IS_EMPTY.set(false);
+
+        if (!FORWARD_STACK.isEmpty()) {
+            FORWARD_STACK.clear();
+        }
+    }
+
+    public static class History {
+
+        private Pane menu;
+        private Parent node;
+
+        public Pane getMenu() {
+            return menu;
+        }
+
+        public void setMenu(Pane menu) {
+            this.menu = menu;
+        }
+
+        public Parent getNode() {
+            return node;
+        }
+
+        public void setNode(Parent node) {
+            this.node = node;
+        }
+    }
+
+    public static SimpleBooleanProperty getBackStackIsEmpty() {
+        return BACK_STACK_IS_EMPTY;
+    }
+}

@@ -12,7 +12,7 @@ public interface IAspect {
 
     }
 
-    default void after(Object instance, Object... args) {
+    default void after(Object instance, Object result, Object... args) {
 
     }
 }

@@ -40,7 +40,7 @@ public class PaneFactory {
                     (proxy, method, args) -> {
                         aspectLinkedList.forEach(aspect -> aspect.before(instance, args));
                         final Object result = method.invoke(instance, args);
-                        aspectLinkedList.forEach(aspect -> aspect.after(instance, args));
+                        aspectLinkedList.forEach(aspect -> aspect.after(instance, result, args));
                         return result;
                     }
             );
