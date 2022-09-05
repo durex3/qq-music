@@ -1,7 +1,6 @@
 package com.durex.music.controller;
 
 import com.durex.music.model.MusicPlayer;
-import com.durex.music.model.PaneType;
 import com.durex.music.model.PlayListContext;
 import com.durex.music.model.PlayType;
 import com.durex.music.model.bind.MusicProperty;
@@ -10,7 +9,12 @@ import com.durex.music.model.qq.MusicDetail;
 import com.durex.music.model.qq.RecommendPlay;
 import com.durex.music.model.qq.SingerDetail;
 import com.durex.music.service.RecommendService;
-import com.durex.music.ui.*;
+import com.durex.music.ui.BasePagePane;
+import com.durex.music.ui.MainPane;
+import com.durex.music.ui.MusicPane;
+import com.durex.music.ui.PaneFactory;
+import com.durex.music.ui.SongDetailPagePane;
+import com.durex.music.ui.SongVBox;
 import com.durex.music.utils.TimeUtils;
 import com.leewyatt.rxcontrols.animation.carousel.AnimAround;
 import com.leewyatt.rxcontrols.animation.carousel.CarouselAnimation;
@@ -214,6 +218,7 @@ public class RecommendController implements Initializable {
                 BasePagePane pane = PaneFactory.newInstance(SongDetailPagePane.class);
                 Parent songDetail = pane.load(dissId);
                 if (songDetail != null) {
+                    MainPane.getScrollPane().setContent(null);
                     MainPane.getScrollPane().setContent(songDetail);
                 }
             });

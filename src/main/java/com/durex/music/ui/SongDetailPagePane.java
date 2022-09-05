@@ -1,5 +1,7 @@
 package com.durex.music.ui;
 
+import com.durex.music.aspect.Aspect;
+import com.durex.music.aspect.MenuStyleAspect;
 import com.durex.music.controller.SongDetailController;
 import com.durex.music.model.PaneType;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.util.Objects;
 
+@Aspect(types = {MenuStyleAspect.class})
 @Slf4j
 public class SongDetailPagePane implements BasePagePane {
 

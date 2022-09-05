@@ -230,7 +230,7 @@ public class MusicPlayer {
         player.currentTimeProperty().removeListener(getDurationChangeListener());
         curMusicSeconds.textProperty().unbind();
         PLAY_BUTTON_SELECTED.set(false);
-        //player.setOnEndOfMedia(null);
+        player.setOnEndOfMedia(null);
         player.dispose();
         player = null;
     }

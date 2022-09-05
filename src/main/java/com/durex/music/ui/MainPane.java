@@ -2,7 +2,6 @@ package com.durex.music.ui;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.exception.MusicException;
-import com.durex.music.model.PaneType;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -80,13 +79,21 @@ public class MainPane {
     }
 
     public static void setMenuStyle(Pane pane) {
-        curSelectedPane.setBackground(null);
-        curSelectedPane.getChildren().forEach(node -> ((Label) node).setTextFill(Color.BLACK));
+        pane.setBackground(null);
+        pane.getChildren().forEach(node -> ((Label) node).setTextFill(Color.BLACK));
 
         pane.getChildren().forEach(node -> ((Label) node).setTextFill(Color.WHITE));
         pane.setBackground(new Background(new BackgroundFill(MusicConstant.MENU_SELECTED_COLOR, MusicConstant.MENU_CORNER_RADII, null)));
 
         curSelectedPane = pane;
+    }
+
+    public static void resetMenuStyle() {
+        if (curSelectedPane != null) {
+            curSelectedPane.setBackground(null);
+            curSelectedPane.getChildren().forEach(node -> ((Label) node).setTextFill(Color.BLACK));
+            curSelectedPane = null;
+        }
     }
 
     public static ScrollPane getScrollPane() {

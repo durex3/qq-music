@@ -11,8 +11,10 @@ public class MenuStyleAspect implements IAspect {
 
     @Override
     public void before(Object instance, Object... args) {
-        if (args[0] != null) {
-            MainPane.setMenuStyle((Pane) args[0]);
+        if (args[0] != null && args[0] instanceof Pane pane) {
+            MainPane.setMenuStyle(pane);
+        } else {
+            MainPane.resetMenuStyle();
         }
     }
 }
