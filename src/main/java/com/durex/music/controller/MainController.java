@@ -1,17 +1,31 @@
 package com.durex.music.controller;
 
 import com.durex.music.model.MusicPlayer;
-import com.durex.music.model.PaneType;
-import com.durex.music.ui.*;
+import com.durex.music.ui.BasePagePane;
+import com.durex.music.ui.MainPane;
+import com.durex.music.ui.MusicHallPagePane;
+import com.durex.music.ui.PaneFactory;
+import com.durex.music.ui.RadioPagePane;
+import com.durex.music.ui.RecommendPagePane;
+import com.durex.music.ui.SoundPane;
+import com.durex.music.ui.VideoPagePane;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.animation.Animation;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
@@ -149,23 +163,26 @@ public class MainController implements Initializable {
     @FXML
     public void handleRecommendClicked(MouseEvent e) {
         BasePagePane pane = PaneFactory.newInstance(RecommendPagePane.class);
-        MainPane.getScrollPane().setContent(pane.load(MainPane.getMenuList().get(0)));
+        MainPane.getScrollPane().setContent(pane.load(e.getSource()));
     }
 
     @FXML
     public void handleMusicClicked(MouseEvent e) {
-        MainPane.getScrollPane().setContent(new Label("音乐馆"));
+        BasePagePane pane = PaneFactory.newInstance(MusicHallPagePane.class);
+        MainPane.getScrollPane().setContent(pane.load(e.getSource()));
     }
 
 
     @FXML
     public void handleVideoClicked(MouseEvent e) {
-        MainPane.getScrollPane().setContent(new Label("视频"));
+        BasePagePane pane = PaneFactory.newInstance(VideoPagePane.class);
+        MainPane.getScrollPane().setContent(pane.load(e.getSource()));
     }
 
     @FXML
     public void handleRadioClicked(MouseEvent e) {
-        MainPane.getScrollPane().setContent(new Label("电台"));
+        BasePagePane pane = PaneFactory.newInstance(RadioPagePane.class);
+        MainPane.getScrollPane().setContent(pane.load(e.getSource()));
     }
 
     @FXML
