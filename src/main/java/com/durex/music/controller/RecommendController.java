@@ -229,6 +229,9 @@ public class RecommendController implements Initializable {
 
     private void initCarousel() {
         final List<Banner> bannerList = RecommendService.getBannerList();
+        if (bannerList.size() < 3) {
+            bannerList.add(bannerList.get(0));
+        }
         // 为了保持更佳的切换效果,建议所有的RXCarouselPane和RXCarousel大小保持一致
         bannerList.forEach(banner -> {
             final Image image = new Image(banner.getPicUrl(), 730, 200, true, false, true);

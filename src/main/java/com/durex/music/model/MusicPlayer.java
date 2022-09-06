@@ -7,12 +7,7 @@ import com.durex.music.model.bind.PlayListMusic;
 import com.durex.music.service.MusicService;
 import com.durex.music.ui.MusicPlayListCell;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -22,6 +17,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,52 +55,51 @@ public class MusicPlayer {
             disposeMediaPlayer();
         }
 
-        player = (new MediaPlayer(new Media(playUrl)));
-        player.setOnReady(() -> {
-            // 音乐播放前执行这里的操作
-            final String imageUrl = String.format(MusicConstant.IMAGE_PREFIX, music.getAlbummid());
-            final Image image = new Image(imageUrl, 40, 40, false, false, true);
-            CUR_MUSIC_PLAY_IMAGE.set(image);
+        player = new WeakReference<>(new MediaPlayer(new Media(playUrl))).get();
+        // 音乐播放前执行这里的操作
+        final String imageUrl = String.format(MusicConstant.IMAGE_PREFIX, music.getAlbummid());
+        final Image image = new Image(imageUrl, 40, 40, false, false, true);
+        CUR_MUSIC_PLAY_IMAGE.set(image);
 
-            CUR_MUSIC_PLAY_MID.set(music.getId());
-            CUR_MUSIC_PLAY_NAME.set(music.getName().getText() + " - " + music.getSinger().getText());
-            CUR_MUSIC_PLAY_ALBUM.set(music.getAlbumName().getText());
-            CUR_MUSIC_TOTAL_SECONDS.set(music.getDuration().getText());
+        CUR_MUSIC_PLAY_MID.set(music.getId());
+        CUR_MUSIC_PLAY_NAME.set(music.getName().getText() + " - " + music.getSinger().getText());
+        CUR_MUSIC_PLAY_ALBUM.set(music.getAlbumName().getText());
+        CUR_MUSIC_TOTAL_SECONDS.set(music.getDuration().getText());
 
-            // 设置播放音乐的时长
-            player.setStopTime(Duration.seconds(music.getInterval()));
+        // 设置播放音乐的时长
+        player.setStopTime(Duration.seconds(music.getInterval()));
 
-            // 绑定当前播放时间
-            final ReadOnlyObjectProperty<Duration> timeProperty = player.currentTimeProperty();
+        // 绑定当前播放时间
+        final ReadOnlyObjectProperty<Duration> timeProperty = player.currentTimeProperty();
 
-            // 绑定进度条
-            curMusicSeconds.textProperty().bind(new CurrPlaySecondsBinding(timeProperty));
-            currMusicProgress.durationProperty().set(Duration.seconds(music.getInterval()));
-            currMusicProgress.bufferProgressTimeProperty().bind(player.bufferProgressTimeProperty());
+        // 绑定进度条
+        curMusicSeconds.textProperty().bind(new CurrPlaySecondsBinding(timeProperty));
+        currMusicProgress.durationProperty().set(Duration.seconds(music.getInterval()));
+        currMusicProgress.bufferProgressTimeProperty().bind(player.bufferProgressTimeProperty());
 
-            // 监听播放时间进度
-            player.currentTimeProperty().addListener(getDurationChangeListener());
+        // 监听播放时间进度
+        player.currentTimeProperty().addListener(getDurationChangeListener());
 
-            // 进度条拖动和点击事件
-            currMusicProgress.setOnMouseDragged(event -> {
-                if (player.getStatus() == MediaPlayer.Status.PLAYING) {
-                    player.seek(currMusicProgress.getCurrentTime());
-                }
-            });
-
-            currMusicProgress.setOnMouseClicked(event -> {
-                if (player.getStatus() == MediaPlayer.Status.PLAYING) {
-                    player.seek(currMusicProgress.getCurrentTime());
-                }
-            });
-
-            // 播放结束自动播放下一首
-            player.setOnEndOfMedia(MusicPlayer::playNextMusic);
-
-            player.setOnPaused(() -> PLAY_BUTTON_SELECTED.set(false));
-
-            PLAY_BUTTON_SELECTED.set(true);
+        // 进度条拖动和点击事件
+        currMusicProgress.setOnMouseDragged(event -> {
+            if (player.getStatus() == MediaPlayer.Status.PLAYING) {
+                player.seek(currMusicProgress.getCurrentTime());
+            }
         });
+
+        currMusicProgress.setOnMouseClicked(event -> {
+            if (player.getStatus() == MediaPlayer.Status.PLAYING) {
+                player.seek(currMusicProgress.getCurrentTime());
+            }
+        });
+
+        // 播放结束自动播放下一首
+        player.setOnEndOfMedia(MusicPlayer::playNextMusic);
+
+        player.setOnPaused(() -> PLAY_BUTTON_SELECTED.set(false));
+
+        PLAY_BUTTON_SELECTED.set(true);
+
         setCurrPlayMusicColor(music, MusicConstant.MENU_SELECTED_COLOR);
         player.play();
     }
