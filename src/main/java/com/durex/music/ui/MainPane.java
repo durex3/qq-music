@@ -223,11 +223,11 @@ public class MainPane {
         loadWindowTool(playDetail, Color.WHITE);
 
         // 加载推荐内容面板
-        Parent recommendPane = new RecommendPagePane().load(null);
-        scrollPane.setContent(recommendPane);
+        final RecommendPagePane recommendPagePane = new RecommendPagePane();
+        scrollPane.setContent(recommendPagePane.load(null));
         final HistoryStack.History recommend = new HistoryStack.History();
         recommend.setMenu(menuList.get(0));
-        recommend.setNode(recommendPane);
+        recommend.setPagePane(recommendPagePane);
 
         HistoryStack.push(recommend);
     }

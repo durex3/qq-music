@@ -1,8 +1,7 @@
 package com.durex.music.ui;
 
 import com.durex.music.aspect.Aspect;
-import com.durex.music.aspect.HistoryPaneAspect;
-import com.durex.music.aspect.MenuStyleAspect;
+import com.durex.music.aspect.PagePaneAspect;
 import com.durex.music.model.PaneType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +15,7 @@ import java.util.Objects;
  * @author liugelong
  * @date 2022/9/2 14:06
  */
-@Aspect(types = {MenuStyleAspect.class, HistoryPaneAspect.class})
+@Aspect(types = {PagePaneAspect.class})
 @Slf4j
 public class RecommendPagePane implements BasePagePane {
 

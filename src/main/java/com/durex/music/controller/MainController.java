@@ -231,16 +231,16 @@ public class MainController implements Initializable {
     @FXML
     public void handleBackClicked(MouseEvent e) {
         final HistoryStack.History history = HistoryStack.back();
-        setHistoryNode(history);
+        setHistoryPane(history);
     }
 
     @FXML
     public void handleForwardClicked(MouseEvent e) {
         final HistoryStack.History history = HistoryStack.forward();
-        setHistoryNode(history);
+        setHistoryPane(history);
     }
 
-    private static void setHistoryNode(HistoryStack.History history) {
+    private static void setHistoryPane(HistoryStack.History history) {
         if (history == null) {
             return;
         }
@@ -248,7 +248,7 @@ public class MainController implements Initializable {
             MainPane.setMenuStyle(history.getMenu());
         }
         MainPane.getScrollPane().setContent(null);
-        MainPane.getScrollPane().setContent(history.getNode());
+        MainPane.getScrollPane().setContent(history.getPagePane().load(history.getParam()));
     }
 
     private Stage getStage() {

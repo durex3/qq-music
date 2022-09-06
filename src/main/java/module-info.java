@@ -15,4 +15,5 @@ module qq.music {
     exports com.durex.music.model.qq;
     exports com.durex.music.model.bind;
     exports com.durex.music.response.qq;
+    exports com.durex.music.ui;
 }
