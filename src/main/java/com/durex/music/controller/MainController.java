@@ -247,6 +247,8 @@ public class MainController implements Initializable {
         }
         if (history.getMenu() != null) {
             MainPane.setMenuStyle(history.getMenu());
+        } else {
+            MainPane.resetMenuStyle();
         }
         MainPane.getScrollPane().setContent(null);
         Platform.runLater(() -> MainPane.getScrollPane().setContent(history.getPagePane().load(history.getParam())));

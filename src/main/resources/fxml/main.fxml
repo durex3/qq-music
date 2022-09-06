@@ -100,7 +100,7 @@
                     </AnchorPane>
                     <AnchorPane id="content-pane" fx:id="leftPane" minHeight="690.0" minWidth="810.0" prefHeight="690.0" prefWidth="810.0" stylesheets="@../css/main.css" AnchorPane.leftAnchor="210.0">
                         <children>
-                        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="730.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+                        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="730.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="20.0">
                            <children>
                               <HBox alignment="CENTER_LEFT" spacing="20.0" HBox.hgrow="ALWAYS">
                                  <children>
