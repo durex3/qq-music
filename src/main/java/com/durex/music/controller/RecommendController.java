@@ -57,6 +57,8 @@ public class RecommendController implements Initializable {
 
     private boolean isForward = true;
 
+    private Parent songDetail;
+
     @FXML
     private TilePane songListPane;
     @FXML
@@ -218,10 +220,9 @@ public class RecommendController implements Initializable {
                 String dissId = image.getUserData().toString();
                 BasePagePane pane = PaneFactory.newInstance(SongDetailPagePane.class);
                 MainPane.getScrollPane().setContent(null);
-                Parent songDetail = pane.load(dissId);
-                if (songDetail != null) {
-                    MainPane.getScrollPane().setContent(songDetail);
-                }
+                songDetail = null;
+                songDetail = pane.load(dissId);
+                MainPane.getScrollPane().setContent(songDetail);
             });
         });
         songListPane.getChildren().addAll(songVboxList);
