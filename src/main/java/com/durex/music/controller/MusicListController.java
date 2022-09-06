@@ -43,13 +43,14 @@ public class MusicListController implements Initializable {
     private TableColumn<MusicProperty, Label> album;
     @FXML
     private TableColumn<MusicProperty, Label> duration;
-    private final ObservableList<MusicProperty> musicPropertyList = FXCollections.observableArrayList();
+    private final ObservableList<MusicProperty> musicPropertyList;
     private final long songId;
     private final List<Music> musicList;
 
     public MusicListController(SongDetail songDetail) {
         this.songId = songDetail.getDissid();
         this.musicList = songDetail.getSonglist();
+        this.musicPropertyList = FXCollections.observableArrayList();
     }
 
     @Override
