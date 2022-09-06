@@ -13,6 +13,7 @@ import com.durex.music.ui.VideoPagePane;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.animation.Animation;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
@@ -248,7 +249,7 @@ public class MainController implements Initializable {
             MainPane.setMenuStyle(history.getMenu());
         }
         MainPane.getScrollPane().setContent(null);
-        MainPane.getScrollPane().setContent(history.getPagePane().load(history.getParam()));
+        Platform.runLater(() -> MainPane.getScrollPane().setContent(history.getPagePane().load(history.getParam())));
     }
 
     private Stage getStage() {

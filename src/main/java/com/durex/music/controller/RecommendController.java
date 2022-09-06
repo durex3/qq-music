@@ -216,9 +216,9 @@ public class RecommendController implements Initializable {
                 RXAvatar image = (RXAvatar) event.getSource();
                 String dissId = image.getUserData().toString();
                 BasePagePane pane = PaneFactory.newInstance(SongDetailPagePane.class);
+                MainPane.getScrollPane().setContent(null);
                 Parent songDetail = pane.load(dissId);
                 if (songDetail != null) {
-                    MainPane.getScrollPane().setContent(null);
                     MainPane.getScrollPane().setContent(songDetail);
                 }
             });

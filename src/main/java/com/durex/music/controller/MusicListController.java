@@ -65,15 +65,14 @@ public class MusicListController implements Initializable {
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         musicPropertyList.clear();
         musicListTable.setItems(musicPropertyList);
-        Platform.runLater(this::init);
+        Platform.runLater(this::initMusicList);
     }
 
-    private void init() {
+    private void initMusicList() {
         PlayListContext context = MusicPlayer.getMusicPlayList().getContext();
         if (context.getType() == PlayType.SONG && context.getDataId().equals(String.valueOf(songId))) {
             musicPropertyList.addAll(MusicPlayer.getMusicPlayList().getMusicPropertyList());
         } else {
-
             musicList.forEach(music -> {
                 MusicProperty musicProperty = new MusicProperty();
                 musicProperty.setId(music.getSongmid());

@@ -70,7 +70,6 @@ public class SongDetailController implements Initializable {
         this.songId = songId;
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         MainPane.getScrollPane().setVvalue(0);
