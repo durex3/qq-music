@@ -6,8 +6,6 @@ import com.leewyatt.rxcontrols.controls.RXAvatar;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -49,6 +47,8 @@ public class SongVBox {
         songImage.setShapeType(RXAvatar.Type.SQUARE);
         songImage.setPrefWidth(167);
         songImage.setPrefHeight(167);
+        songImage.setMinWidth(167);
+        songImage.setMinHeight(167);
 
         Rectangle clip = new Rectangle(
                 songImage.getPrefWidth(), songImage.getPrefHeight()

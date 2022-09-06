@@ -72,6 +72,7 @@ public class RecommendController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         initCarousel();
 
         initSongList();

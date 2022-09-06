@@ -72,7 +72,6 @@ public class SongDetailController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        MainPane.getScrollPane().setVvalue(0);
         final SongDetail songDetail = SongDetailService.getSongDetail(songId);
         if (songDetail == null) {
             return;

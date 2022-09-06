@@ -32,5 +32,6 @@ public class PagePaneAspect implements IAspect {
             history.setParam(args[0]);
             HistoryStack.push(history);
         }
+        MainPane.getScrollPane().setVvalue(0);
     }
 }
