@@ -171,7 +171,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void handleRecommendClicked(MouseEvent e) {
-        if (MainPane.getCurSelectedPane().equals(e.getSource())) {
+        if (MainPane.getCurSelectedPane() != null && MainPane.getCurSelectedPane().equals(e.getSource())) {
             return;
         }
         BasePagePane pane = PaneFactory.newInstance(RecommendPagePane.class);
@@ -180,7 +180,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void handleMusicClicked(MouseEvent e) {
-        if (MainPane.getCurSelectedPane().equals(e.getSource())) {
+        if (MainPane.getCurSelectedPane() != null && MainPane.getCurSelectedPane().equals(e.getSource())) {
             return;
         }
         BasePagePane pane = PaneFactory.newInstance(MusicHallPagePane.class);
@@ -190,7 +190,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void handleVideoClicked(MouseEvent e) {
-        if (MainPane.getCurSelectedPane().equals(e.getSource())) {
+        if (MainPane.getCurSelectedPane() != null && MainPane.getCurSelectedPane().equals(e.getSource())) {
             return;
         }
         BasePagePane pane = PaneFactory.newInstance(VideoPagePane.class);
@@ -199,7 +199,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void handleRadioClicked(MouseEvent e) {
-        if (MainPane.getCurSelectedPane().equals(e.getSource())) {
+        if (MainPane.getCurSelectedPane() != null && MainPane.getCurSelectedPane().equals(e.getSource())) {
             return;
         }
         BasePagePane pane = PaneFactory.newInstance(RadioPagePane.class);
