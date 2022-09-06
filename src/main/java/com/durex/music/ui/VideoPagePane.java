@@ -5,6 +5,8 @@ import com.durex.music.aspect.PagePaneAspect;
 import com.durex.music.model.PaneType;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -17,7 +19,11 @@ public class VideoPagePane implements BasePagePane {
 
     @Override
     public Parent load(Object param) {
-        return new Label("视频");
+        BorderPane borderPane = new BorderPane();
+        final Label label = new Label("视频-暂未实现");
+        label.setFont(Font.font(36));
+        borderPane.setCenter(label);
+        return borderPane;
     }
 
     @Override
