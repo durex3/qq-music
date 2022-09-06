@@ -111,6 +111,10 @@ public class MainPane {
         return hidePlayDetailAnim;
     }
 
+    public static Pane getCurSelectedPane() {
+        return curSelectedPane;
+    }
+
     /**
      * <h2>加载底部播放信息</h2>
      *

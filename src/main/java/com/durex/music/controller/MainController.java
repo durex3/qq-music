@@ -171,12 +171,18 @@ public class MainController implements Initializable {
 
     @FXML
     public void handleRecommendClicked(MouseEvent e) {
+        if (MainPane.getCurSelectedPane().equals(e.getSource())) {
+            return;
+        }
         BasePagePane pane = PaneFactory.newInstance(RecommendPagePane.class);
         MainPane.getScrollPane().setContent(pane.load(e.getSource()));
     }
 
     @FXML
     public void handleMusicClicked(MouseEvent e) {
+        if (MainPane.getCurSelectedPane().equals(e.getSource())) {
+            return;
+        }
         BasePagePane pane = PaneFactory.newInstance(MusicHallPagePane.class);
         MainPane.getScrollPane().setContent(pane.load(e.getSource()));
     }
@@ -184,12 +190,18 @@ public class MainController implements Initializable {
 
     @FXML
     public void handleVideoClicked(MouseEvent e) {
+        if (MainPane.getCurSelectedPane().equals(e.getSource())) {
+            return;
+        }
         BasePagePane pane = PaneFactory.newInstance(VideoPagePane.class);
         MainPane.getScrollPane().setContent(pane.load(e.getSource()));
     }
 
     @FXML
     public void handleRadioClicked(MouseEvent e) {
+        if (MainPane.getCurSelectedPane().equals(e.getSource())) {
+            return;
+        }
         BasePagePane pane = PaneFactory.newInstance(RadioPagePane.class);
         MainPane.getScrollPane().setContent(pane.load(e.getSource()));
     }
@@ -251,7 +263,10 @@ public class MainController implements Initializable {
             MainPane.resetMenuStyle();
         }
         MainPane.getScrollPane().setContent(null);
-        Platform.runLater(() -> MainPane.getScrollPane().setContent(history.getPagePane().load(history.getParam())));
+        Platform.runLater(() -> {
+            MainPane.getScrollPane().setContent(history.getPagePane().load(history.getParam()));
+            MainPane.getScrollPane().setVvalue(0);
+        });
     }
 
     private Stage getStage() {
