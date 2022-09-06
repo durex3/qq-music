@@ -22,8 +22,6 @@ import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -39,7 +37,6 @@ public class MainPane {
     private static Timeline hidePlayListAnim;
     private static Timeline showPlayDetailAnim;
     private static Timeline hidePlayDetailAnim;
-    private static final List<Pane> menuList = new ArrayList<>();
     private static Pane curSelectedPane;
 
     private static final Font MENU = Font.loadFont(MainPane.class.getResourceAsStream("/font/qq-music-menu.ttf"), 25);
@@ -114,10 +111,6 @@ public class MainPane {
         return hidePlayDetailAnim;
     }
 
-    public static List<Pane> getMenuList() {
-        return menuList;
-    }
-
     /**
      * <h2>加载底部播放信息</h2>
      *
@@ -166,9 +159,7 @@ public class MainPane {
 
         // 默认选择推荐
         Pane recommendPane = (Pane) root.lookup("#recommend-pane");
-        curSelectedPane = recommendPane;
         setMenuStyle(recommendPane);
-        menuList.add(recommendPane);
 
         Label recommendLabel = (Label) root.lookup("#recommend-label");
         recommendLabel.setTextFill(Color.WHITE);
@@ -179,25 +170,19 @@ public class MainPane {
         recommendText.setTextFill(Color.WHITE);
 
         // 音乐馆
-        Pane musicPane = (Pane) root.lookup("#music-pane");
         Label musicLabel = (Label) root.lookup("#music-label");
         musicLabel.setText("\ue644;;");
         musicLabel.setFont(MENU);
-        menuList.add(musicPane);
 
         // 视频
-        Pane videoPane = (Pane) root.lookup("#video-pane");
         Label videoLabel = (Label) root.lookup("#video-label");
         videoLabel.setText("\ue6e7;");
         videoLabel.setFont(MENU);
-        menuList.add(videoPane);
 
         // 电台
-        Pane radioPane = (Pane) root.lookup("#radio-pane");
         Label radioLabel = (Label) root.lookup("#radio-label");
         radioLabel.setText("\ue693;");
         radioLabel.setFont(MENU);
-        menuList.add(radioPane);
     }
 
     private static void initAnim() {
@@ -226,7 +211,7 @@ public class MainPane {
         final RecommendPagePane recommendPagePane = new RecommendPagePane();
         scrollPane.setContent(recommendPagePane.load(null));
         final HistoryStack.History recommend = new HistoryStack.History();
-        recommend.setMenu(menuList.get(0));
+        recommend.setMenu(curSelectedPane);
         recommend.setPagePane(recommendPagePane);
 
         HistoryStack.push(recommend);
