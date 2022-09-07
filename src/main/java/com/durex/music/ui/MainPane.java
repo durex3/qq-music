@@ -49,7 +49,8 @@ public class MainPane {
         AnchorPane root;
         try {
             // 主面板
-            root = FXMLLoader.load(Objects.requireNonNull(MainPane.class.getResource("/fxml/main.fxml")));
+            FXMLLoader fxmlLoader = new FXMLLoader(MainPane.class.getResource("/fxml/main.fxml"));
+            root = fxmlLoader.load();
             loadLeftMenu(root);
             loadTopInfo(root);
             loadBottomPlayInfo(root);

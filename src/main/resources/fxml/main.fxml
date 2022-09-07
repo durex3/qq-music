@@ -1,346 +1,336 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.leewyatt.rxcontrols.controls.RXAvatar?>
-<?import com.leewyatt.rxcontrols.controls.RXMediaProgressBar?>
-<?import java.lang.String?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<AnchorPane id="root" minHeight="690.0" minWidth="1020.0" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.MainController">
-   <children>
-      <StackPane>
-         <children>
-            <AnchorPane fx:id="mainPane" stylesheets="@../css/main.css">
-                <children>
-                    <AnchorPane id="left-Menu-pane" prefHeight="690.0" prefWidth="210.0" stylesheets="@../css/main.css" AnchorPane.leftAnchor="0.0">
-                        <children>
-                            <VBox id="logo-h" prefHeight="50.0" prefWidth="105.0" stylesheets="@../css/main.css" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="20.0">
-                                <children>
-                                    <Pane prefHeight="30.0" prefWidth="106.0">
-                                        <children>
-                                            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                                <image>
-                                                    <Image url="@../image/logo.png" />
-                                                </image>
-                                            </ImageView>
-                                            <Label layoutX="25.0" layoutY="-1.0" prefHeight="30.0" prefWidth="70.0" text="QQ音乐">
-                                                <font>
-                                                    <Font name="System Bold" size="16.0" />
-                                                </font>
-                                                <padding>
-                                                    <Insets left="5.0" />
-                                                </padding>
-                                            </Label>
-                                        </children>
-                                    </Pane>
-                                </children>
-                            </VBox>
-                            <Label prefHeight="19.0" prefWidth="61.0" text="在线音乐" textFill="#948d8d" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="100.0" />
-                            <VBox id="online-box" prefHeight="160.0" prefWidth="160.0" stylesheets="@../css/main.css" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="130.0">
-                                <children>
-                                    <Pane id="recommend-pane" onMouseClicked="#handleRecommendClicked" prefHeight="30.0" prefWidth="68.0" styleClass="menu-btn" stylesheets="@../css/main.css">
-                                        <children>
-                                            <Label id="recommend-text" layoutX="40.0" layoutY="4.0" prefHeight="22.0" prefWidth="33.0" text="推荐">
-                                                <font>
-                                                    <Font size="14.0" />
-                                                </font>
-                                            </Label>
-                                            <Label id="recommend-label" layoutX="8.0" layoutY="2.0" prefHeight="25.0" prefWidth="25.0" />
-                                        </children>
-                                    </Pane>
-                                    <Pane id="music-pane" onMouseClicked="#handleMusicClicked" prefHeight="30.0" prefWidth="160.0" styleClass="menu-btn" stylesheets="@../css/main.css">
-                                        <children>
-                                            <Label id="music-text" layoutX="40.0" layoutY="4.0" prefHeight="22.0" prefWidth="45.0" text="音乐馆">
-                                                <font>
-                                                    <Font size="14.0" />
-                                                </font>
-                                            </Label>
-                                            <Label id="music-label" layoutX="8.0" layoutY="2.0" prefHeight="25.0" prefWidth="25.0" />
-                                        </children>
-                                    </Pane>
-                                    <Pane id="video-pane" onMouseClicked="#handleVideoClicked" prefHeight="30.0" prefWidth="160.0" styleClass="menu-btn" stylesheets="@../css/main.css">
-                                        <children>
-                                            <Label id="video-text" layoutX="40.0" layoutY="4.0" prefHeight="22.0" prefWidth="33.0" text="视频">
-                                                <font>
-                                                    <Font size="14.0" />
-                                                </font>
-                                            </Label>
-                                            <Label id="video-label" layoutX="8.0" layoutY="2.0" prefHeight="25.0" prefWidth="25.0" />
-                                        </children>
-                                    </Pane>
-                                    <Pane id="radio-pane" onMouseClicked="#handleRadioClicked" prefHeight="30.0" prefWidth="160.0" styleClass="menu-btn" stylesheets="@../css/main.css">
-                                        <children>
-                                            <Label id="radio-text" layoutX="40.0" layoutY="4.0" prefHeight="22.0" prefWidth="33.0" text="电台">
-                                                <font>
-                                                    <Font size="14.0" />
-                                                </font>
-                                            </Label>
-                                            <Label id="radio-label" layoutX="8.0" layoutY="2.0" prefHeight="25.0" prefWidth="25.0" />
-                                        </children>
-                                    </Pane>
-                                </children>
-                                <opaqueInsets>
-                                    <Insets />
-                                </opaqueInsets>
-                            </VBox>
-                        </children>
-                    </AnchorPane>
-                    <AnchorPane id="content-pane" fx:id="leftPane" minHeight="690.0" minWidth="810.0" prefHeight="690.0" prefWidth="810.0" stylesheets="@../css/main.css" AnchorPane.leftAnchor="210.0">
-                        <children>
-                        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="730.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="20.0">
-                           <children>
-                              <HBox alignment="CENTER_LEFT" spacing="20.0" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label fx:id="backBtn" onMouseClicked="#handleBackClicked" prefWidth="10.0" styleClass="back-btn" stylesheets="@../css/main.css" />
-                                    <Label fx:id="forwardBtn" onMouseClicked="#handleForwardClicked" prefWidth="10.0" styleClass="forward-btn" stylesheets="@../css/main.css" />
-                                    <StackPane>
-                                       <children>
-                                                <TextField id="search-text-field" prefHeight="30.0" prefWidth="200.0" promptText="搜索音乐" stylesheets="@../css/main.css" />
-                                                <Label id="search-icon-label" prefHeight="15.0" prefWidth="16.0" textFill="#979797" StackPane.alignment="CENTER_RIGHT">
-                                             <StackPane.margin>
-                                                <Insets right="5.0" />
-                                             </StackPane.margin>
-                                          </Label>
-                                       </children>
-                                    </StackPane>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="ALWAYS">
-                                 <children>
-                                          <Label id="minimize-label" fx:id="minimizeLabel" onMouseClicked="#handleMinimizeClicked" prefHeight="17.0" prefWidth="15.0" text="Label" />
-                                          <Label id="maximize-label" prefHeight="15.0" prefWidth="15.0" text="Label" />
-                                          <Label id="close-label" fx:id="closeLabel" onMouseClicked="#handleCloseClicked" prefHeight="15.0" prefWidth="15.0" text="Label" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <AnchorPane id="bottom-pane" prefHeight="70.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="620.0">
-                           <children>
-                              <RXMediaProgressBar fx:id="currMusicProgress" prefHeight="10.0" prefWidth="810.0" />
-                              <HBox alignment="CENTER" prefHeight="60.0" prefWidth="770.0" spacing="80.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="10.0">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
-                                       <children>
-                                          <StackPane fx:id="curMusicPlayImagePane">
-                                             <children>
-                                                <RXAvatar id="cur-play-image" fx:id="curMusicPlayImage" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#handleShowPlayDetailPaneClicked" prefHeight="40.0" prefWidth="40.0" shapeType="SQUARE">
-                                                   <image>
-                                                      <Image url="@../image/qilixiang.jpeg" />
-                                                   </image>
-                                                </RXAvatar>
-                                                <Label fx:id="showPlayDetailIcon" minHeight="17.0" minWidth="17.0" onMouseClicked="#handleShowPlayDetailPaneClicked" styleClass="show-play-detail-icon" stylesheets="@../css/main.css" visible="false" />
-                                             </children>
-                                          </StackPane>
-                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                                             <children>
-                                                <Label id="cur_play_name" fx:id="curMusicPlayName" text="七里香-周杰伦">
-                                                   <font>
-                                                      <Font size="14.0" />
-                                                   </font>
-                                                </Label>
-                                                <HBox alignment="CENTER" prefWidth="200.0" spacing="15.0">
-                                                   <children>
-                                                      <StackPane prefHeight="150.0" prefWidth="200.0" stylesheets="@../css/main.css">
-                                                         <children>
-                                                            <Region prefHeight="200.0" prefWidth="200.0" />
-                                                         </children>
-                                                         <styleClass>
-                                                            <String fx:value="svg-btn" />
-                                                            <String fx:value="download-btn" />
-                                                         </styleClass>
-                                                      </StackPane>
-                                                      <StackPane prefHeight="150.0" prefWidth="200.0" stylesheets="@../css/main.css">
-                                                         <children>
-                                                            <Region prefHeight="200.0" prefWidth="200.0" />
-                                                         </children>
-                                                         <styleClass>
-                                                            <String fx:value="svg-btn" />
-                                                            <String fx:value="comment-btn" />
-                                                         </styleClass>
-                                                      </StackPane>
-                                                      <StackPane prefHeight="150.0" prefWidth="200.0" stylesheets="@../css/main.css">
-                                                         <children>
-                                                            <Region prefHeight="200.0" prefWidth="200.0" />
-                                                         </children>
-                                                         <styleClass>
-                                                            <String fx:value="svg-btn" />
-                                                            <String fx:value="more-btn" />
-                                                         </styleClass>
-                                                      </StackPane>
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" spacing="20.0" HBox.hgrow="ALWAYS">
-                                       <children>
-                                          <StackPane maxHeight="16.0" maxWidth="16.0" stylesheets="@../css/main.css">
-                                             <children>
-                                                <Region fx:id="preBtn" prefHeight="200.0" prefWidth="200.0" />
-                                             </children>
-                                             <styleClass>
-                                                <String fx:value="prev-btn" />
-                                                <String fx:value="svg-btn" />
-                                             </styleClass>
-                                          </StackPane>
-                                          <ToggleButton id="play-btn" fx:id="playButton" mnemonicParsing="false" styleClass="play-btn" stylesheets="@../css/main.css">
-                                             <graphic>
-                                                <Region prefHeight="30.0" prefWidth="30.0" />
-                                             </graphic>
-                                          </ToggleButton>
-                                          <StackPane maxHeight="16.0" maxWidth="16.0" stylesheets="@../css/main.css">
-                                             <children>
-                                                <Region fx:id="nextBtn" prefHeight="200.0" prefWidth="200.0" />
-                                             </children>
-                                             <styleClass>
-                                                <String fx:value="next-btn" />
-                                                <String fx:value="svg-btn" />
-                                             </styleClass>
-                                          </StackPane>
-                                       </children>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="220.0" spacing="15.0" HBox.hgrow="ALWAYS">
-                                       <children>
-                                          <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <Label fx:id="curMusicSeconds" minWidth="36.0" text="00:00" textFill="#7b7b7a" />
-                                                <Label text="/ " textFill="#7b7b7a" />
-                                                <Label id="cur_play_interval" fx:id="curMusicTotalSeconds" minWidth="36.0" text="00:00" textFill="#7b7b7a" />
-                                             </children>
-                                          </HBox>
-                                          <StackPane fx:id="soundBtn" onMouseClicked="#handleSoundPopupClicked" prefHeight="150.0" prefWidth="200.0" stylesheets="@../css/main.css">
-                                             <children>
-                                                <Region prefHeight="200.0" prefWidth="200.0" />
-                                             </children>
-                                             <styleClass>
-                                                <String fx:value="sound-btn" />
-                                                <String fx:value="svg-btn" />
-                                             </styleClass>
-                                          </StackPane>
-                                          <Label styleClass="lyric-label" stylesheets="@../css/main.css" text="词" textFill="#7b7a7a">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Label>
-                                          <HBox alignment="CENTER_LEFT" onMouseClicked="#handleShowPlayListPaneClicked" prefWidth="50.0" styleClass="show-list-btn" stylesheets="@../css/main.css" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <Label minHeight="16.0" minWidth="16.0" prefHeight="16.0" prefWidth="16.0" styleClass="show-list-icon" stylesheets="@../css/main.css" />
-                                                <Label fx:id="bottomPlayListNum" onMouseClicked="#handleShowPlayListPaneClicked" text="100" textFill="#7b7a7a">
-                                                   <font>
-                                                      <Font size="12.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </AnchorPane>
-                        <ScrollPane id="scroll-pane" fx:id="contentPane" hbarPolicy="NEVER" prefWidth="810.0" stylesheets="@../css/main.css" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="70.0" AnchorPane.topAnchor="70.0" />
-                        </children>
-                    </AnchorPane>
-                </children>
-            </AnchorPane>
-            <AnchorPane id="play-detail-pane" prefHeight="200.0" prefWidth="200.0" translateY="690.0" visible="false" />
-            <AnchorPane id="play-list-pane" fx:id="playListPane" prefHeight="690.0" prefWidth="300.0" stylesheets="@../css/main.css" translateX="300.0" visible="false" StackPane.alignment="TOP_RIGHT">
-               <children>
-                  <AnchorPane onMouseClicked="#handleHidePlayListPaneClicked" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <AnchorPane id="list-pane" prefWidth="300.0" stylesheets="@../css/main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <VBox prefHeight="690.0" prefWidth="265.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="20.0">
-                           <children>
-                              <VBox prefHeight="100.0" prefWidth="265.0" spacing="10.0">
-                                 <children>
-                                    <Label text="播放队列">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets top="20.0" />
-                                       </padding>
-                                    </Label>
-                                    <HBox prefHeight="40.0" prefWidth="265.0">
-                                       <children>
-                                          <Label prefWidth="15.0" text="共" />
-                                          <Label fx:id="playListNum" text="400" />
-                                          <Label prefWidth="40.0" text="首歌曲" />
-                                          <AnchorPane prefHeight="40.0" HBox.hgrow="ALWAYS">
-                                             <children>
-                                                <HBox prefHeight="20.0" spacing="3.0" styleClass="add-to-btn" stylesheets="@../css/main.css" AnchorPane.rightAnchor="60.0">
-                                                   <children>
-                                                      <Label minHeight="12.0" minWidth="12.0" prefHeight="12.0" prefWidth="12.0" styleClass="add-to-icon" stylesheets="@../css/main.css">
-                                                         <font>
-                                                            <Font size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="添加到" textFill="#7b7a7a">
-                                                         <font>
-                                                            <Font size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                </HBox>
-                                                <HBox fx:id="clearListBtn" spacing="3.0" styleClass="clear-list-btn" stylesheets="@../css/main.css" AnchorPane.rightAnchor="0.0">
-                                                   <children>
-                                                      <Label minHeight="13.0" minWidth="13.0" prefHeight="13.0" prefWidth="13.0" styleClass="clear-list-icon" stylesheets="@../css/main.css">
-                                                         <font>
-                                                            <Font size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <Label text="清空" textFill="#7b7a7a">
-                                                         <font>
-                                                            <Font size="12.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                              <AnchorPane prefHeight="525.0" prefWidth="265.0">
-                                 <children>
-                                    <ListView fx:id="playListView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                 </children></AnchorPane>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="65.0" prefWidth="265.0" spacing="2.0">
-                                 <children>
-                                    <HBox alignment="CENTER" onMouseClicked="#handleHidePlayListPaneClicked" styleClass="hide-list-btn" stylesheets="@../css/main.css">
-                                       <children>
-                                          <Label minHeight="16.0" minWidth="16.0" prefHeight="16.0" prefWidth="16.0" styleClass="hide-list-icon" stylesheets="@../css/main.css" />
-                                          <Label text="收起" textFill="#7b7a7a">
-                                             <font>
-                                                <Font size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
-         </children>
-      </StackPane>
-   </children>
+<AnchorPane id="root" minHeight="690.0" minWidth="1020.0" onMouseDragged="#handleMouseDragged"
+            onMousePressed="#handleMousePressed" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.MainController">
+    <!--    <StackPane>-->
+    <!--        <AnchorPane fx:id="mainPane" stylesheets="@../css/main.css">-->
+    <!--            <AnchorPane id="left-Menu-pane" prefHeight="690.0" prefWidth="210.0" stylesheets="@../css/main.css"-->
+    <!--                        AnchorPane.leftAnchor="0.0">-->
+    <!--                <VBox id="logo-h" prefHeight="50.0" prefWidth="105.0" stylesheets="@../css/main.css"-->
+    <!--                      AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="20.0">-->
+    <!--                    <Pane prefHeight="30.0" prefWidth="106.0">-->
+    <!--                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"-->
+    <!--                                   preserveRatio="true">-->
+    <!--                            <Image url="@../image/logo.png"/>-->
+    <!--                        </ImageView>-->
+    <!--                        <Label layoutX="25.0" layoutY="-1.0" prefHeight="30.0" prefWidth="70.0"-->
+    <!--                               text="QQ音乐">-->
+    <!--                            <font>-->
+    <!--                                <Font name="System Bold" size="16.0"/>-->
+    <!--                            </font>-->
+    <!--                            <padding>-->
+    <!--                                <Insets left="5.0"/>-->
+    <!--                            </padding>-->
+    <!--                        </Label>-->
+    <!--                    </Pane>-->
+    <!--                </VBox>-->
+    <!--                <Label prefHeight="19.0" prefWidth="61.0" text="在线音乐" textFill="#948d8d"-->
+    <!--                       AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="100.0"/>-->
+    <!--                <VBox id="online-box" prefHeight="160.0" prefWidth="160.0" stylesheets="@../css/main.css"-->
+    <!--                      AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="130.0">-->
+    <!--                    <Pane id="recommend-pane" onMouseClicked="#handleRecommendClicked" prefHeight="30.0"-->
+    <!--                          prefWidth="68.0" styleClass="menu-btn" stylesheets="@../css/main.css">-->
+    <!--                        <Label id="recommend-text" layoutX="40.0" layoutY="4.0" prefHeight="22.0"-->
+    <!--                               prefWidth="33.0" text="推荐">-->
+    <!--                            <font>-->
+    <!--                                <Font size="14.0"/>-->
+    <!--                            </font>-->
+    <!--                        </Label>-->
+    <!--                        <Label id="recommend-label" layoutX="8.0" layoutY="2.0" prefHeight="25.0"-->
+    <!--                               prefWidth="25.0"/>-->
+    <!--                    </Pane>-->
+    <!--                    <Pane id="music-pane" onMouseClicked="#handleMusicClicked" prefHeight="30.0"-->
+    <!--                          prefWidth="160.0" styleClass="menu-btn" stylesheets="@../css/main.css">-->
+    <!--                        <Label id="music-text" layoutX="40.0" layoutY="4.0" prefHeight="22.0"-->
+    <!--                               prefWidth="45.0" text="音乐馆">-->
+    <!--                            <font>-->
+    <!--                                <Font size="14.0"/>-->
+    <!--                            </font>-->
+    <!--                        </Label>-->
+    <!--                        <Label id="music-label" layoutX="8.0" layoutY="2.0" prefHeight="25.0"-->
+    <!--                               prefWidth="25.0"/>-->
+    <!--                    </Pane>-->
+    <!--                    <Pane id="video-pane" onMouseClicked="#handleVideoClicked" prefHeight="30.0"-->
+    <!--                          prefWidth="160.0" styleClass="menu-btn" stylesheets="@../css/main.css">-->
+    <!--                        <Label id="video-text" layoutX="40.0" layoutY="4.0" prefHeight="22.0"-->
+    <!--                               prefWidth="33.0" text="视频">-->
+    <!--                            <font>-->
+    <!--                                <Font size="14.0"/>-->
+    <!--                            </font>-->
+    <!--                        </Label>-->
+    <!--                        <Label id="video-label" layoutX="8.0" layoutY="2.0" prefHeight="25.0"-->
+    <!--                               prefWidth="25.0"/>-->
+    <!--                    </Pane>-->
+    <!--                    <Pane id="radio-pane" onMouseClicked="#handleRadioClicked" prefHeight="30.0"-->
+    <!--                          prefWidth="160.0" styleClass="menu-btn" stylesheets="@../css/main.css">-->
+    <!--                        <Label id="radio-text" layoutX="40.0" layoutY="4.0" prefHeight="22.0"-->
+    <!--                               prefWidth="33.0" text="电台">-->
+    <!--                            <font>-->
+    <!--                                <Font size="14.0"/>-->
+    <!--                            </font>-->
+    <!--                        </Label>-->
+    <!--                        <Label id="radio-label" layoutX="8.0" layoutY="2.0" prefHeight="25.0"-->
+    <!--                               prefWidth="25.0"/>-->
+    <!--                    </Pane>-->
+    <!--                </VBox>-->
+    <!--            </AnchorPane>-->
+    <!--            <AnchorPane id="content-pane" fx:id="leftPane" minHeight="690.0" minWidth="810.0" prefHeight="690.0"-->
+    <!--                        prefWidth="810.0" stylesheets="@../css/main.css" AnchorPane.leftAnchor="210.0">-->
+    <!--                <HBox alignment="CENTER" prefHeight="70.0" prefWidth="730.0" AnchorPane.leftAnchor="40.0"-->
+    <!--                      AnchorPane.rightAnchor="20.0">-->
+    <!--                    <HBox alignment="CENTER_LEFT" spacing="20.0" HBox.hgrow="ALWAYS">-->
+    <!--                        <Label fx:id="backBtn" onMouseClicked="#handleBackClicked" prefWidth="10.0"-->
+    <!--                               styleClass="back-btn" stylesheets="@../css/main.css"/>-->
+    <!--                        <Label fx:id="forwardBtn" onMouseClicked="#handleForwardClicked"-->
+    <!--                               prefWidth="10.0" styleClass="forward-btn"-->
+    <!--                               stylesheets="@../css/main.css"/>-->
+    <!--                        <StackPane>-->
+    <!--                            <children>-->
+    <!--                                <TextField id="search-text-field" prefHeight="30.0"-->
+    <!--                                           prefWidth="200.0" promptText="搜索音乐"-->
+    <!--                                           stylesheets="@../css/main.css"/>-->
+    <!--                                <Label id="search-icon-label" prefHeight="15.0" prefWidth="16.0"-->
+    <!--                                       textFill="#979797" StackPane.alignment="CENTER_RIGHT">-->
+    <!--                                    <StackPane.margin>-->
+    <!--                                        <Insets right="5.0"/>-->
+    <!--                                    </StackPane.margin>-->
+    <!--                                </Label>-->
+    <!--                            </children>-->
+    <!--                        </StackPane>-->
+    <!--                    </HBox>-->
+    <!--                    <HBox alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="ALWAYS">-->
+    <!--                        <Label id="minimize-label" fx:id="minimizeLabel"-->
+    <!--                               onMouseClicked="#handleMinimizeClicked" prefHeight="17.0"-->
+    <!--                               prefWidth="15.0" text="Label"/>-->
+    <!--                        <Label id="maximize-label" prefHeight="15.0" prefWidth="15.0" text="Label"/>-->
+    <!--                        <Label id="close-label" fx:id="closeLabel"-->
+    <!--                               onMouseClicked="#handleCloseClicked" prefHeight="15.0"-->
+    <!--                               prefWidth="15.0" text="Label"/>-->
+    <!--                    </HBox>-->
+    <!--                </HBox>-->
+    <!--                <AnchorPane id="bottom-pane" prefHeight="70.0" prefWidth="810.0"-->
+    <!--                            AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="620.0">-->
+    <!--                    <RXMediaProgressBar fx:id="currMusicProgress" prefHeight="10.0" prefWidth="810.0"/>-->
+    <!--                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="770.0" spacing="80.0"-->
+    <!--                          AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="10.0">-->
+    <!--                        <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0"-->
+    <!--                              spacing="10.0" HBox.hgrow="ALWAYS">-->
+    <!--                            <StackPane fx:id="curMusicPlayImagePane">-->
+    <!--                                <RXAvatar id="cur-play-image" fx:id="curMusicPlayImage"-->
+    <!--                                          maxHeight="-Infinity" maxWidth="-Infinity"-->
+    <!--                                          onMouseClicked="#handleShowPlayDetailPaneClicked"-->
+    <!--                                          prefHeight="40.0" prefWidth="40.0"-->
+    <!--                                          shapeType="SQUARE">-->
+    <!--                                    <image>-->
+    <!--                                        <Image url="@../image/qilixiang.jpeg"/>-->
+    <!--                                    </image>-->
+    <!--                                </RXAvatar>-->
+    <!--                                <Label fx:id="showPlayDetailIcon" minHeight="17.0"-->
+    <!--                                       minWidth="17.0"-->
+    <!--                                       onMouseClicked="#handleShowPlayDetailPaneClicked"-->
+    <!--                                       styleClass="show-play-detail-icon"-->
+    <!--                                       stylesheets="@../css/main.css" visible="false"/>-->
+    <!--                            </StackPane>-->
+    <!--                            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0"-->
+    <!--                                  spacing="10.0">-->
+    <!--                                <Label id="cur_play_name" fx:id="curMusicPlayName"-->
+    <!--                                       text="七里香-周杰伦">-->
+    <!--                                    <font>-->
+    <!--                                        <Font size="14.0"/>-->
+    <!--                                    </font>-->
+    <!--                                </Label>-->
+    <!--                                <HBox alignment="CENTER" prefWidth="200.0" spacing="15.0">-->
+    <!--                                    <StackPane prefHeight="150.0" prefWidth="200.0"-->
+    <!--                                               stylesheets="@../css/main.css">-->
+    <!--                                        <styleClass>-->
+    <!--                                            <String fx:value="svg-btn"/>-->
+    <!--                                            <String fx:value="download-btn"/>-->
+    <!--                                        </styleClass>-->
+    <!--                                        <Region prefHeight="200.0"-->
+    <!--                                                prefWidth="200.0"/>-->
+    <!--                                    </StackPane>-->
+    <!--                                    <StackPane prefHeight="150.0" prefWidth="200.0"-->
+    <!--                                               stylesheets="@../css/main.css">-->
+    <!--                                        <styleClass>-->
+    <!--                                            <String fx:value="svg-btn"/>-->
+    <!--                                            <String fx:value="comment-btn"/>-->
+    <!--                                        </styleClass>-->
+    <!--                                        <Region prefHeight="200.0"-->
+    <!--                                                prefWidth="200.0"/>-->
+    <!--                                    </StackPane>-->
+    <!--                                    <StackPane prefHeight="150.0" prefWidth="200.0"-->
+    <!--                                               stylesheets="@../css/main.css">-->
+    <!--                                        <styleClass>-->
+    <!--                                            <String fx:value="svg-btn"/>-->
+    <!--                                            <String fx:value="more-btn"/>-->
+    <!--                                        </styleClass>-->
+    <!--                                        <Region prefHeight="200.0"-->
+    <!--                                                prefWidth="200.0"/>-->
+    <!--                                    </StackPane>-->
+    <!--                                </HBox>-->
+    <!--                            </VBox>-->
+    <!--                        </HBox>-->
+    <!--                        <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0"-->
+    <!--                              spacing="20.0" HBox.hgrow="ALWAYS">-->
+    <!--                            <StackPane maxHeight="16.0" maxWidth="16.0"-->
+    <!--                                       stylesheets="@../css/main.css">-->
+    <!--                                <styleClass>-->
+    <!--                                    <String fx:value="prev-btn"/>-->
+    <!--                                    <String fx:value="svg-btn"/>-->
+    <!--                                </styleClass>-->
+    <!--                                <Region fx:id="preBtn" prefHeight="200.0"-->
+    <!--                                        prefWidth="200.0"/>-->
+    <!--                            </StackPane>-->
+    <!--                            <ToggleButton id="play-btn" fx:id="playButton"-->
+    <!--                                          mnemonicParsing="false" styleClass="play-btn"-->
+    <!--                                          stylesheets="@../css/main.css">-->
+    <!--                                <graphic>-->
+    <!--                                    <Region prefHeight="30.0" prefWidth="30.0"/>-->
+    <!--                                </graphic>-->
+    <!--                            </ToggleButton>-->
+    <!--                            <StackPane maxHeight="16.0" maxWidth="16.0"-->
+    <!--                                       stylesheets="@../css/main.css">-->
+    <!--                                <styleClass>-->
+    <!--                                    <String fx:value="next-btn"/>-->
+    <!--                                    <String fx:value="svg-btn"/>-->
+    <!--                                </styleClass>-->
+    <!--                                <Region fx:id="nextBtn" prefHeight="200.0"-->
+    <!--                                        prefWidth="200.0"/>-->
+    <!--                            </StackPane>-->
+    <!--                        </HBox>-->
+    <!--                        <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="220.0"-->
+    <!--                              spacing="15.0" HBox.hgrow="ALWAYS">-->
+    <!--                            <HBox alignment="CENTER" HBox.hgrow="ALWAYS">-->
+    <!--                                <Label fx:id="curMusicSeconds" minWidth="36.0" text="00:00"-->
+    <!--                                       textFill="#7b7b7a"/>-->
+    <!--                                <Label text="/ " textFill="#7b7b7a"/>-->
+    <!--                                <Label id="cur_play_interval" fx:id="curMusicTotalSeconds"-->
+    <!--                                       minWidth="36.0" text="00:00" textFill="#7b7b7a"/>-->
+    <!--                            </HBox>-->
+    <!--                            <StackPane fx:id="soundBtn"-->
+    <!--                                       onMouseClicked="#handleSoundPopupClicked"-->
+    <!--                                       prefHeight="150.0" prefWidth="200.0"-->
+    <!--                                       stylesheets="@../css/main.css">-->
+    <!--                                <styleClass>-->
+    <!--                                    <String fx:value="sound-btn"/>-->
+    <!--                                    <String fx:value="svg-btn"/>-->
+    <!--                                </styleClass>-->
+    <!--                                <Region prefHeight="200.0" prefWidth="200.0"/>-->
+    <!--                            </StackPane>-->
+    <!--                            <Label styleClass="lyric-label" stylesheets="@../css/main.css"-->
+    <!--                                   text="词" textFill="#7b7a7a">-->
+    <!--                                <font>-->
+    <!--                                    <Font size="16.0"/>-->
+    <!--                                </font>-->
+    <!--                            </Label>-->
+    <!--                            <HBox alignment="CENTER_LEFT"-->
+    <!--                                  onMouseClicked="#handleShowPlayListPaneClicked"-->
+    <!--                                  prefWidth="50.0" styleClass="show-list-btn"-->
+    <!--                                  stylesheets="@../css/main.css" HBox.hgrow="ALWAYS">-->
+    <!--                                <Label minHeight="16.0" minWidth="16.0" prefHeight="16.0"-->
+    <!--                                       prefWidth="16.0" styleClass="show-list-icon"-->
+    <!--                                       stylesheets="@../css/main.css"/>-->
+    <!--                                <Label fx:id="bottomPlayListNum"-->
+    <!--                                       onMouseClicked="#handleShowPlayListPaneClicked"-->
+    <!--                                       text="100" textFill="#7b7a7a">-->
+    <!--                                    <font>-->
+    <!--                                        <Font size="12.0"/>-->
+    <!--                                    </font>-->
+    <!--                                </Label>-->
+    <!--                            </HBox>-->
+    <!--                        </HBox>-->
+    <!--                    </HBox>-->
+    <!--                </AnchorPane>-->
+    <!--                <ScrollPane id="scroll-pane" fx:id="contentPane" hbarPolicy="NEVER" prefWidth="810.0"-->
+    <!--                            stylesheets="@../css/main.css" vbarPolicy="ALWAYS"-->
+    <!--                            AnchorPane.bottomAnchor="70.0" AnchorPane.topAnchor="70.0"/>-->
+    <!--            </AnchorPane>-->
+    <!--        </AnchorPane>-->
+    <!--        <AnchorPane id="play-detail-pane" prefHeight="200.0" prefWidth="200.0" translateY="690.0" visible="false"/>-->
+    <!--        <AnchorPane id="play-list-pane" fx:id="playListPane" prefHeight="690.0" prefWidth="300.0"-->
+    <!--                    stylesheets="@../css/main.css" translateX="300.0" visible="false"-->
+    <!--                    StackPane.alignment="TOP_RIGHT">-->
+    <!--            <AnchorPane onMouseClicked="#handleHidePlayListPaneClicked" prefHeight="200.0" prefWidth="200.0"-->
+    <!--                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"-->
+    <!--                        AnchorPane.topAnchor="0.0"/>-->
+    <!--            <AnchorPane id="list-pane" prefWidth="300.0" stylesheets="@../css/main.css"-->
+    <!--                        AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">-->
+    <!--                <VBox prefHeight="690.0" prefWidth="265.0" AnchorPane.leftAnchor="15.0"-->
+    <!--                      AnchorPane.rightAnchor="20.0">-->
+    <!--                    <VBox prefHeight="100.0" prefWidth="265.0" spacing="10.0">-->
+    <!--                        <Label text="播放队列">-->
+    <!--                            <font>-->
+    <!--                                <Font size="20.0"/>-->
+    <!--                            </font>-->
+    <!--                            <padding>-->
+    <!--                                <Insets top="20.0"/>-->
+    <!--                            </padding>-->
+    <!--                        </Label>-->
+    <!--                        <HBox prefHeight="40.0" prefWidth="265.0">-->
+    <!--                            <Label prefWidth="15.0" text="共"/>-->
+    <!--                            <Label fx:id="playListNum" text="400"/>-->
+    <!--                            <Label prefWidth="40.0" text="首歌曲"/>-->
+    <!--                            <AnchorPane prefHeight="40.0" HBox.hgrow="ALWAYS">-->
+    <!--                                <HBox prefHeight="20.0" spacing="3.0"-->
+    <!--                                      styleClass="add-to-btn" stylesheets="@../css/main.css"-->
+    <!--                                      AnchorPane.rightAnchor="60.0">-->
+    <!--                                    <Label minHeight="12.0" minWidth="12.0"-->
+    <!--                                           prefHeight="12.0" prefWidth="12.0"-->
+    <!--                                           styleClass="add-to-icon"-->
+    <!--                                           stylesheets="@../css/main.css">-->
+    <!--                                        <font>-->
+    <!--                                            <Font size="12.0"/>-->
+    <!--                                        </font>-->
+    <!--                                    </Label>-->
+    <!--                                    <Label text="添加到" textFill="#7b7a7a">-->
+    <!--                                        <font>-->
+    <!--                                            <Font size="12.0"/>-->
+    <!--                                        </font>-->
+    <!--                                    </Label>-->
+    <!--                                </HBox>-->
+    <!--                                <HBox fx:id="clearListBtn" spacing="3.0"-->
+    <!--                                      styleClass="clear-list-btn"-->
+    <!--                                      stylesheets="@../css/main.css"-->
+    <!--                                      AnchorPane.rightAnchor="0.0">-->
+    <!--                                    <Label minHeight="13.0" minWidth="13.0"-->
+    <!--                                           prefHeight="13.0" prefWidth="13.0"-->
+    <!--                                           styleClass="clear-list-icon"-->
+    <!--                                           stylesheets="@../css/main.css">-->
+    <!--                                        <font>-->
+    <!--                                            <Font size="12.0"/>-->
+    <!--                                        </font>-->
+    <!--                                    </Label>-->
+    <!--                                    <Label text="清空" textFill="#7b7a7a">-->
+    <!--                                        <font>-->
+    <!--                                            <Font size="12.0"/>-->
+    <!--                                        </font>-->
+    <!--                                    </Label>-->
+    <!--                                </HBox>-->
+    <!--                            </AnchorPane>-->
+    <!--                        </HBox>-->
+    <!--                    </VBox>-->
+    <!--                    <AnchorPane prefHeight="525.0" prefWidth="265.0">-->
+    <!--                        <ListView fx:id="playListView" prefHeight="200.0" prefWidth="200.0"-->
+    <!--                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"-->
+    <!--                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>-->
+    <!--                    </AnchorPane>-->
+    <!--                    <HBox alignment="CENTER_RIGHT" prefHeight="65.0" prefWidth="265.0" spacing="2.0">-->
+    <!--                        <HBox alignment="CENTER" onMouseClicked="#handleHidePlayListPaneClicked"-->
+    <!--                              styleClass="hide-list-btn" stylesheets="@../css/main.css">-->
+    <!--                            <Label minHeight="16.0" minWidth="16.0" prefHeight="16.0"-->
+    <!--                                   prefWidth="16.0" styleClass="hide-list-icon"-->
+    <!--                                   stylesheets="@../css/main.css"/>-->
+    <!--                            <Label text="收起" textFill="#7b7a7a">-->
+    <!--                                <font>-->
+    <!--                                    <Font size="12.0"/>-->
+    <!--                                </font>-->
+    <!--                            </Label>-->
+    <!--                        </HBox>-->
+    <!--                    </HBox>-->
+    <!--                </VBox>-->
+    <!--            </AnchorPane>-->
+    <!--        </AnchorPane>-->
+    <!--    </StackPane>-->
 </AnchorPane>

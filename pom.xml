@@ -12,7 +12,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javafx-version>18.0.2</javafx-version>
+        <javafx-version>17.0.2</javafx-version>
         <gluonfx-maven-plugin.version>1.0.15</gluonfx-maven-plugin.version>
         <start-class>com.durex.music.QQMusicApplication</start-class>
     </properties>
@@ -71,6 +71,29 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>${start-class}</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
@@ -94,7 +117,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>qq.music/com.durex.music.QQMusicApplication</mainClass>
+                            <mainClass>${start-class}</mainClass>
                         </configuration>
                     </execution>
                 </executions>
@@ -104,43 +127,10 @@
                 <artifactId>gluonfx-maven-plugin</artifactId>
                 <version>${gluonfx-maven-plugin.version}</version>
                 <configuration>
+                    <target>host</target>
                     <mainClass>${start-class}</mainClass>
-                    <!--
-                    <javaStaticSdkVersion>11-ea+10</javaStaticSdkVersion>
-                    -->
-                    <javafxStaticSdkVersion>${javafx-version}</javafxStaticSdkVersion>
-                    <!-- JavaFx 中使用 ResourceBundle.getBundle("xxxxxx") 的路径，如果没有则不需要配置 -->
-                    <!--<bundlesList>
-                        <list>com.mueeee.desktopjavafx</list>
-                    </bundlesList>-->
-                    <!-- 允许的资源文件后缀 -->
-                    <resourcesList>
-                        <list>.*\\.properties$</list>
-                    </resourcesList>
                     <!-- 涉及反射的类 -->
-                    <reflectionList>
-                        <list>com.durex.music.controller.MusicListController</list>
-                        <list>com.durex.music.controller.MainController</list>
-                        <list>com.durex.music.controller.RecommendController</list>
-                        <list>com.durex.music.controller.SongDetailController</list>
-                        <list>com.durex.music.controller.PlayDetailController</list>
-                        <list>com.durex.music.ui.PaneFactory</list>
-                    </reflectionList>
-                    <nativeImageArgs>
-                        <!-- “快速构建”模式，以减少在开发过程中生成本机可执行文件所需的时间。请注意，此模式可能会对峰值性能和生成的可执行文件的大小产生负面影响，因此建议仅用于开发目的。 -->
-                        <!--<arg>-Ob</arg>-->
-                        <!-- 现在默认启用并已弃用，因为不再需要它。 -->
-                        <!--<arg>&#45;&#45;allow-incomplete-classpath</arg>-->
-                    </nativeImageArgs>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

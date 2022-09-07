@@ -23,4 +23,8 @@ public class QQMusicApplication extends Application {
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/logo.png"))));
         stage.show();
     }
+
+    public static void main(String[] args) {
+        Application.launch(QQMusicApplication.class, args);
+    }
 }
