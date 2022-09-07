@@ -218,6 +218,12 @@ public class MainPane {
         recommend.setMenu(curSelectedPane);
         recommend.setPagePane(recommendPagePane);
 
+        MainPane.getScrollPane().contentProperty().addListener((observableValue, o, n) -> {
+            if (o != null && RecommendPagePane.getInstance() != o) {
+                ((Pane) o).getChildren().clear();
+            }
+        });
+
         HistoryStack.push(recommend);
     }
 }

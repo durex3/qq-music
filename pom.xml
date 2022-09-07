@@ -97,7 +97,22 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.gluonhq</groupId>
+                <artifactId>gluonfx-maven-plugin</artifactId>
+                <version>1.0.15</version>
+                <configuration>
+                    <mainClass>qq.music/com.durex.music.QQMusicApplication</mainClass>
+                    <reflectionList>
+                        <list>qq.music/com.durex.music.controller.MusicListController</list>
+                        <list>qq.music/com.durex.music.controller.MainController</list>
+                        <list>qq.music/com.durex.music.controller.RecommendController</list>
+                        <list>qq.music/com.durex.music.controller.SongDetailController</list>
+                        <list>qq.music/com.durex.music.controller.PlayDetailController</list>
+                        <list>qq.music/com.durex.music.ui.PaneFactory</list>
+                    </reflectionList>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
 </project>

@@ -41,4 +41,8 @@ public class RecommendPagePane implements BasePagePane {
     public PaneType getType() {
         return PaneType.MENU;
     }
+
+    public static AnchorPane getInstance() {
+        return instance;
+    }
 }

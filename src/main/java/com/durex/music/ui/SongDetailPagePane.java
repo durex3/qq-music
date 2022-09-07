@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.Objects;
 
 @Aspect(types = {PagePaneAspect.class})
@@ -23,7 +22,7 @@ public class SongDetailPagePane implements BasePagePane {
         fxmlLoader.setControllerFactory(c -> new SongDetailController(param.toString()));
 
         try {
-            return new WeakReference<Parent>(fxmlLoader.load()).get();
+            return fxmlLoader.load();
         } catch (IOException e) {
             log.error("加载歌单详情页面失败: ", e);
         }
