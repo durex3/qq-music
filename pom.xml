@@ -12,7 +12,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javafx-version>17.0.2</javafx-version>
+        <javafx-version>18.0.2</javafx-version>
         <gluonfx-maven-plugin.version>1.0.15</gluonfx-maven-plugin.version>
         <start-class>com.durex.music.QQMusicApplication</start-class>
     </properties>
@@ -130,6 +130,93 @@
                     <target>host</target>
                     <mainClass>${start-class}</mainClass>
                     <!-- 涉及反射的类 -->
+<!--                    <reflectionList>-->
+<!--                        <list>com.durex.music.controller.MainController</list>-->
+<!--                        <list>com.durex.music.controller.MusicListController</list>-->
+<!--                        <list>com.durex.music.controller.PlayDetailController</list>-->
+<!--                        <list>com.durex.music.controller.RecommendController</list>-->
+<!--                        <list>com.durex.music.controller.SongDetailController</list>-->
+<!--                        <list>com.durex.music.response.qq.RecommendBannerResp</list>-->
+<!--                        <list>com.durex.music.response.qq.RecommendPlayListUResp</list>-->
+<!--                        <list>com.durex.music.response.qq.RecommendPlayListUResp$Data</list>-->
+<!--                        <list>com.durex.music.response.qq.NewMusicResp</list>-->
+<!--                        <list>com.durex.music.response.qq.NewMusicResp$Data</list>-->
+<!--                        <list>com.durex.music.response.qq.SongListResp</list>-->
+<!--                        <list>com.durex.music.response.qq.LyricResp</list>-->
+<!--                        <list>com.durex.music.model.qq.Action</list>-->
+<!--                        <list>com.durex.music.model.qq.Album</list>-->
+<!--                        <list>com.durex.music.model.qq.Banner</list>-->
+<!--                        <list>com.durex.music.model.qq.CreatorInfo</list>-->
+<!--                        <list>com.durex.music.model.qq.File</list>-->
+<!--                        <list>com.durex.music.model.qq.Ksong</list>-->
+<!--                        <list>com.durex.music.model.qq.Music</list>-->
+<!--                        <list>com.durex.music.model.qq.MusicDetail</list>-->
+<!--                        <list>com.durex.music.model.qq.MusicPay</list>-->
+<!--                        <list>com.durex.music.model.qq.Mv</list>-->
+<!--                        <list>com.durex.music.model.qq.Pay</list>-->
+<!--                        <list>com.durex.music.model.qq.Preview</list>-->
+<!--                        <list>com.durex.music.model.qq.RecommendPlay</list>-->
+<!--                        <list>com.durex.music.model.qq.Singer</list>-->
+<!--                        <list>com.durex.music.model.qq.SingerDetail</list>-->
+<!--                        <list>com.durex.music.model.qq.Song</list>-->
+<!--                        <list>com.durex.music.model.qq.SongDetail</list>-->
+<!--                        <list>com.durex.music.model.qq.Tag</list>-->
+<!--                        <list>com.durex.music.model.qq.Volume</list>-->
+<!--                        <list>com.durex.music.aspect.PagePaneAspect</list>-->
+<!--                        <list>com.durex.music.aspect.Aspect</list>-->
+<!--                        <list>com.durex.music.aspect.IAspect</list>-->
+<!--                        <list>com.durex.music.ui.PaneFactory</list>-->
+<!--                        <list>com.durex.music.ui.MusicHallPagePane</list>-->
+<!--                        <list>com.durex.music.ui.RadioPagePane</list>-->
+<!--                        <list>com.durex.music.ui.RecommendPagePane</list>-->
+<!--                        <list>com.durex.music.ui.SongDetailPagePane</list>-->
+<!--                        <list>com.durex.music.ui.VideoPagePane</list>-->
+<!--                        <list>com.durex.music.model.bind.MusicProperty</list>-->
+
+<!--                        <list>com.leewyatt.rxcontrols.controls.RXAvatar</list>-->
+<!--                        <list>com.leewyatt.rxcontrols.controls.RXAvatar$Type</list>-->
+<!--                        <list>com.leewyatt.rxcontrols.controls.RXMediaProgressBar</list>-->
+<!--                        <list>com.leewyatt.rxcontrols.controls.RXAudioSpectrum</list>-->
+<!--                        <list>com.leewyatt.rxcontrols.controls.RXLrcView</list>-->
+<!--                        <list>com.leewyatt.rxcontrols.controls.RXCarousel</list>-->
+<!--                        <list>com.leewyatt.rxcontrols.controls.RXCarousel$RXDirection</list>-->
+<!--                        <list>com.leewyatt.rxcontrols.pane.RXCarouselPane</list>-->
+<!--                        <list>com.leewyatt.rxcontrols.animation.carousel.AnimAround</list>-->
+<!--                        <list>com.fasterxml.jackson.core.type.TypeReference</list>-->
+<!--                        <list>com.fasterxml.jackson.databind.DeserializationFeature</list>-->
+<!--                        <list>com.fasterxml.jackson.databind.ObjectMapper</list>-->
+<!--                        <list>com.fasterxml.jackson.databind.PropertyNamingStrategies</list>-->
+
+<!--                        <list>javafx.geometry.Insets</list>-->
+<!--                        <list>javafx.scene.control.Label</list>-->
+<!--                        <list>javafx.scene.control.OverrunStyle</list>-->
+<!--                        <list>javafx.scene.control.ListView</list>-->
+<!--                        <list>javafx.scene.control.ScrollPane</list>-->
+<!--                        <list>javafx.scene.control.TextField</list>-->
+<!--                        <list>javafx.scene.control.ToggleButton</list>-->
+<!--                        <list>javafx.scene.image.Image</list>-->
+<!--                        <list>javafx.scene.image.ImageView</list>-->
+<!--                        <list>javafx.scene.layout.AnchorPane</list>-->
+<!--                        <list>javafx.scene.layout.HBox</list>-->
+<!--                        <list>javafx.scene.layout.Pane</list>-->
+<!--                        <list>javafx.scene.layout.Region</list>-->
+<!--                        <list>javafx.scene.layout.StackPane</list>-->
+<!--                        <list>javafx.scene.layout.VBox</list>-->
+<!--                        <list>javafx.scene.text.Font</list>-->
+<!--                        <list>javafx.scene.control.Slider</list>-->
+<!--                        <list>javafx.scene.shape.Line</list>-->
+<!--                        <list>javafx.scene.shape.Rectangle</list>-->
+<!--                        <list>javafx.scene.layout.ColumnConstraints</list>-->
+<!--                        <list>javafx.scene.layout.GridPane</list>-->
+<!--                        <list>javafx.scene.layout.RowConstraints</list>-->
+<!--                        <list>javafx.scene.layout.TilePane</list>-->
+<!--                        <list>javafx.util.Duration</list>-->
+<!--                        <list>javafx.scene.control.TableView</list>-->
+<!--                        <list>javafx.scene.control.TableColumn</list>-->
+<!--                        <list>javafx.scene.media.MediaPlayer</list>-->
+<!--                        <list>javafx.scene.media.Media</list>-->
+<!--                        <list>com.durex.music.model.MusicPlayer</list>-->
+<!--                    </reflectionList>-->
                 </configuration>
             </plugin>
         </plugins>

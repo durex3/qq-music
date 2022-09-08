@@ -7,7 +7,12 @@ import com.durex.music.model.bind.PlayListMusic;
 import com.durex.music.service.MusicService;
 import com.durex.music.ui.MusicPlayListCell;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
-import javafx.beans.property.*;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -17,7 +22,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,7 +59,7 @@ public class MusicPlayer {
             disposeMediaPlayer();
         }
 
-        player = new WeakReference<>(new MediaPlayer(new Media(playUrl))).get();
+        player = new MediaPlayer(new Media(playUrl));
         // 音乐播放前执行这里的操作
         final String imageUrl = String.format(MusicConstant.IMAGE_PREFIX, music.getAlbummid());
         final Image image = new Image(imageUrl, 40, 40, false, false, true);
