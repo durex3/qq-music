@@ -95,15 +95,26 @@ public class MusicPlayer {
             }
         });
 
+        player.setVolume(CURRENT_SOUND_VALUE.getValue() / 100);
+
         // 播放结束自动播放下一首
-        player.setOnEndOfMedia(MusicPlayer::playNextMusic);
+        player.setOnEndOfMedia(() -> {
+            if (player.currentTimeProperty().get().lessThan(player.getStopTime())) {
+                // mac bug 没播放就结束了 重新加载
+                play(music);
+            } else {
+                playNextMusic();
+            }
+        });
+
 
         player.setOnPaused(() -> PLAY_BUTTON_SELECTED.set(false));
 
-        PLAY_BUTTON_SELECTED.set(true);
-
-        setCurrPlayMusicColor(music, MusicConstant.MENU_SELECTED_COLOR);
-        player.play();
+        player.setOnReady(() -> {
+            player.play();
+            PLAY_BUTTON_SELECTED.set(true);
+            setCurrPlayMusicColor(music, MusicConstant.MENU_SELECTED_COLOR);
+        });
     }
 
     public static synchronized void play(int index, MusicProperty music) {
@@ -217,13 +228,11 @@ public class MusicPlayer {
     }
 
     private static void disposeMediaPlayer() {
-        player.stop();
         currMusicProgress.durationProperty().unbind();
         currMusicProgress.bufferProgressTimeProperty().unbind();
         currMusicProgress.setCurrentTime(Duration.ZERO);
         player.currentTimeProperty().removeListener(getDurationChangeListener());
         curMusicSeconds.textProperty().unbind();
-        PLAY_BUTTON_SELECTED.set(false);
         player.setOnEndOfMedia(null);
         player.dispose();
         player = null;
