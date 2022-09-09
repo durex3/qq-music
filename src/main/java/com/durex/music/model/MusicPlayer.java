@@ -20,6 +20,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 
@@ -99,7 +101,9 @@ public class MusicPlayer {
 
         // 播放结束自动播放下一首
         player.setOnEndOfMedia(() -> {
-            if (player.currentTimeProperty().get().lessThan(player.getStopTime())) {
+            BigDecimal currentTime = BigDecimal.valueOf(player.currentTimeProperty().get().toSeconds())
+                    .setScale(1, RoundingMode.HALF_UP);
+            if (currentTime.compareTo(BigDecimal.valueOf(player.getStopTime().toSeconds())) < 0) {
                 // mac bug 没播放就结束了 重新加载
                 play(music);
             } else {
