@@ -5,7 +5,6 @@ import com.durex.music.model.bind.CurrPlaySecondsBinding;
 import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.bind.PlayListMusic;
 import com.durex.music.service.MusicService;
-import com.durex.music.ui.MusicPlayListCell;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -16,7 +15,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -206,14 +204,11 @@ public class MusicPlayer {
             }
         });
         MusicPlayer.getMusicPlayList().getMusicPropertyList().clear();
-        MusicPlayer.getMusicPlayList().getMusicPaneList().clear();
         MusicPlayer.getMusicPlayList().getContext().setType(type);
         MusicPlayer.getMusicPlayList().getContext().setDataId(dataId);
 
         for (MusicProperty musicProperty : musicPropertyList) {
             MusicPlayer.getMusicPlayList().getMusicPropertyList().add(musicProperty);
-            AnchorPane musicPlayListCell = MusicPlayListCell.build(musicProperty);
-            MusicPlayer.getMusicPlayList().getMusicPaneList().add(musicPlayListCell);
         }
 
         MusicPlayer.getMusicPlayList().setSize(String.valueOf(MusicPlayer.getMusicPlayList().getMusicPropertyList().size()));

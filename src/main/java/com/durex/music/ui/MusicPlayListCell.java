@@ -6,9 +6,11 @@ import com.durex.music.utils.TimeUtils;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
@@ -16,24 +18,26 @@ import javafx.scene.text.Font;
  * @author liugelong
  * @date 2022/8/25 16:04
  */
-public class MusicPlayListCell {
+public class MusicPlayListCell extends ListCell<MusicProperty> {
 
-    private MusicPlayListCell() {
+    private final AnchorPane anchorPane = new AnchorPane();
+    private final RXAvatar musicImage;
+    private final HBox musicNameHBox;
+    private final Label musicNameLabel;
+    private final Label singerLabel;
+    private final Label musicDuration;
+    private StackPane vipPane;
 
-    }
+    public MusicPlayListCell() {
 
-    public static AnchorPane build(MusicProperty music) {
-
-        AnchorPane anchorPane = new AnchorPane();
-
-        // 歌曲图片
         HBox musicInfoHBox = new HBox();
         musicInfoHBox.setPrefHeight(50);
         musicInfoHBox.setAlignment(Pos.CENTER_LEFT);
         musicInfoHBox.setSpacing(10);
-        String mid = music.getAlbummid();
-        String imageUrl = String.format(MusicConstant.IMAGE_PREFIX, mid);
-        RXAvatar musicImage = new RXAvatar(new Image(imageUrl, 40, 40, false, false, true));
+        AnchorPane.setLeftAnchor(musicInfoHBox, 0.0);
+
+        // 歌曲图片
+        musicImage = new RXAvatar();
         musicImage.setShapeType(RXAvatar.Type.SQUARE);
         musicImage.setPrefWidth(40);
         musicImage.setPrefWidth(40);
@@ -44,36 +48,72 @@ public class MusicPlayListCell {
         VBox musicNameAndSingerVBox = new VBox();
         musicNameAndSingerVBox.setAlignment(Pos.CENTER_LEFT);
 
-        // 歌曲名
-        HBox musicNameHBox = new HBox();
+        musicNameHBox = new HBox();
         musicNameHBox.setSpacing(5);
-        final Label musicNameLabel = new Label(music.getName().getText());
+
+        musicNameLabel = new Label();
+        musicNameLabel.setFont(Font.font(12));
         musicNameLabel.setMaxWidth(100);
-        musicNameLabel.textFillProperty().bind(music.getName().textFillProperty());
-        musicNameHBox.getChildren().add(musicNameLabel);
 
-        if (music.isVip()) {
-            musicNameHBox.getChildren().add(MusicVipPane.build());
-        }
-
-        Label singerLabel = new Label(music.getSinger().getText());
+        singerLabel = new Label();
         singerLabel.setMaxWidth(150);
         singerLabel.setFont(Font.font(14));
-        singerLabel.textFillProperty().bind(music.getSinger().textFillProperty());
-        musicNameAndSingerVBox.getChildren().addAll(musicNameHBox, singerLabel);
 
+        musicNameHBox.getChildren().add(musicNameLabel);
+        musicNameAndSingerVBox.getChildren().addAll(musicNameHBox, singerLabel);
         musicInfoHBox.getChildren().addAll(musicImage, musicNameAndSingerVBox);
-        AnchorPane.setLeftAnchor(musicInfoHBox, 0.0);
 
         HBox musicDurationHBox = new HBox();
         musicDurationHBox.setPrefHeight(50);
         musicDurationHBox.setAlignment(Pos.CENTER_LEFT);
-        Label musicDuration = new Label(TimeUtils.format(Double.valueOf(music.getInterval())));
-        musicDuration.textFillProperty().bind(music.getDuration().textFillProperty());
+        musicDuration = new Label();
+        musicDuration.setFont(Font.font(12));
         musicDurationHBox.getChildren().add(musicDuration);
         AnchorPane.setRightAnchor(musicDurationHBox, 0.0);
 
         anchorPane.getChildren().addAll(musicInfoHBox, musicDurationHBox);
-        return anchorPane;
+
+    }
+
+    @Override
+    protected void updateItem(MusicProperty music, boolean empty) {
+        super.updateItem(music, empty);
+        if (empty || music == null) {
+            musicNameLabel.textFillProperty().unbind();
+            singerLabel.textFillProperty().unbind();
+            musicDuration.textFillProperty().unbind();
+
+            this.setGraphic(null);
+            this.setText(null);
+            return;
+        }
+
+        if (musicImage.getImage() == null) {
+            String mid = music.getAlbummid();
+            String imageUrl = String.format(MusicConstant.IMAGE_PREFIX, mid);
+            musicImage.setImage(new Image(imageUrl, 40, 40, false, false, true));
+        }
+
+        musicNameLabel.setText(music.getName().getText());
+        musicNameLabel.textFillProperty().bind(music.getName().textFillProperty());
+        if (!musicNameLabel.textFillProperty().isBound()) {
+            musicNameLabel.textFillProperty().bind(music.getName().textFillProperty());
+        }
+
+        if (!musicNameHBox.getChildren().contains(vipPane) && music.isVip()) {
+            vipPane = MusicVipPane.build();
+            musicNameHBox.getChildren().add(vipPane);
+        }
+        singerLabel.setText(music.getSinger().getText());
+        if (!singerLabel.textFillProperty().isBound()) {
+            singerLabel.textFillProperty().bind(music.getSinger().textFillProperty());
+        }
+
+        musicDuration.setText(TimeUtils.format(Double.valueOf(music.getInterval())));
+        if (!musicDuration.textFillProperty().isBound()) {
+            musicDuration.textFillProperty().bind(music.getSinger().textFillProperty());
+        }
+
+        this.setGraphic(anchorPane);
     }
 }

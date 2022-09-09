@@ -1,11 +1,9 @@
 package com.durex.music.model.bind;
 
 import com.durex.music.model.PlayListContext;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.layout.AnchorPane;
 
 /**
  * @author liugelong
@@ -14,8 +12,6 @@ import javafx.scene.layout.AnchorPane;
 public class PlayListMusic {
 
     private final ObservableList<MusicProperty> musicPropertyList = FXCollections.observableArrayList();
-    private final ObservableList<AnchorPane> musicPaneList = FXCollections.observableArrayList();
-
     private final SimpleStringProperty size = new SimpleStringProperty("0");
 
     private final PlayListContext context = new PlayListContext();
@@ -28,10 +24,6 @@ public class PlayListMusic {
 
     public ObservableList<MusicProperty> getMusicPropertyList() {
         return musicPropertyList;
-    }
-
-    public ObservableList<AnchorPane> getMusicPaneList() {
-        return musicPaneList;
     }
 
     public String getSize() {

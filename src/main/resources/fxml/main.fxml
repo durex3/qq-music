@@ -252,7 +252,7 @@
                                         </HBox>
                                     </children>
                                 </AnchorPane>
-                                <ScrollPane id="scroll-pane" fx:id="contentPane" hbarPolicy="NEVER" prefWidth="810.0" stylesheets="@../css/main.css" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="70.0" AnchorPane.topAnchor="70.0" />
+                                <ScrollPane id="scroll-pane" fx:id="contentPane" hbarPolicy="NEVER" prefWidth="810.0" styleClass="content-scroll-pane" stylesheets="@../css/main.css" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="70.0" AnchorPane.topAnchor="70.0" />
                             </children>
                         </AnchorPane>
                     </children>
@@ -263,9 +263,9 @@
                         <AnchorPane onMouseClicked="#handleHidePlayListPaneClicked" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                         <AnchorPane id="list-pane" prefWidth="300.0" stylesheets="@../css/main.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <VBox prefHeight="690.0" prefWidth="265.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="20.0">
+                                <VBox prefHeight="690.0" prefWidth="285.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0">
                                     <children>
-                                        <VBox prefHeight="100.0" prefWidth="265.0" spacing="10.0">
+                                        <VBox prefHeight="100.0" prefWidth="285.0" spacing="10.0">
                                             <children>
                                                 <Label text="播放队列">
                                                     <font>
@@ -315,12 +315,20 @@
                                                     </children>
                                                 </HBox>
                                             </children>
+                                 <padding>
+                                    <Insets right="20.0" />
+                                 </padding>
                                         </VBox>
-                                        <AnchorPane prefHeight="525.0" prefWidth="265.0">
-                                            <children>
-                                                <ListView fx:id="playListView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                            </children></AnchorPane>
-                                        <HBox alignment="CENTER_RIGHT" prefHeight="65.0" prefWidth="265.0" spacing="2.0">
+                              <ScrollPane hbarPolicy="NEVER" prefHeight="525.0" styleClass="play-list-scroll-pane" stylesheets="@../css/main.css" vbarPolicy="ALWAYS">
+                                 <content>
+                                                <ListView fx:id="playListView" prefHeight="525.0" prefWidth="285.0">
+                                       <padding>
+                                          <Insets right="20.0" />
+                                       </padding>
+                                    </ListView>
+                                 </content>
+                              </ScrollPane>
+                                        <HBox alignment="CENTER_RIGHT" prefHeight="65.0" prefWidth="285.0" spacing="2.0">
                                             <children>
                                                 <HBox alignment="CENTER" onMouseClicked="#handleHidePlayListPaneClicked" styleClass="hide-list-btn" stylesheets="@../css/main.css">
                                                     <children>
@@ -333,6 +341,9 @@
                                                     </children>
                                                 </HBox>
                                             </children>
+                                 <padding>
+                                    <Insets right="20.0" />
+                                 </padding>
                                         </HBox>
                                     </children>
                                 </VBox>

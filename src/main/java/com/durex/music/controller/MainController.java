@@ -2,9 +2,11 @@ package com.durex.music.controller;
 
 import com.durex.music.model.HistoryStack;
 import com.durex.music.model.MusicPlayer;
+import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.ui.BasePagePane;
 import com.durex.music.ui.MainPane;
 import com.durex.music.ui.MusicHallPagePane;
+import com.durex.music.ui.MusicPlayListCell;
 import com.durex.music.ui.PaneFactory;
 import com.durex.music.ui.RadioPagePane;
 import com.durex.music.ui.RecommendPagePane;
@@ -14,6 +16,7 @@ import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.animation.Animation;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
@@ -77,7 +80,7 @@ public class MainController implements Initializable {
     @FXML
     private HBox clearListBtn;
     @FXML
-    private ListView<AnchorPane> playListView;
+    private ListView<MusicProperty> playListView;
     @FXML
     private StackPane soundBtn;
     @FXML
@@ -131,13 +134,20 @@ public class MainController implements Initializable {
         nextBtn.setOnMouseClicked(event -> MusicPlayer.playNextMusic());
         bottomPlayListNum.textProperty().bind(MusicPlayer.getMusicPlayList().sizeProperty());
         playListNum.textProperty().bind(MusicPlayer.getMusicPlayList().sizeProperty());
-        playListView.setItems(MusicPlayer.getMusicPlayList().getMusicPaneList());
+        playListView.setCellFactory(c -> new MusicPlayListCell());
+        playListView.setItems(MusicPlayer.getMusicPlayList().getMusicPropertyList());
         playListView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 final int selectedIndex = playListView.getSelectionModel().getSelectedIndex();
                 MusicPlayer.play(selectedIndex, MusicPlayer.getMusicPlayList().getMusicPropertyList().get(selectedIndex));
             }
         });
+
+        // 高度适应行数
+        playListView.setFixedCellSize(50);
+        playListView.prefHeightProperty().bind(playListView.fixedCellSizeProperty().multiply(Bindings.size(playListView.getItems()).add(0.75)));
+        playListView.minHeightProperty().bind(playListView.prefHeightProperty());
+        playListView.maxHeightProperty().bind(playListView.prefHeightProperty());
 
         // 声音弹出
         soundPopup = new ContextMenu(new SeparatorMenuItem());

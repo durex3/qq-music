@@ -7,11 +7,10 @@ import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.qq.Music;
 import com.durex.music.model.qq.Singer;
 import com.durex.music.model.qq.SongDetail;
-import com.durex.music.ui.MusicTableNameCell;
+import com.durex.music.ui.MusicNameTableCell;
 import com.durex.music.utils.TimeUtils;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,7 +20,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
@@ -36,7 +34,7 @@ public class MusicListController implements Initializable {
     @FXML
     private TableColumn<MusicProperty, Integer> id;
     @FXML
-    private TableColumn<MusicProperty, HBox> name;
+    private TableColumn<MusicProperty, Label> name;
     @FXML
     private TableColumn<MusicProperty, Label> singer;
     @FXML
@@ -56,11 +54,8 @@ public class MusicListController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        name.setCellValueFactory(cell -> {
-            final SimpleObjectProperty<HBox> property = new SimpleObjectProperty<>();
-            property.set(MusicTableNameCell.build(cell.getValue()));
-            return property;
-        });
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        name.setCellFactory(param -> new MusicNameTableCell());
         singer.setCellValueFactory(new PropertyValueFactory<>("singer"));
         album.setCellValueFactory(new PropertyValueFactory<>("albumName"));
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
