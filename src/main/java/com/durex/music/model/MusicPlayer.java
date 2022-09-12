@@ -123,7 +123,7 @@ public class MusicPlayer {
 
     public static synchronized void play(int index, MusicProperty music) {
 
-        if (music.isVip() || music.isNotCanPlay()) {
+        if (music.isNotCanPlay()) {
             return;
         }
         MusicProperty lastMusic = null;
@@ -170,7 +170,7 @@ public class MusicPlayer {
         index = (index == size - 1) ? 0 : index + 1;
         MusicProperty nextMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
 
-        while (nextMusic.isVip() || nextMusic.isNotCanPlay()) {
+        while (nextMusic.isNotCanPlay()) {
             index = (index == size - 1) ? 0 : index + 1;
             nextMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
         }
@@ -196,7 +196,7 @@ public class MusicPlayer {
         index = (index == 0) ? size - 1 : index - 1;
         MusicProperty preMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
 
-        while (preMusic.isVip() || preMusic.isNotCanPlay()) {
+        while (preMusic.isNotCanPlay()) {
             index = (index == 0) ? size - 1 : index - 1;
             preMusic = MUSIC_PLAY_LIST.getMusicPropertyList().get(index);
         }

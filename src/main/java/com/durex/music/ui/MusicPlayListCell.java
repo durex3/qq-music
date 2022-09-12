@@ -52,7 +52,7 @@ public class MusicPlayListCell extends ListCell<MusicProperty> {
         musicNameHBox.setSpacing(5);
 
         musicNameLabel = new Label();
-        musicNameLabel.setFont(Font.font(12));
+        musicNameLabel.setFont(Font.font(13));
         musicNameLabel.setMaxWidth(100);
 
         singerLabel = new Label();
@@ -67,7 +67,7 @@ public class MusicPlayListCell extends ListCell<MusicProperty> {
         musicDurationHBox.setPrefHeight(50);
         musicDurationHBox.setAlignment(Pos.CENTER_LEFT);
         musicDuration = new Label();
-        musicDuration.setFont(Font.font(12));
+        musicDuration.setFont(Font.font(13));
         musicDurationHBox.getChildren().add(musicDuration);
         AnchorPane.setRightAnchor(musicDurationHBox, 0.0);
 
