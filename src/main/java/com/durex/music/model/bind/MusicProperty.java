@@ -1,7 +1,11 @@
 package com.durex.music.model.bind;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Color;
 
 public class MusicProperty {
 
@@ -18,6 +22,8 @@ public class MusicProperty {
 
     private final SimpleObjectProperty<Label> duration = new SimpleObjectProperty<>();
 
+    private final ObjectProperty<Background> background = new SimpleObjectProperty<>(new Background(new BackgroundFill(Color.BLACK, null, null)));
+
     private Long interval;
 
     /**
@@ -28,7 +34,6 @@ public class MusicProperty {
     private Long msgid;
 
     private long payplay;
-
 
     public boolean isVip() {
         return payplay == 1;
@@ -124,5 +129,17 @@ public class MusicProperty {
 
     public void setPayplay(long payplay) {
         this.payplay = payplay;
+    }
+
+    public Background getBackground() {
+        return background.get();
+    }
+
+    public ObjectProperty<Background> backgroundProperty() {
+        return background;
+    }
+
+    public void setBackground(Background background) {
+        this.background.set(background);
     }
 }

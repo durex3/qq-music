@@ -95,7 +95,6 @@ public class MusicPlayListCell extends ListCell<MusicProperty> {
         }
 
         musicNameLabel.setText(music.getName().getText());
-        musicNameLabel.textFillProperty().bind(music.getName().textFillProperty());
         if (!musicNameLabel.textFillProperty().isBound()) {
             musicNameLabel.textFillProperty().bind(music.getName().textFillProperty());
         }

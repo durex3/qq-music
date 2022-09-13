@@ -15,6 +15,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -210,6 +212,7 @@ public class MusicPlayer {
         music.getName().setTextFill(menuSelectedColor);
         music.getAlbumName().setTextFill(menuSelectedColor);
         music.getDuration().setTextFill(menuSelectedColor);
+        music.setBackground(new Background(new BackgroundFill(menuSelectedColor, null, null)));
     }
 
     public static void refreshPlayList(PlayType type, String dataId, List<MusicProperty> musicPropertyList) {
