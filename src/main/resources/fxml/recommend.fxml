@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.leewyatt.rxcontrols.controls.RXCarousel?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -14,59 +15,75 @@
 
 <AnchorPane prefWidth="810.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.RecommendController">
    <children>
-      <Label prefHeight="50.0" text="推荐" AnchorPane.leftAnchor="40.0">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Label>
-      <HBox alignment="CENTER_LEFT" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="60.0">
+      <VBox spacing="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <RXCarousel fx:id="carousel" animationTime="1000.0ms" prefHeight="200.0" prefWidth="730.0" showTime="1000.0ms" styleClass="carousel" stylesheets="@../css/recommend.css" />
-         </children>
-      </HBox>
-      <VBox id="song-vbox" alignment="CENTER_LEFT" prefHeight="300.0" spacing="20.0" stylesheets="@../css/recommend.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="300.0">
-         <children>
-            <Label text="你的歌单宝藏库">
+            <Label prefHeight="50.0" text="推荐">
                <font>
-                  <Font size="24.0" />
+                  <Font size="36.0" />
                </font>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" />
+               </VBox.margin>
             </Label>
-            <TilePane fx:id="songListPane" alignment="CENTER_LEFT" hgap="15.0" prefColumns="3" prefHeight="450.0" prefRows="4" prefWidth="810.0" tileAlignment="CENTER_LEFT" vgap="20.0" />
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <RXCarousel fx:id="carousel" animationTime="1000.0ms" prefHeight="200.0" prefWidth="730.0" showTime="1000.0ms" styleClass="carousel" stylesheets="@../css/recommend.css" />
+               </children>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox id="song-vbox" alignment="CENTER_LEFT" prefHeight="300.0" spacing="20.0" stylesheets="@../css/recommend.css">
+               <children>
+                  <Label text="你的歌单宝藏库">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TilePane fx:id="songListPane" alignment="CENTER_LEFT" hgap="15.0" prefColumns="3" prefHeight="450.0" prefRows="4" prefWidth="810.0" tileAlignment="CENTER_LEFT" vgap="20.0" />
+               </children>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox spacing="20.0">
+               <children>
+                  <Label text="新歌推荐">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="40.0" />
+                     </VBox.margin>
+                  </Label>
+                  <AnchorPane fx:id="newMusicPane" prefWidth="810.0" styleClass="new-music-pane" stylesheets="@../css/recommend.css">
+                     <children>
+                        <StackPane minWidth="30.0" onMouseClicked="#handleMusicBackClicked" prefHeight="280.0" AnchorPane.leftAnchor="10.0">
+                           <children>
+                              <Label fx:id="newMusicLeft" prefHeight="35.0" prefWidth="18.0" styleClass="new-music-left" stylesheets="@../css/recommend.css" visible="false" />
+                           </children>
+                        </StackPane>
+                        <GridPane fx:id="musicListPane" hgap="10.0" prefHeight="280.0" styleClass="new-music-pane" stylesheets="@../css/recommend.css" vgap="10.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="50.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                        <StackPane layoutX="780.0" maxWidth="30.0" minWidth="30.0" prefHeight="280.0" AnchorPane.rightAnchor="20.0">
+                           <children>
+                              <Label fx:id="newMusicRight" onMouseClicked="#handleMusicForwardClicked" prefHeight="35.0" prefWidth="18.0" styleClass="new-music-right" stylesheets="@../css/recommend.css" visible="false" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
          </children>
       </VBox>
-      <AnchorPane AnchorPane.topAnchor="1080.0">
-         <children>
-            <Label text="新歌推荐" AnchorPane.leftAnchor="40.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <AnchorPane fx:id="newMusicPane" prefWidth="810.0" styleClass="new-music-pane" stylesheets="@../css/recommend.css" AnchorPane.topAnchor="50.0">
-               <children>
-                  <StackPane minWidth="30.0" onMouseClicked="#handleMusicBackClicked" prefHeight="280.0" AnchorPane.leftAnchor="10.0">
-                     <children>
-                        <Label fx:id="newMusicLeft" prefHeight="35.0" prefWidth="18.0" styleClass="new-music-left" stylesheets="@../css/recommend.css" visible="false" />
-                     </children>
-                  </StackPane>
-                  <GridPane fx:id="musicListPane" hgap="10.0" prefHeight="280.0" styleClass="new-music-pane" stylesheets="@../css/recommend.css" vgap="10.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                  </GridPane>
-                  <StackPane layoutX="780.0" maxWidth="30.0" minWidth="30.0" prefHeight="280.0" AnchorPane.rightAnchor="10.0">
-                     <children>
-                        <Label fx:id="newMusicRight" onMouseClicked="#handleMusicForwardClicked" prefHeight="35.0" prefWidth="18.0" styleClass="new-music-right" stylesheets="@../css/recommend.css" visible="false" />
-                     </children>
-                  </StackPane>
-               </children>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
    </children>
 </AnchorPane>

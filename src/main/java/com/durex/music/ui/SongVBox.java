@@ -6,6 +6,8 @@ import com.leewyatt.rxcontrols.controls.RXAvatar;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -39,9 +41,6 @@ public class SongVBox {
         song.setSpacing(5);
 
         StackPane stackPane = new StackPane();
-        stackPane.prefWidthProperty().bind(MainPane.getScrollPane().widthProperty().subtract(80).subtract(60).divide(4));
-        stackPane.prefHeightProperty().bind(stackPane.prefWidthProperty());
-
 
         // 封面图
         RXAvatar songImage = new RXAvatar(new Image(imageUrl, 167, 167, false, false, true));
@@ -128,12 +127,6 @@ public class SongVBox {
         title.setPrefWidth(170);
         title.setPrefHeight(50);
         title.setWrapText(true);
-
-        stackPane.prefWidthProperty().addListener((observable, oldValue, newValue) -> {
-            songImage.setScaleX(newValue.doubleValue() / 167);
-            songImage.setScaleY(newValue.doubleValue() / 167);
-            title.setPrefWidth(newValue.doubleValue());
-        });
 
         song.getChildren().addAll(stackPane, title);
 

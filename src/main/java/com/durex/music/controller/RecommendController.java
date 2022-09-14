@@ -140,7 +140,7 @@ public class RecommendController implements Initializable {
         }
         lastMusicShowIndex = MUSIC_SIZE - 1;
         setMusicListPane();
-        newMusicPane.prefWidthProperty().bind(MainPane.getScrollPane().widthProperty().subtract(20));
+        newMusicPane.prefWidthProperty().bind(MainPane.getScrollPane().widthProperty().subtract(10));
     }
 
     private void bindPlayClicked() {
