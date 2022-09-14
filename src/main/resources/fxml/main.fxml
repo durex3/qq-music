@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="root" minHeight="690.0" minWidth="1020.0" onMouseDragged="#handleMouseDragged" onMousePressed="#handleMousePressed" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.MainController">
+<AnchorPane id="root" minHeight="690.0" minWidth="1020.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.durex.music.controller.MainController">
     <children>
         <StackPane>
             <children>
@@ -216,7 +216,7 @@
                                                 </HBox>
                                                 <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="220.0" spacing="15.0">
                                                     <children>
-                                                        <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                                                        <HBox alignment="CENTER">
                                                             <children>
                                                                 <Label fx:id="curMusicSeconds" minWidth="36.0" text="00:00" textFill="#7b7b7a" />
                                                                 <Label text="/ " textFill="#7b7b7a" />
@@ -237,7 +237,7 @@
                                                                 <Font size="16.0" />
                                                             </font>
                                                         </Label>
-                                                        <HBox alignment="CENTER_LEFT" onMouseClicked="#handleShowPlayListPaneClicked" prefWidth="50.0" styleClass="show-list-btn" stylesheets="@../css/main.css" HBox.hgrow="ALWAYS">
+                                                        <HBox alignment="CENTER_LEFT" maxHeight="20.0" onMouseClicked="#handleShowPlayListPaneClicked" styleClass="show-list-btn" stylesheets="@../css/main.css">
                                                             <children>
                                                                 <Label minHeight="16.0" minWidth="16.0" prefHeight="16.0" prefWidth="16.0" styleClass="show-list-icon" stylesheets="@../css/main.css" />
                                                                 <Label fx:id="bottomPlayListNum" onMouseClicked="#handleShowPlayListPaneClicked" text="100" textFill="#7b7a7a">

@@ -3,15 +3,7 @@ package com.durex.music.controller;
 import com.durex.music.model.HistoryStack;
 import com.durex.music.model.MusicPlayer;
 import com.durex.music.model.bind.MusicProperty;
-import com.durex.music.ui.BasePagePane;
-import com.durex.music.ui.MainPane;
-import com.durex.music.ui.MusicHallPagePane;
-import com.durex.music.ui.MusicPlayListCell;
-import com.durex.music.ui.PaneFactory;
-import com.durex.music.ui.RadioPagePane;
-import com.durex.music.ui.RecommendPagePane;
-import com.durex.music.ui.SoundPane;
-import com.durex.music.ui.VideoPagePane;
+import com.durex.music.ui.*;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.animation.Animation;
@@ -20,12 +12,7 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -47,8 +34,6 @@ import java.util.ResourceBundle;
 @Slf4j
 public class MainController implements Initializable {
 
-    private double dragOffsetX;
-    private double dragOffsetY;
     private ContextMenu soundPopup;
 
     @FXML
@@ -165,18 +150,6 @@ public class MainController implements Initializable {
     @FXML
     public void handleCloseClicked(MouseEvent event) {
         getStage().close();
-    }
-
-    @FXML
-    public void handleMousePressed(MouseEvent e) {
-        this.dragOffsetX = e.getScreenX() - getStage().getX();
-        this.dragOffsetY = e.getScreenY() - getStage().getY();
-    }
-
-    @FXML
-    public void handleMouseDragged(MouseEvent e) {
-        getStage().setX(e.getScreenX() - this.dragOffsetX);
-        getStage().setY(e.getScreenY() - this.dragOffsetY);
     }
 
     @FXML

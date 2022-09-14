@@ -1,6 +1,7 @@
 package com.durex.music;
 
 import com.durex.music.ui.MainPane;
+import com.durex.music.utils.ResizeUtils;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -16,10 +17,8 @@ public class QQMusicApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         MainPane.load(stage);
-        stage.setMinWidth(1020);
-        stage.setMinHeight(720);
-        //stage.initStyle(StageStyle.UNDECORATED);
-        //stage.setResizable(false);
+        stage.initStyle(StageStyle.UNDECORATED);
+        ResizeUtils.addResizable(stage);
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/image/logo.png"))));
         stage.show();
     }
