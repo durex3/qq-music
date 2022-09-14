@@ -39,16 +39,17 @@ public class SongVBox {
         song.setSpacing(5);
 
         StackPane stackPane = new StackPane();
+        stackPane.prefWidthProperty().bind(MainPane.getScrollPane().widthProperty().subtract(80).subtract(60).divide(4));
+        stackPane.prefHeightProperty().bind(stackPane.prefWidthProperty());
+
 
         // 封面图
         RXAvatar songImage = new RXAvatar(new Image(imageUrl, 167, 167, false, false, true));
         songImage.setId("song-image");
-        songImage.setUserData(id);
         songImage.setShapeType(RXAvatar.Type.SQUARE);
+        songImage.setUserData(id);
         songImage.setPrefWidth(167);
         songImage.setPrefHeight(167);
-        songImage.setMinWidth(167);
-        songImage.setMinHeight(167);
 
         Rectangle clip = new Rectangle(
                 songImage.getPrefWidth(), songImage.getPrefHeight()
@@ -127,6 +128,13 @@ public class SongVBox {
         title.setPrefWidth(170);
         title.setPrefHeight(50);
         title.setWrapText(true);
+
+        stackPane.prefWidthProperty().addListener((observable, oldValue, newValue) -> {
+            songImage.setScaleX(newValue.doubleValue() / 167);
+            songImage.setScaleY(newValue.doubleValue() / 167);
+            title.setPrefWidth(newValue.doubleValue());
+        });
+
         song.getChildren().addAll(stackPane, title);
 
         return song;
