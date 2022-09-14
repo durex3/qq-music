@@ -98,9 +98,9 @@
                                 </VBox>
                             </children>
                         </AnchorPane>
-                        <AnchorPane id="content-pane" fx:id="leftPane" minHeight="690.0" minWidth="810.0" prefHeight="690.0" prefWidth="810.0" stylesheets="@../css/main.css" AnchorPane.leftAnchor="210.0">
+                        <AnchorPane id="right-pane" fx:id="rightPane" minHeight="690.0" minWidth="810.0" prefHeight="690.0" prefWidth="810.0" stylesheets="@../css/main.css" AnchorPane.leftAnchor="210.0">
                             <children>
-                                <HBox alignment="CENTER" prefHeight="70.0" prefWidth="730.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="20.0">
+                                <HBox alignment="CENTER" maxHeight="70.0" minHeight="70.0" prefHeight="70.0" prefWidth="730.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <HBox alignment="CENTER_LEFT" spacing="20.0" HBox.hgrow="ALWAYS">
                                             <children>
@@ -127,10 +127,11 @@
                                         </HBox>
                                     </children>
                                 </HBox>
-                                <AnchorPane id="bottom-pane" prefHeight="70.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="620.0">
+                                <ScrollPane id="scroll-pane" fx:id="contentPane" hbarPolicy="NEVER" prefWidth="810.0" styleClass="content-scroll-pane" stylesheets="@../css/main.css" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="70.0" AnchorPane.topAnchor="70.0" />
+                                <AnchorPane id="bottom-pane" maxHeight="70.0" minHeight="70.0" prefHeight="70.0" prefWidth="810.0" AnchorPane.bottomAnchor="0.0">
                                     <children>
-                                        <RXMediaProgressBar fx:id="currMusicProgress" prefHeight="10.0" prefWidth="810.0" />
-                                        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="770.0" spacing="80.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="10.0">
+                                        <RXMediaProgressBar id="curr-music-progress" fx:id="currMusicProgress" prefHeight="10.0" prefWidth="810.0" />
+                                        <HBox id="curr-play-info-box" alignment="CENTER" prefHeight="60.0" prefWidth="770.0" spacing="80.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="10.0">
                                             <children>
                                                 <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                                     <children>
@@ -213,7 +214,7 @@
                                                         </StackPane>
                                                     </children>
                                                 </HBox>
-                                                <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="220.0" spacing="15.0" HBox.hgrow="ALWAYS">
+                                                <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="220.0" spacing="15.0">
                                                     <children>
                                                         <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                                                             <children>
@@ -252,7 +253,6 @@
                                         </HBox>
                                     </children>
                                 </AnchorPane>
-                                <ScrollPane id="scroll-pane" fx:id="contentPane" hbarPolicy="NEVER" prefWidth="810.0" styleClass="content-scroll-pane" stylesheets="@../css/main.css" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="70.0" AnchorPane.topAnchor="70.0" />
                             </children>
                         </AnchorPane>
                     </children>

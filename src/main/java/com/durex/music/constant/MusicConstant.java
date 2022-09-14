@@ -25,6 +25,12 @@ public class MusicConstant {
     // 59：经典，71：情歌，3056：网络歌曲，64：KTV热歌
     public static final List<String> SONG_CATEGORY_RANDOM = Arrays.asList("3230", "71", "74", "3317", "3056");
 
+    public static final int LEFT_MENU_WIDTH = 210;
+
+    public static final int CONTENT_LEFT_RIGHT_GAP_WIDTH = 80;
+
+    public static final int TOP_BOTTOM_GAP_HEIGHT = 140;
+
     private MusicConstant() {
     }
 }

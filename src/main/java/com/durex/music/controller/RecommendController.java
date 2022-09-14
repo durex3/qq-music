@@ -1,5 +1,6 @@
 package com.durex.music.controller;
 
+import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.MusicPlayer;
 import com.durex.music.model.PlayListContext;
 import com.durex.music.model.PlayType;
@@ -139,6 +140,7 @@ public class RecommendController implements Initializable {
         }
         lastMusicShowIndex = MUSIC_SIZE - 1;
         setMusicListPane();
+        newMusicPane.prefWidthProperty().bind(MainPane.getScrollPane().widthProperty().subtract(20));
     }
 
     private void bindPlayClicked() {
@@ -225,6 +227,7 @@ public class RecommendController implements Initializable {
                 MainPane.getScrollPane().setContent(songDetail);
             });
         });
+        songListPane.prefWidthProperty().bind(MainPane.getScrollPane().widthProperty().subtract(MusicConstant.CONTENT_LEFT_RIGHT_GAP_WIDTH));
         songListPane.getChildren().addAll(songVboxList);
     }
 
@@ -246,5 +249,6 @@ public class RecommendController implements Initializable {
         carousel.setArrowDisplayMode(DisplayMode.AUTO);
         // 设置自动播放/切换 轮播图
         carousel.setAutoSwitch(true);
+        carousel.prefWidthProperty().bind(MainPane.getScrollPane().widthProperty().subtract(MusicConstant.CONTENT_LEFT_RIGHT_GAP_WIDTH));
     }
 }

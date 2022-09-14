@@ -3,6 +3,7 @@ package com.durex.music.ui;
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.exception.MusicException;
 import com.durex.music.model.HistoryStack;
+import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -14,6 +15,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -51,10 +53,7 @@ public class MainPane {
             // 主面板
             FXMLLoader fxmlLoader = new FXMLLoader(MainPane.class.getResource("/fxml/main.fxml"));
             root = fxmlLoader.load();
-            loadLeftMenu(root);
-            loadTopInfo(root);
-            loadBottomPlayInfo(root);
-            loadContentPane(root);
+            loadRightPane(root);
         } catch (IOException e) {
             log.error("初始化主面板失败: ", e);
             throw new MusicException(e);
@@ -62,7 +61,6 @@ public class MainPane {
         initAnim();
         stage.setScene(new Scene(root));
     }
-
 
     public static void setMenuStyle(Pane pane) {
         if (curSelectedPane != null) {
@@ -116,13 +114,27 @@ public class MainPane {
         return curSelectedPane;
     }
 
+    private static void loadRightPane(AnchorPane root) throws IOException {
+        final AnchorPane rightPane = (AnchorPane) root.lookup("#right-pane");
+        rightPane.prefWidthProperty().bind(root.widthProperty().subtract(MusicConstant.LEFT_MENU_WIDTH));
+        rightPane.prefHeightProperty().bind(root.heightProperty());
+
+        loadLeftMenu(root);
+        loadTopInfo(root);
+        loadContentPane(root);
+        loadBottomPlayInfo(root);
+    }
+
     /**
      * <h2>加载底部播放信息</h2>
      *
      * @param root root
      */
     private static void loadBottomPlayInfo(AnchorPane root) {
-
+        final RXMediaProgressBar currMusicProgress = (RXMediaProgressBar) root.lookup("#curr-music-progress");
+        currMusicProgress.prefWidthProperty().bind(root.widthProperty());
+        final HBox currPlayInfoBox = (HBox) root.lookup("#curr-play-info-box");
+        currPlayInfoBox.prefWidthProperty().bind(scrollPane.widthProperty().subtract(20));
     }
 
     /**
@@ -203,6 +215,9 @@ public class MainPane {
     private static void loadContentPane(AnchorPane root) throws IOException {
         // 播放器内容滚动面板 和播放队列面板
         MainPane.scrollPane = (ScrollPane) root.lookup("#scroll-pane");
+        MainPane.scrollPane.prefWidthProperty().bind(root.widthProperty().subtract(MusicConstant.LEFT_MENU_WIDTH));
+        MainPane.scrollPane.prefHeightProperty().bind(root.heightProperty().subtract(MusicConstant.TOP_BOTTOM_GAP_HEIGHT));
+
         MainPane.playListPane = (AnchorPane) root.lookup("#play-list-pane");
 
         // 加载播放详情面板
