@@ -49,6 +49,8 @@ public class SongVBox {
         songImage.setUserData(id);
         songImage.setPrefWidth(167);
         songImage.setPrefHeight(167);
+        songImage.setMinWidth(167);
+        songImage.setMinHeight(167);
 
         Rectangle clip = new Rectangle(
                 songImage.getPrefWidth(), songImage.getPrefHeight()

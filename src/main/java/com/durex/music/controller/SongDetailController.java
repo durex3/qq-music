@@ -15,12 +15,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -59,10 +59,9 @@ public class SongDetailController implements Initializable {
     @FXML
     private Label songNum;
     @FXML
-    private BorderPane songDetailPane;
+    private AnchorPane songDetailPane;
     @FXML
-    private VBox songDetailVbox;
-
+    private BorderPane musicListPane;
     private Node curSelectedTab;
     private final String songId;
 
@@ -150,11 +149,10 @@ public class SongDetailController implements Initializable {
         try {
             fxmlLoader.setControllerFactory(c -> new MusicListController(songDetail));
             Parent musicList = fxmlLoader.load();
-            songDetailPane.setCenter(musicList);
+            musicListPane.setCenter(musicList);
             // 单向绑定高度变化
-            songDetailVbox.prefHeightProperty().bind(
-                    songDetailPane.prefHeightProperty()
-            );
+            songDetailPane.prefWidthProperty().bind(MainPane.getScrollPane().widthProperty().subtract(MusicConstant.CONTENT_LEFT_RIGHT_GAP_WIDTH));
+            songDetailPane.prefHeightProperty().bind(MainPane.getScrollPane().heightProperty());
         } catch (IOException e) {
             log.error("加载歌曲列表失败: ", e);
         }

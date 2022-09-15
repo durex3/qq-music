@@ -1,5 +1,6 @@
 package com.durex.music.controller;
 
+import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.MusicPlayer;
 import com.durex.music.model.PlayListContext;
 import com.durex.music.model.PlayType;
@@ -7,6 +8,7 @@ import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.qq.Music;
 import com.durex.music.model.qq.Singer;
 import com.durex.music.model.qq.SongDetail;
+import com.durex.music.ui.MainPane;
 import com.durex.music.ui.MusicNameTableCell;
 import com.durex.music.utils.TimeUtils;
 import javafx.application.Platform;
@@ -32,8 +34,6 @@ public class MusicListController implements Initializable {
     @FXML
     private TableView<MusicProperty> musicListTable;
     @FXML
-    private TableColumn<MusicProperty, Integer> id;
-    @FXML
     private TableColumn<MusicProperty, Label> name;
     @FXML
     private TableColumn<MusicProperty, Label> singer;
@@ -53,12 +53,21 @@ public class MusicListController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        musicListTable.prefWidthProperty().bind(MainPane.getScrollPane().widthProperty().subtract(MusicConstant.CONTENT_LEFT_RIGHT_GAP_WIDTH));
+
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         name.setCellFactory(param -> new MusicNameTableCell());
+        name.minWidthProperty().bind(musicListTable.widthProperty().multiply(0.45));
+
         singer.setCellValueFactory(new PropertyValueFactory<>("singer"));
+        singer.minWidthProperty().bind(musicListTable.widthProperty().multiply(0.25));
+
         album.setCellValueFactory(new PropertyValueFactory<>("albumName"));
+        album.minWidthProperty().bind(musicListTable.widthProperty().multiply(0.2));
+
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        duration.minWidthProperty().bind(musicListTable.widthProperty().multiply(0.1));
+
         musicPropertyList.clear();
         musicListTable.setItems(musicPropertyList);
         Platform.runLater(this::initMusicList);
@@ -98,8 +107,6 @@ public class MusicListController implements Initializable {
         // 高度适应行数
         musicListTable.setFixedCellSize(40);
         musicListTable.prefHeightProperty().bind(musicListTable.fixedCellSizeProperty().multiply(Bindings.size(musicListTable.getItems()).add(0.75)));
-        musicListTable.minHeightProperty().bind(musicListTable.prefHeightProperty());
-        musicListTable.maxHeightProperty().bind(musicListTable.prefHeightProperty());
 
         musicListTable.setRowFactory(param -> {
             TableRow<MusicProperty> row = new TableRow<>();

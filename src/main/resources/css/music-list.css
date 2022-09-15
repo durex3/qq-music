@@ -3,6 +3,10 @@
     -fx-text-fill: black;
 }
 
+.table-view .virtual-flow .scroll-bar:horizontal {
+    -fx-pref-height: 0;
+}
+
 .table-view .column-header .label {
     -fx-alignment: center-left;
     -fx-font-size: 13;
