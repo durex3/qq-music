@@ -8,7 +8,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -172,7 +171,10 @@ public class MainPane {
      *
      * @param root root
      */
-    private static void loadLeftMenu(Parent root) {
+    private static void loadLeftMenu(AnchorPane root) {
+
+        final AnchorPane leftMenuPane = (AnchorPane) root.lookup("#left-Menu-pane");
+        leftMenuPane.prefHeightProperty().bind(root.heightProperty());
 
         // 默认选择推荐
         Pane recommendPane = (Pane) root.lookup("#recommend-pane");
@@ -219,6 +221,10 @@ public class MainPane {
         MainPane.scrollPane.prefHeightProperty().bind(root.heightProperty().subtract(MusicConstant.TOP_BOTTOM_GAP_HEIGHT));
 
         MainPane.playListPane = (AnchorPane) root.lookup("#play-list-pane");
+        AnchorPane listPane = (AnchorPane) root.lookup("#list-pane");
+        listPane.prefHeightProperty().bind(root.heightProperty());
+        ScrollPane playListScrollPane = (ScrollPane) root.lookup(".play-list-scroll-pane");
+        playListScrollPane.minHeightProperty().bind(root.heightProperty().subtract(165));
 
         // 加载播放详情面板
         AnchorPane playDetailPane = (AnchorPane) root.lookup("#play-detail-pane");

@@ -3,7 +3,15 @@ package com.durex.music.controller;
 import com.durex.music.model.HistoryStack;
 import com.durex.music.model.MusicPlayer;
 import com.durex.music.model.bind.MusicProperty;
-import com.durex.music.ui.*;
+import com.durex.music.ui.BasePagePane;
+import com.durex.music.ui.MainPane;
+import com.durex.music.ui.MusicHallPagePane;
+import com.durex.music.ui.MusicPlayListCell;
+import com.durex.music.ui.PaneFactory;
+import com.durex.music.ui.RadioPagePane;
+import com.durex.music.ui.RecommendPagePane;
+import com.durex.music.ui.SoundPane;
+import com.durex.music.ui.VideoPagePane;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.animation.Animation;
@@ -12,7 +20,12 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -129,10 +142,7 @@ public class MainController implements Initializable {
         });
 
         // 高度适应行数
-        playListView.setFixedCellSize(50);
-        playListView.prefHeightProperty().bind(playListView.fixedCellSizeProperty().multiply(Bindings.size(playListView.getItems()).add(0.75)));
-        playListView.minHeightProperty().bind(playListView.prefHeightProperty());
-        playListView.maxHeightProperty().bind(playListView.prefHeightProperty());
+        playListView.prefHeightProperty().bind(playListView.fixedCellSizeProperty().multiply(Bindings.size(playListView.getItems())));
 
         // 声音弹出
         soundPopup = new ContextMenu(new SeparatorMenuItem());

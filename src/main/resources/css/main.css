@@ -55,12 +55,6 @@
     -fx-font-size: 10px;
 }
 
-.play-list-scroll-pane {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-font-size: 10px;
-}
-
 .scroll-bar {
     -fx-background-color: transparent;
 }
@@ -182,12 +176,23 @@
     -fx-background-color: white;
 }
 
+.play-list-scroll-pane {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-font-size: 12px;
+}
+
+.play-list-scroll-pane > .viewport  {
+    -fx-background-color: white;
+}
+
 .list-view {
     -fx-background-color: white;
     -fx-border-color: transparent;
+    -fx-fixed-cell-size: 50;
 }
 
-.list-cel Label {
+.list-cell Label {
     -fx-text-fill: black;
 }
 
