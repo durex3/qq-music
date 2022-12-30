@@ -1,4 +1,4 @@
-package com.durex.music.ui;
+package com.durex.music.ui.page;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.exception.MusicException;
@@ -233,12 +233,12 @@ public class MainPane {
         playDetailPane.getChildren().add(playDetail);
         loadWindowTool(playDetail, Color.WHITE);
 
-        // 加载推荐内容面板
+        // 默认加载推荐内容面板
         final RecommendPagePane recommendPagePane = new RecommendPagePane();
         scrollPane.setContent(recommendPagePane.load(null));
-        final HistoryStack.History recommend = new HistoryStack.History();
-        recommend.setMenu(curSelectedPane);
-        recommend.setPagePane(recommendPagePane);
+        final HistoryStack.History recommendHistory = new HistoryStack.History();
+        recommendHistory.setPagePane(recommendPagePane);
+        recommendHistory.setParam(curSelectedPane);
 
         MainPane.getScrollPane().contentProperty().addListener((observableValue, o, n) -> {
             if (o != null && RecommendPagePane.getInstance() != o) {
@@ -246,6 +246,6 @@ public class MainPane {
             }
         });
 
-        HistoryStack.push(recommend);
+        HistoryStack.push(recommendHistory);
     }
 }

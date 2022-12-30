@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class MusicConstant {
 
-    public static final String QQ_MUSIC_HOST = "http://yumbo.top:3300";
+    public static final String QQ_MUSIC_HOST = "http://127.0.0.1:3300";
 
     public static final Color MENU_SELECTED_COLOR = Color.rgb(30, 207, 157);
 

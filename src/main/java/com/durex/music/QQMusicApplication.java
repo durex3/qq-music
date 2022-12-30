@@ -1,6 +1,6 @@
 package com.durex.music;
 
-import com.durex.music.ui.MainPane;
+import com.durex.music.ui.page.MainPane;
 import com.durex.music.utils.ResizeUtils;
 import javafx.application.Application;
 import javafx.scene.image.Image;

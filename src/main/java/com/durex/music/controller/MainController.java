@@ -2,16 +2,17 @@ package com.durex.music.controller;
 
 import com.durex.music.model.HistoryStack;
 import com.durex.music.model.MusicPlayer;
+import com.durex.music.model.PaneType;
 import com.durex.music.model.bind.MusicProperty;
-import com.durex.music.ui.BasePagePane;
-import com.durex.music.ui.MainPane;
-import com.durex.music.ui.MusicHallPagePane;
+import com.durex.music.ui.page.BasePagePane;
+import com.durex.music.ui.page.MainPane;
+import com.durex.music.ui.page.MusicHallPagePane;
 import com.durex.music.ui.MusicPlayListCell;
-import com.durex.music.ui.PaneFactory;
-import com.durex.music.ui.RadioPagePane;
-import com.durex.music.ui.RecommendPagePane;
+import com.durex.music.ui.PaneProxy;
+import com.durex.music.ui.page.RadioPagePane;
+import com.durex.music.ui.page.RecommendPagePane;
 import com.durex.music.ui.SoundPane;
-import com.durex.music.ui.VideoPagePane;
+import com.durex.music.ui.page.VideoPagePane;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.animation.Animation;
@@ -29,6 +30,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -167,7 +169,7 @@ public class MainController implements Initializable {
         if (MainPane.getCurSelectedPane() != null && MainPane.getCurSelectedPane().equals(e.getSource())) {
             return;
         }
-        BasePagePane pane = PaneFactory.newInstance(RecommendPagePane.class);
+        BasePagePane pane = PaneProxy.newInstance(RecommendPagePane.class);
         MainPane.getScrollPane().setContent(pane.load(e.getSource()));
     }
 
@@ -176,17 +178,16 @@ public class MainController implements Initializable {
         if (MainPane.getCurSelectedPane() != null && MainPane.getCurSelectedPane().equals(e.getSource())) {
             return;
         }
-        BasePagePane pane = PaneFactory.newInstance(MusicHallPagePane.class);
+        BasePagePane pane = PaneProxy.newInstance(MusicHallPagePane.class);
         MainPane.getScrollPane().setContent(pane.load(e.getSource()));
     }
-
 
     @FXML
     public void handleVideoClicked(MouseEvent e) {
         if (MainPane.getCurSelectedPane() != null && MainPane.getCurSelectedPane().equals(e.getSource())) {
             return;
         }
-        BasePagePane pane = PaneFactory.newInstance(VideoPagePane.class);
+        BasePagePane pane = PaneProxy.newInstance(VideoPagePane.class);
         MainPane.getScrollPane().setContent(pane.load(e.getSource()));
     }
 
@@ -195,7 +196,7 @@ public class MainController implements Initializable {
         if (MainPane.getCurSelectedPane() != null && MainPane.getCurSelectedPane().equals(e.getSource())) {
             return;
         }
-        BasePagePane pane = PaneFactory.newInstance(RadioPagePane.class);
+        BasePagePane pane = PaneProxy.newInstance(RadioPagePane.class);
         MainPane.getScrollPane().setContent(pane.load(e.getSource()));
     }
 
@@ -250,8 +251,8 @@ public class MainController implements Initializable {
         if (history == null) {
             return;
         }
-        if (history.getMenu() != null) {
-            MainPane.setMenuStyle(history.getMenu());
+        if (history.getPagePane().getType() == PaneType.MENU) {
+            MainPane.setMenuStyle((Pane) history.getParam());
         } else {
             MainPane.resetMenuStyle();
         }

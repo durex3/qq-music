@@ -4,7 +4,7 @@ import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.qq.SongDetail;
 import com.durex.music.model.qq.Tag;
 import com.durex.music.service.SongDetailService;
-import com.durex.music.ui.MainPane;
+import com.durex.music.ui.page.MainPane;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

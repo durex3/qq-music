@@ -2,6 +2,7 @@ package com.durex.music.ui;
 
 import com.durex.music.aspect.Aspect;
 import com.durex.music.aspect.IAspect;
+import com.durex.music.aspect.Ignore;
 import com.durex.music.exception.MusicException;
 
 import java.lang.annotation.Annotation;
@@ -9,15 +10,13 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <h1>面板工厂</h1>
  */
-public class PaneFactory {
+public class PaneProxy {
 
-    private PaneFactory() {
+    private PaneProxy() {
 
     }
 
@@ -41,13 +40,19 @@ public class PaneFactory {
                     clazz.getClassLoader(),
                     clazz.getInterfaces(),
                     (proxy, method, args) -> {
-                        aspectLinkedList.forEach(aspect -> aspect.before(instance, args));
-                        final Object result = method.invoke(instance, args);
-                        aspectLinkedList.forEach(aspect -> aspect.after(instance, result, args));
+                        Object result;
+                        if (!method.isAnnotationPresent(Ignore.class)) {
+                            aspectLinkedList.forEach(aspect -> aspect.before(instance, args));
+                        }
+                        result = method.invoke(instance, args);
+                        if (!method.isAnnotationPresent(Ignore.class)) {
+                            aspectLinkedList.forEach(aspect -> aspect.after(instance, result, args));
+                        }
+                        aspectLinkedList.clear();
                         return result;
                     }
             );
-            return new WeakReference<T>(t).get();
+            return new WeakReference<>(t).get();
 
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                  NoSuchMethodException e) {

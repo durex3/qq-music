@@ -8,7 +8,7 @@ import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.qq.Music;
 import com.durex.music.model.qq.Singer;
 import com.durex.music.model.qq.SongDetail;
-import com.durex.music.ui.MainPane;
+import com.durex.music.ui.page.MainPane;
 import com.durex.music.ui.MusicNameTableCell;
 import com.durex.music.utils.TimeUtils;
 import javafx.application.Platform;

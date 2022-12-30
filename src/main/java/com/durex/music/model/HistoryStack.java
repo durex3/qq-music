@@ -1,6 +1,6 @@
 package com.durex.music.model;
 
-import com.durex.music.ui.BasePagePane;
+import com.durex.music.ui.page.BasePagePane;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.Pane;
 
@@ -77,18 +77,8 @@ public class HistoryStack {
     }
 
     public static class History {
-
-        private Pane menu;
         private BasePagePane pagePane;
         private Object param;
-
-        public Pane getMenu() {
-            return menu;
-        }
-
-        public void setMenu(Pane menu) {
-            this.menu = menu;
-        }
 
         public BasePagePane getPagePane() {
             return pagePane;

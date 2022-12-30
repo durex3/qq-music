@@ -2,7 +2,7 @@ package com.durex.music.controller;
 
 import com.durex.music.model.MusicPlayer;
 import com.durex.music.service.MusicService;
-import com.durex.music.ui.MainPane;
+import com.durex.music.ui.page.MainPane;
 import com.durex.music.ui.SoundPane;
 import com.leewyatt.rxcontrols.controls.RXAudioSpectrum;
 import com.leewyatt.rxcontrols.controls.RXAvatar;

@@ -1,7 +1,10 @@
 package com.durex.music.utils;
 
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -11,9 +14,9 @@ public final class ResizeUtils {
     private static boolean isRight;// 是否处于右边界调整窗口状态
     private static boolean isBottomRight;// 是否处于右下角调整窗口状态
     private static boolean isBottom;// 是否处于下边界调整窗口状态
-    private final static int RESIZE_WIDTH = 5;// 判定是否为调整窗口状态的范围与边界距离
-    private final static double MIN_WIDTH = 1020;// 窗口最小宽度
-    private final static double MIN_HEIGHT = 690;// 窗口最小高度
+    private static final int RESIZE_WIDTH = 10;// 判定是否为调整窗口状态的范围与边界距离
+    private static final double MIN_WIDTH = 1020;// 窗口最小宽度
+    private static final double MIN_HEIGHT = 690;// 窗口最小高度
     private static double xOffset = 0;
     private static double yOffset = 0;
 

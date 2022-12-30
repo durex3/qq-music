@@ -1,4 +1,4 @@
-package com.durex.music.ui;
+package com.durex.music.ui.page;
 
 import com.durex.music.aspect.Aspect;
 import com.durex.music.aspect.PagePaneAspect;

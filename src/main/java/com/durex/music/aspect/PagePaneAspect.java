@@ -1,9 +1,9 @@
 package com.durex.music.aspect;
 
 import com.durex.music.model.HistoryStack;
-import com.durex.music.ui.BasePagePane;
-import com.durex.music.ui.MainPane;
-import javafx.scene.Parent;
+import com.durex.music.model.PaneType;
+import com.durex.music.ui.page.BasePagePane;
+import com.durex.music.ui.page.MainPane;
 import javafx.scene.layout.Pane;
 
 /**
@@ -14,8 +14,8 @@ public class PagePaneAspect implements IAspect {
 
     @Override
     public void before(Object instance, Object... args) {
-        if (args[0] != null && args[0] instanceof Pane pane) {
-            MainPane.setMenuStyle(pane);
+        if (instance instanceof BasePagePane pane && pane.getType() == PaneType.MENU) {
+            MainPane.setMenuStyle((Pane) args[0]);
         } else {
             MainPane.resetMenuStyle();
         }
@@ -23,11 +23,8 @@ public class PagePaneAspect implements IAspect {
 
     @Override
     public void after(Object instance, Object result, Object... args) {
-        if (instance instanceof BasePagePane pane && result instanceof Parent) {
+        if (instance instanceof BasePagePane pane) {
             HistoryStack.History history = new HistoryStack.History();
-            if (args[0] != null && args[0] instanceof Pane menu) {
-                history.setMenu(menu);
-            }
             history.setPagePane(pane);
             history.setParam(args[0]);
             HistoryStack.push(history);

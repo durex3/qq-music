@@ -1,4 +1,4 @@
-package com.durex.music.ui;
+package com.durex.music.ui.page;
 
 import com.durex.music.aspect.Aspect;
 import com.durex.music.aspect.PagePaneAspect;
@@ -11,17 +11,16 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author liugelong
- * @date 2022/9/5 09:31
+ * @date 2022/9/5 09:50
  */
 @Aspect(types = {PagePaneAspect.class})
 @Slf4j
-public class MusicHallPagePane implements BasePagePane {
-
+public class VideoPagePane implements BasePagePane {
 
     @Override
     public Parent load(Object param) {
         BorderPane borderPane = new BorderPane();
-        final Label label = new Label("音乐馆-暂未实现");
+        final Label label = new Label("视频-暂未实现");
         label.setFont(Font.font(36));
         borderPane.setCenter(label);
         return borderPane;

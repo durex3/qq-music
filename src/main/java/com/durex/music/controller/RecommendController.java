@@ -10,11 +10,11 @@ import com.durex.music.model.qq.MusicDetail;
 import com.durex.music.model.qq.RecommendPlay;
 import com.durex.music.model.qq.SingerDetail;
 import com.durex.music.service.RecommendService;
-import com.durex.music.ui.BasePagePane;
-import com.durex.music.ui.MainPane;
+import com.durex.music.ui.page.BasePagePane;
+import com.durex.music.ui.page.MainPane;
 import com.durex.music.ui.MusicPane;
-import com.durex.music.ui.PaneFactory;
-import com.durex.music.ui.SongDetailPagePane;
+import com.durex.music.ui.PaneProxy;
+import com.durex.music.ui.page.SongDetailPagePane;
 import com.durex.music.ui.SongVBox;
 import com.durex.music.utils.TimeUtils;
 import com.leewyatt.rxcontrols.animation.carousel.AnimAround;
@@ -220,7 +220,7 @@ public class RecommendController implements Initializable {
                 // 传递数据
                 RXAvatar image = (RXAvatar) event.getSource();
                 String dissId = image.getUserData().toString();
-                BasePagePane pane = PaneFactory.newInstance(SongDetailPagePane.class);
+                BasePagePane pane = PaneProxy.newInstance(SongDetailPagePane.class);
                 MainPane.getScrollPane().setContent(null);
                 songDetail = null;
                 songDetail = pane.load(dissId);
