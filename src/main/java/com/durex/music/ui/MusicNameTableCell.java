@@ -42,7 +42,7 @@ public class MusicNameTableCell extends TableCell<MusicProperty, Label> {
             musicNameHBox.getChildren().add(nameLabel);
         }
         if (!musicNameHBox.getChildren().contains(vipStackPane) && music.isVip()) {
-            vipStackPane = MusicVipPane.build();
+            vipStackPane = MusicVipPane.createInstance();
             musicNameHBox.getChildren().add(vipStackPane);
         }
         if (music.isNotCanPlay()) {

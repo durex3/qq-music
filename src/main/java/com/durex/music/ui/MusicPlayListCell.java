@@ -98,9 +98,10 @@ public class MusicPlayListCell extends ListCell<MusicProperty> {
         }
 
         if (!musicNameHBox.getChildren().contains(vipPane) && music.isVip()) {
-            vipPane = MusicVipPane.build();
+            vipPane = MusicVipPane.createInstance();;
             musicNameHBox.getChildren().add(vipPane);
         }
+
         singerLabel.setText(music.getSinger().getText());
         if (!singerLabel.textFillProperty().isBound()) {
             singerLabel.textFillProperty().bind(music.getSinger().textFillProperty());

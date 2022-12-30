@@ -192,10 +192,6 @@
     -fx-fixed-cell-size: 50;
 }
 
-.list-cell Label {
-    -fx-text-fill: black;
-}
-
 .list-cell {
     -fx-background-color: transparent;
     -fx-border-color: transparent;

@@ -26,7 +26,7 @@ public class MusicTableNameCell {
         hBox.getChildren().add(nameLabel);
         nameLabel.textFillProperty().bind(music.getName().textFillProperty());
         if (music.isVip()) {
-            hBox.getChildren().add(MusicVipPane.build());
+            hBox.getChildren().add(MusicVipPane.createInstance());
         }
 
         return hBox;

@@ -16,7 +16,7 @@ public class MusicVipPane {
     private MusicVipPane() {
     }
 
-    public static StackPane build() {
+    public static StackPane createInstance() {
         StackPane stackPane = new StackPane();
         Rectangle rectangle = new Rectangle(20, 12);
         rectangle.setFill(Color.WHITE);
