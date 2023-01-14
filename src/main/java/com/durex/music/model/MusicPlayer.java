@@ -4,7 +4,7 @@ import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.bind.CurrPlaySecondsBinding;
 import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.bind.PlayListMusic;
-import com.durex.music.service.MusicService;
+import com.durex.music.api.MusicApi;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -51,7 +51,7 @@ public class MusicPlayer {
     private static RXMediaProgressBar currMusicProgress;
 
     private static synchronized void play(MusicProperty music) {
-        final String playUrl = MusicService.getMusicPlay(music.getId());
+        final String playUrl = MusicApi.getMusicPlay(music.getId());
         if (playUrl == null || playUrl.isBlank()) {
             return;
         }

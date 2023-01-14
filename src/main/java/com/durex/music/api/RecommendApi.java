@@ -1,4 +1,4 @@
-package com.durex.music.service;
+package com.durex.music.api;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.qq.Banner;
@@ -25,9 +25,9 @@ import java.util.List;
  * @date 2022/8/17 09:27
  */
 @Slf4j
-public class RecommendService {
+public class RecommendApi {
 
-    private RecommendService() {
+    private RecommendApi() {
     }
 
 

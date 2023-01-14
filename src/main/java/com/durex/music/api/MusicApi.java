@@ -1,4 +1,4 @@
-package com.durex.music.service;
+package com.durex.music.api;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.response.qq.LyricResp;
@@ -19,9 +19,9 @@ import java.util.Map;
  * @date 2022/8/22 10:09
  */
 @Slf4j
-public class MusicService {
+public class MusicApi {
 
-    private MusicService() {
+    private MusicApi() {
     }
 
     /**

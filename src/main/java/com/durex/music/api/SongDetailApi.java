@@ -1,4 +1,4 @@
-package com.durex.music.service;
+package com.durex.music.api;
 
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.qq.SongDetail;
@@ -18,9 +18,9 @@ import java.net.http.HttpResponse;
  * @date 2022/8/19 08:59
  */
 @Slf4j
-public class SongDetailService {
+public class SongDetailApi {
 
-    private SongDetailService() {
+    private SongDetailApi() {
     }
 
     /**

@@ -3,7 +3,7 @@ package com.durex.music.controller;
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.qq.SongDetail;
 import com.durex.music.model.qq.Tag;
-import com.durex.music.service.SongDetailService;
+import com.durex.music.api.SongDetailApi;
 import com.durex.music.ui.page.MainPane;
 import com.leewyatt.rxcontrols.controls.RXAvatar;
 import javafx.fxml.FXML;
@@ -71,7 +71,7 @@ public class SongDetailController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        final SongDetail songDetail = SongDetailService.getSongDetail(songId);
+        final SongDetail songDetail = SongDetailApi.getSongDetail(songId);
         if (songDetail == null) {
             return;
         }

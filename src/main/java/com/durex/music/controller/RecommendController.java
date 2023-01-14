@@ -9,7 +9,7 @@ import com.durex.music.model.qq.Banner;
 import com.durex.music.model.qq.MusicDetail;
 import com.durex.music.model.qq.RecommendPlay;
 import com.durex.music.model.qq.SingerDetail;
-import com.durex.music.service.RecommendService;
+import com.durex.music.api.RecommendApi;
 import com.durex.music.ui.page.BasePagePane;
 import com.durex.music.ui.page.MainPane;
 import com.durex.music.ui.MusicPane;
@@ -112,7 +112,7 @@ public class RecommendController implements Initializable {
             newMusicRight.setVisible(false);
         });
 
-        final List<MusicDetail> newMusicList = RecommendService.getNewMusicList();
+        final List<MusicDetail> newMusicList = RecommendApi.getNewMusicList();
         if (newMusicList == null || newMusicList.isEmpty()) {
             return;
         }
@@ -209,7 +209,7 @@ public class RecommendController implements Initializable {
     }
 
     private void initSongList() {
-        final List<RecommendPlay> songList = RecommendService.getRecommendSongList();
+        final List<RecommendPlay> songList = RecommendApi.getRecommendSongList();
 
 
         final List<VBox> songVboxList = songList.stream().map(song -> SongVBox.build(String.valueOf(song.getContentId()), song.getCover(), song.getTitle(), song.getListenNum())).toList();
@@ -232,7 +232,7 @@ public class RecommendController implements Initializable {
     }
 
     private void initCarousel() {
-        final List<Banner> bannerList = RecommendService.getBannerList();
+        final List<Banner> bannerList = RecommendApi.getBannerList();
         if (bannerList.size() < 3) {
             bannerList.add(bannerList.get(0));
         }

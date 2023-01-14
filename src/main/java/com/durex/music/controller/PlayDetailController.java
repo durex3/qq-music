@@ -1,7 +1,7 @@
 package com.durex.music.controller;
 
 import com.durex.music.model.MusicPlayer;
-import com.durex.music.service.MusicService;
+import com.durex.music.api.MusicApi;
 import com.durex.music.ui.page.MainPane;
 import com.durex.music.ui.SoundPane;
 import com.leewyatt.rxcontrols.controls.RXAudioSpectrum;
@@ -124,7 +124,7 @@ public class PlayDetailController implements Initializable {
                 MusicPlayer.getPlayer().setAudioSpectrumListener(null);
                 curMusicAudioSpectrum.setMagnitudes(emptyAry);
             }
-            final String lyric = MusicService.getLyric(n);
+            final String lyric = MusicApi.getLyric(n);
             curMusicLrcView.setLrcDoc(LrcDoc.parseLrcDoc(lyric));
             // 设置歌词进度
             curMusicLrcView.currentTimeProperty().bind(MusicPlayer.getPlayer().currentTimeProperty());
