@@ -1,17 +1,12 @@
 package com.durex.music.model;
 
+import com.durex.music.api.MusicApi;
 import com.durex.music.constant.MusicConstant;
 import com.durex.music.model.bind.CurrPlaySecondsBinding;
 import com.durex.music.model.bind.MusicProperty;
 import com.durex.music.model.bind.PlayListMusic;
-import com.durex.music.api.MusicApi;
 import com.leewyatt.rxcontrols.controls.RXMediaProgressBar;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -26,6 +21,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
+
 
 public class MusicPlayer {
 
@@ -225,13 +221,12 @@ public class MusicPlayer {
         MusicPlayer.getMusicPlayList().getContext().setType(type);
         MusicPlayer.getMusicPlayList().getContext().setDataId(dataId);
 
-        for (MusicProperty musicProperty : musicPropertyList) {
-            MusicPlayer.getMusicPlayList().getMusicPropertyList().add(musicProperty);
-        }
+        MusicPlayer.getMusicPlayList().getMusicPropertyList().addAll(musicPropertyList);
 
         MusicPlayer.getMusicPlayList().setSize(String.valueOf(MusicPlayer.getMusicPlayList().getMusicPropertyList().size()));
 
         MusicPlayer.getMusicPlayList().setLastMusicIndex(-1);
+
     }
 
     private static void disposeMediaPlayer() {

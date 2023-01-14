@@ -86,19 +86,18 @@ public class MusicPlayListCell extends ListCell<MusicProperty> {
             return;
         }
 
-        if (musicImage.getImage() == null) {
-            String mid = music.getAlbummid();
-            String imageUrl = String.format(MusicConstant.IMAGE_PREFIX, mid);
-            musicImage.setImage(new Image(imageUrl, 40, 40, false, false, true));
-        }
+        String mid = music.getAlbummid();
+        String imageUrl = String.format(MusicConstant.IMAGE_PREFIX, mid);
+        musicImage.setImage(new Image(imageUrl, 40, 40, false, false, true));
 
         musicNameLabel.setText(music.getName().getText());
         if (!musicNameLabel.textFillProperty().isBound()) {
             musicNameLabel.textFillProperty().bind(music.getName().textFillProperty());
         }
 
-        if (!musicNameHBox.getChildren().contains(vipPane) && music.isVip()) {
-            vipPane = MusicVipPane.createInstance();;
+        musicNameHBox.getChildren().remove(vipPane);
+        if (music.isVip()) {
+            vipPane = MusicVipPane.createInstance();
             musicNameHBox.getChildren().add(vipPane);
         }
 
