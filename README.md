@@ -1,3 +1,7 @@
+## 仿 qq 音乐播放器
+- [视频](https://www.bilibili.com/video/BV1ve4y1F77J/)
+- 待重构
+
 ## 打包成镜像文件
 
 ```shell
